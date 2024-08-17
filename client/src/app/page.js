@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Maintenance from "@/Components/Maintenance/page";
+import Maintenance from "@/Components/Maintenance/page.jsx";
 
 export default function Home() {
   return (
