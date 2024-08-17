@@ -1,9 +1,13 @@
 import Image from "next/image";
+import Maintenance from "@/Components/Maintenance/page";
 
 export default function Home() {
   return (
     <>
-      <div className="w-screen h-screen bg-red-400"></div>
+      {/* <div className="content-center w-screen h-screen text-center bg-red-400">
+        This is the div
+      </div> */}
+      <Maintenance />
     </>
   );
 }
