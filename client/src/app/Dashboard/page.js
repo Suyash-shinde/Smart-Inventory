@@ -1,8 +1,12 @@
 import React from 'react'
-
+import styles from './Dashboard.css'
 const page = () => {
   return (
-    <div>page</div>
+    <>
+      <div className='Navbar'>
+          hi
+      </div>
+    </>
   )
 }
 
