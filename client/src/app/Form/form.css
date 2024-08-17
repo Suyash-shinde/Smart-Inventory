@@ -1,0 +1,45 @@
+.Form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30%;
+    margin-right: 30%;
+    border-radius: 5%;
+    background-color: #D9D9D9;
+    margin-top: 2%;
+    min-height: calc(100vh - 130px);
+    min-width: 25vw;
+}
+
+label {
+    
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+    
+}
+input, select, textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    /* border-radius: 5%; */
+    box-sizing: border-box;
+    resize: vertical;
+  }
+  input[type=reset]{
+    margin-top: 10%;
+    margin-right: 52%;
+    
+    max-width: fit-content;
+    order: 2;
+    background: rgb(175, 20, 20); 
+    /* top: 68%; */
+}
+input[type=submit]{
+    /* padding: 15px; */
+    max-width: fit-content;
+    background: rgb(18, 185, 129); 
+    /* top: 68%; */
+}
+.bottomButtons{
+    
+}
