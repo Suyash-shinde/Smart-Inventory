@@ -1,5 +1,5 @@
-import {mongoose, Schema} from 'mongoose';
-import jwt from 'jwt';
+import mongoose, {Schema} from 'mongoose';
+import jwt from "jsonwebtoken";
 
 const userSchema = new Schema({
     name:{
@@ -8,7 +8,7 @@ const userSchema = new Schema({
         lowercase:true,
     },
     prn:{
-        type:String,
+        type:String ,
         required:true,
         unique:true
     },
