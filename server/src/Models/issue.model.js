@@ -1,6 +1,6 @@
-import {mongoose, Schema} from 'mongoose';
-import { User } from './user.model';
-import { Lab } from './lab.model';
+import mongoose, {Schema} from 'mongoose';
+import { User } from './user.model.js';
+import { Lab } from './lab.model.js';
 
 const issueSchema = new Schema({
     deviceId:{
