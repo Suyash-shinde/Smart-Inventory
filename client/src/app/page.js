@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Maintenance from "@/Components/Maintenance/page";
 
 export default function Home() {
