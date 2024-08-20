@@ -1,5 +1,5 @@
 "use client"
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Navbar from '../Components/Navbar'
 
 import styles from './form.css'
@@ -21,26 +21,31 @@ const page = () => {
             facultyLabIncharge:'',
             details:''
         });
+        
+
         const handleChange = (e) =>{
                 const {name,value} =e.target;
-             setIssueDetails((prevState)=> ({...prevState,[name]:e.target.value}));
-                //  console.log(issueDetails);
-                  
+             setIssueDetails((prevState)=> ({...prevState,[name]:e.target.value}));                  
             };
-    // function handleChangeFacultyName (e) {
-        
-    //     setIssueDetails(e.target.value);
-        
-    //     console.log(e.target.value);
-        
-    // }   
     
-
-  const handleSubmit = (e) => {
+    
+    const sendData = async () => {
+        const myData=issueDetails;
+        const result = await fetch('http://localhost:3090/api/issues',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(myData)
+        })
+        const resultInJson= await result.json();
+    }
+    
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await sendData()
     console.log(issueDetails);
     
-    //idhar se backend mai data bhejna h /)
   }; 
 
   const handleReset = (e) =>{
@@ -98,7 +103,7 @@ const page = () => {
                         <div className='bottomButtons'>
                         <button className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded mr-[58%] " type='reset'
                         onClick={handleReset} >Delete </button>
-                        <button className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"  type='submit' onClick={handleSubmit} > Submit</button>
+                        <button className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"  type='submit' onClick={handleSubmit}  > Submit</button>
                         </div>
                     </form>
                 </div>

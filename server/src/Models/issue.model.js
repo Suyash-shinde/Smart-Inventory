@@ -21,9 +21,8 @@ const issueSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:User,   
     },
-    labNo:{
-        type:Schema.Types.ObjectId,
-        ref:Lab,
+    facultyLabIncharge:{
+        type:String,
         required:true,
     },
     details:{
