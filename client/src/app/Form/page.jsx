@@ -1,6 +1,7 @@
 "use client"
 import React,{useState,useEffect} from 'react'
 import Navbar from '../Components/Navbar'
+import 'dotenv/config'
 
 import styles from './form.css'
 const page = () => {
