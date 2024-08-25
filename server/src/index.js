@@ -18,7 +18,6 @@ app.use(express.json());
 connectDb();
 app.use("/", router);    
 app.use("/api/issues",issueRoutes);
-// app.post("/api/messages", (req, res) => res.send("Hello, world!"));
 
 app.listen(port, ()=>{
     console.log(`Server is listening on port http://localhost:${port}`);

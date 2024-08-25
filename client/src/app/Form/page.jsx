@@ -62,7 +62,7 @@ const page = () => {
                         <div>
                         <label className='' > Faculty Name: </label>
                         {/* We need to get this automatically from login details */}
-                        <input className='border-2 '  id='facultyName' name='facultyName' placeholder='Faculty Name' type='text' value={issueDetails.facultyName} onChange={handleChange} />
+                        <input   id='facultyName' name='facultyName' placeholder='Faculty Name' type='text' value={issueDetails.facultyName} onChange={handleChange} />
                         </div>
                         
                         <div>

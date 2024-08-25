@@ -11,7 +11,7 @@ const issueSchema = new Schema({
         required:true,
     },
     status:{
-        type:Boolean,//true is the issue is resolved else false
+        type:String,//true is the issue is resolved else false
     },
     date:{
         type:Date,

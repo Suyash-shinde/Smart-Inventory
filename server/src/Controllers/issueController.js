@@ -19,6 +19,7 @@ export const createIssue =  async (req,res,next) => {
             deviceType,
             date,
             //facultyName,
+            status:false,
             facultyLabIncharge,
             details
         })
@@ -37,3 +38,17 @@ export const createIssue =  async (req,res,next) => {
         
     }
 };
+
+
+//@desc Sending existing issues to frontend
+ //@route /api/issue
+ //@access public
+
+ export const getIssue = async (req,res,next) => {
+        try {
+            const issue= await Issue.find({});
+            return res.send(issue);
+        } catch (error) {
+            next(error)
+        }
+ }
