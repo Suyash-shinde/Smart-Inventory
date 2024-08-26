@@ -2,7 +2,7 @@
 import React,{useState,useEffect} from 'react'
 
 import 'dotenv/config'
-
+import { issueReq } from '@/utils/api.calls.js'
 import styles from './form.css'
 const page = () => {
     const getDate = () => {
@@ -32,14 +32,9 @@ const page = () => {
     
     const sendData = async () => {
         const myData=issueDetails;
-        const result = await fetch('http://localhost:3090/api/issues',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify(myData)
-        })
-        const resultInJson= await result.json();
+        const result = await issueReq(myData);
+        //const resultInJson= await result.json();
+        console.log(result);
     }
     
   const handleSubmit = async (e) => {
@@ -62,7 +57,7 @@ const page = () => {
                         <div>
                         <label className='' > Faculty Name: </label>
                         {/* We need to get this automatically from login details */}
-                        <input   id='facultyName' name='facultyName' placeholder='Faculty Name' type='text' value={issueDetails.facultyName} onChange={handleChange} />
+                        <input className='border-2 '  id='facultyName' name='facultyName' placeholder='Faculty Name' type='text' value={issueDetails.facultyName} onChange={handleChange} />
                         </div>
                         
                         <div>
