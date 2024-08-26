@@ -12,20 +12,20 @@ export default function Navbar() {
 
   const navlinks = [
     {
-      labe: "link1",
-      link: "#",
+      labe: "Maintenance",
+      link: "/Maintenance",
     },
     {
-      labe: "link2",
-      link: "#",
+      labe: "Labs",
+      link: "/Labs",
     },
     {
-      labe: "lnk3",
-      link: "#",
+      labe: "Form",
+      link: "/Form",
     },
     {
-      labe: "link4",
-      link: "#",
+      labe: "Dashboard",
+      link: "/Dashboard",
     },
   ];
 
