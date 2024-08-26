@@ -11,7 +11,7 @@ const issueSchema = new Schema({
         required:true,
     },
     status:{
-        type:Boolean,//true is the issue is resolved else false
+        type:String,//true is the issue is resolved else false
     },
     date:{
         type:Date,
@@ -21,9 +21,8 @@ const issueSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref:User,   
     },
-    labNo:{
-        type:Schema.Types.ObjectId,
-        ref:Lab,
+    facultyLabIncharge:{
+        type:String,
         required:true,
     },
     details:{

@@ -1,3 +1,4 @@
+
 import React from "react";
 import Piechart from "../components/Piechart";
 
@@ -48,3 +49,4 @@ const page = () => {
 };
 
 export default page;
+
