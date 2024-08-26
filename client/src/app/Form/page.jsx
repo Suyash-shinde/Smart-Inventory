@@ -1,6 +1,6 @@
 "use client"
 import React,{useState,useEffect} from 'react'
-import Navbar from '../Components/Navbar'
+
 import 'dotenv/config'
 
 import styles from './form.css'
@@ -55,7 +55,7 @@ const page = () => {
 
   return (
     <>
-        <Navbar/>
+        {/* <Navbar/> */}
         <div className='min-h-screen bg-green-200 py-2'>
                 <div className='Form'>
                     <form >
