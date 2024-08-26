@@ -1,5 +1,5 @@
 import { User } from "../Models/user.model.js";
-
+import jwt from "jsonwebtoken"
 const generateAccessAndRefreshTokens = async(userId)=>{
     try {
         const user = await User.findById(userId)
@@ -16,7 +16,7 @@ const generateAccessAndRefreshTokens = async(userId)=>{
     }
 }
 const options={
-    httpOnly:true,
+    // httpOnly:true,
     secure:true,
 } 
 export const register=async(req,res,next)=>{
@@ -105,6 +105,8 @@ export const login=async(req,res,next)=>{
 }
 
 export const refreshAccessToken=async(req,res,next)=>{
+    console.log("At refresh token");
+    
     const incomingRefreshToken= await req.cookies?.refreshToken;
     if(!incomingRefreshToken){
         return res.json({msg:"Unauthorised request", status:false});

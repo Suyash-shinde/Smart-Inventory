@@ -4,12 +4,12 @@ import React from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useState } from "react";
-import { redirect } from "react-router-dom";
+import { useRouter } from 'next/navigation'; 
 import toast from "react-hot-toast";
 import { RegisterRoute } from "../utils/APIroutes";
 
 const page = () => {
-
+  const router = useRouter();
   const [user, setUser] = useState({
     name: "",
     prn: "",
@@ -36,12 +36,17 @@ const page = () => {
         name,
         prn,
         password,
-      });
+      }
+      ,{
+        withCredentials: true
+      }
+    );
       if (data.status === false) {
         alert(data.msg);
       } else {
         alert(data.msg);
-        return redirect("/Form");
+        console.log(data);
+        router.push("/Form");
       }
     }
   };
