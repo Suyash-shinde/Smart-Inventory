@@ -4,9 +4,12 @@ import React from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useState } from "react";
+import { redirect } from "react-router-dom";
 import toast from "react-hot-toast";
 import { RegisterRoute } from "../utils/APIroutes";
+
 const page = () => {
+
   const [user, setUser] = useState({
     name: "",
     prn: "",
@@ -38,6 +41,7 @@ const page = () => {
         alert(data.msg);
       } else {
         alert(data.msg);
+        return redirect("/Form");
       }
     }
   };

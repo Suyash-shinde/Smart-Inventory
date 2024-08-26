@@ -2,8 +2,8 @@
 import React,{useState,useEffect} from 'react'
 
 import 'dotenv/config'
-import { issueReq } from '@/utils/api.calls.js'
 import styles from './form.css'
+import { issuePost } from '../utils/APIpost'
 const page = () => {
     const getDate = () => {
         const today=new Date();
@@ -32,7 +32,7 @@ const page = () => {
     
     const sendData = async () => {
         const myData=issueDetails;
-        const result = await issueReq(myData);
+        const result = await issuePost(myData);
         //const resultInJson= await result.json();
         console.log(result);
     }
