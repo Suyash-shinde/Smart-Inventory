@@ -14,6 +14,7 @@ const app=express();
 const port=process.env.PORT ;
 app.use(cors({
     "origin": "http://localhost:3000",
+    //"allowedOrigins":'['*']',
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
     "optionsSuccessStatus": 204,
