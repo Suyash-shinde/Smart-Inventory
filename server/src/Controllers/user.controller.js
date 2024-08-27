@@ -1,5 +1,5 @@
 import { User } from "../Models/user.model.js";
-
+import jwt from "jsonwebtoken"
 const generateAccessAndRefreshTokens = async(userId)=>{
     try {
         const user = await User.findById(userId)
@@ -16,7 +16,7 @@ const generateAccessAndRefreshTokens = async(userId)=>{
     }
 }
 const options={
-    httpOnly:true,
+    // httpOnly:true,
     secure:true,
 } 
 export const register=async(req,res,next)=>{
@@ -96,8 +96,49 @@ export const login=async(req,res,next)=>{
             status:true,
             msg:"Logged in sucessfully",
             user:sendUser,
+            accessToken:accessToken,
+            refreshToken:refreshToken,          
         });
     } catch (error) {
         next(error);
     }
 }
+
+export const refreshAccessToken=async(req,res,next)=>{
+    console.log("At refresh token");
+    
+    const incomingRefreshToken= await req.cookies?.refreshToken;
+    if(!incomingRefreshToken){
+        return res.json({msg:"Unauthorised request", status:false});
+    }
+    try {
+        const decodedToken=  jwt.verify(incomingRefreshToken,process.env.REFRESH_TOKEN_SECRET);
+        const findUser= await User.findById(decodedToken?._id);
+        if(!findUser){
+            return res.json({msg:"Invalid Refresh Token", status:false});
+        }
+        if(incomingRefreshToken!==findUser.refreshToken){
+            return res.json({msg:"Login Expired", status:false});
+        }
+        const accessToken= findUser.genereateAccessTokens();
+        const refreshToken= findUser.genereateRefreshTokens();
+        findUser.refreshToken = refreshToken
+        await findUser.save({ validateBeforeSave: false })
+        const options={
+            httpOnly:true,
+            secure:true,
+        }
+        console.log("Access token refreshed");          
+        return res
+        .status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json({
+            msg:"Access Token Refreshed",
+        })
+    } catch (error) {
+        next(error);
+    }
+}
+
+

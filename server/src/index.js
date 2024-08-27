@@ -12,7 +12,14 @@ import issueRoutes from './Routes/issueRoute.js'
 
 const app=express();
 const port=process.env.PORT ;
-app.use(cors());
+app.use(cors({
+    "origin": "http://localhost:3000",
+    //"allowedOrigins":'['*']',
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204,
+    "credentials":true      
+  }));
 app.use(cookieParser());
 app.use(express.json());        
 connectDb();
