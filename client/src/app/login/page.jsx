@@ -2,7 +2,8 @@
 import React, { useState } from 'react'
 import styles from './page.module.css';
 import { loginRoute } from '../utils/APIroutes';
-import axios from 'axios';    
+import axios from 'axios';
+ 
 const page = () => {
   const [user,setUser] = useState({});
   const handleChange=(e)=>{
@@ -18,7 +19,8 @@ const page = () => {
 
   const handleSubmit = async()=>{
       if(handleValidation){
-        const {prn,password} = user;
+        const {prn,password} = user; 
+
         const {data}= await axios.post(loginRoute,{
           prn,
           password,
