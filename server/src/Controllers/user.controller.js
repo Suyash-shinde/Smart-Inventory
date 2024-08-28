@@ -92,12 +92,11 @@ export const login=async(req,res,next)=>{
         return res
         .cookie("accessToken",accessToken,options)
         .cookie("refreshToken", refreshToken, options)
+        .cookie("user",sendUser)
         .json({
             status:true,
             msg:"Logged in sucessfully",
-            user:sendUser,
-            accessToken:accessToken,
-            refreshToken:refreshToken,          
+            user:sendUser,          
         });
     } catch (error) {
         next(error);
