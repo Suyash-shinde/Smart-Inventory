@@ -1,11 +1,16 @@
 "use client"
 import React,{useState,useEffect} from 'react'
 import { getCookie,parseCookie,getPropertyFromCookie } from '../utils/useCookie'
+import { useSearchParams } from 'next/navigation'
 import 'dotenv/config'
+import { cards } from '../data'
 import styles from './form.css'
 import { issuePost } from '../utils/APIpost'
 const page = () => {
-    const getDate = () => {
+  const searchParams = useSearchParams()
+  //const id=searchParams.get('id');
+  
+  const getDate = () => {
         const today=new Date();
         const month=today.getMonth()+1;
         const year=today.getFullYear();
@@ -21,13 +26,21 @@ const page = () => {
         let cookieReq= getCookie("user");  //this gets me the cookie associated with user 
         let parsed= parseCookie(cookieReq).user;
         let fetchedName = getPropertyFromCookie(parsed, "name");
-              
+        
+        let id=+searchParams.get('id');
+           
+        //console.log(typeof(id));
+        
+        const selectedCard = cards.find(card => card.index === id);  
+        console.log(selectedCard);
+        
         setIssueDetails(prevDetails => ({
             ...prevDetails,
-            facultyName: fetchedName
+            facultyName: fetchedName,
+            facultyLabIncharge:selectedCard ? selectedCard.labIncharge : 'No', 
           }));   
     }
-  }, []);
+  }, [searchParams]);
     const date=getDate();
         const [issueDetails,setIssueDetails] = useState({
             deviceId:'',
@@ -54,9 +67,12 @@ const page = () => {
     }
     
   const handleSubmit = async (e) => {
+    //console.log(id);
+    
     e.preventDefault();
     await sendData()
     console.log(issueDetails);
+    //console.log(id);
     
   }; 
 
@@ -79,7 +95,7 @@ const page = () => {
                         <div>
                         <label > Faculty Lab Incharge: </label>
                         {/* We need to get this automatically from either lab ka details or something like that , maybe a hardcoded json of each lab to faculty,login details */}
-                        <input className='h-10 border mt-1 rounded px-4 w-full bg-gray-50' type='text' name='facultyLabIncharge'id='FacultyLab' placeholder='Faculty Lab' value={issueDetails.facultyLabIncharge} onChange={handleChange}/>
+                        <input className='h-10 border mt-1 rounded px-4 w-full bg-gray-50 cursor-not-allowed' type='text' name='facultyLabIncharge' id='FacultyLab' placeholder='Faculty LabInCharge' value={issueDetails.facultyLabIncharge} readOnly/>
                         </div>
                         
                         <div>
@@ -90,8 +106,11 @@ const page = () => {
 
                         <div>
                         <label  > Equipment : </label>
-                            <select name='deviceType' className='appearance-none row-start-1 col-start-1 bg-slate-50 dark:bg-slate-400' value={issueDetails.deviceType} onChange={handleChange}>
-                                <option value='' disabled selected >Choose an Equipment</option>
+                            <select name='deviceType' 
+                            className='appearance-none row-start-1 col-start-1 bg-slate-50 dark:bg-slate-400' 
+                            value={issueDetails.deviceType} 
+                            onChange={handleChange}>
+                                <option value='' disabled >Choose an Equipment</option>
                                 <option value="Monitor">Monitor</option>
                                 <option value="PC">PC</option>
                                 <option value="Projector">Projector</option>
