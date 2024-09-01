@@ -12,14 +12,20 @@ const page = () => {
   
   const getDate = () => {
         const today=new Date();
-        const month=today.getMonth()+1;
         const year=today.getFullYear();
-        const date=today.getDate();
-        const currentDate = date + "/" +month  + "/" + year;
-        return currentDate;
-    }
+        
     
-   
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Ensure two digits
+        const date = String(today.getDate()).padStart(2, '0'); // Ensure two digits
+        return `${year}-${month}-${date}`;
+    }
+    const formatToUKDate = (isoDate) => {
+      const [year, month, day] = isoDate.split('-');
+      return `${day}/${month}/${year}`;
+    };
+    
+    //const date=getDate();
+
     useEffect(() => {
     // Ensure the code runs only on the client side
     if (typeof window !== 'undefined') {
@@ -33,19 +39,20 @@ const page = () => {
         
         const selectedCard = cards.find(card => card.index === id);  
         console.log(selectedCard);
+        //console.log(date);
         
         setIssueDetails(prevDetails => ({
             ...prevDetails,
             facultyName: fetchedName,
             facultyLabIncharge:selectedCard ? selectedCard.labIncharge : 'No', 
+            date:getDate() 
           }));   
     }
   }, [searchParams]);
-    const date=getDate();
         const [issueDetails,setIssueDetails] = useState({
             deviceId:'',
             deviceType:'',
-            date:date,
+            date:getDate(),
             facultyName:'',
             facultyLabIncharge:'',
             details:''
@@ -101,7 +108,7 @@ const page = () => {
                         <div>
                         <label  >Date:</label>
                         {/* Automatically from OS or something */}
-                        <input  className='h-11 border mt-1 rounded px-4 w-full bg-gray-50' type='date' placeholder="dd-mm-yyyy" name='date'  id='Date'  value={issueDetails.date} onChange={handleChange}></input>
+                        <input  className='h-11 border mt-1 rounded px-4 w-full bg-gray-50 cursor-not-allowed' type='date'  name='date'  id='Date'  value={issueDetails.date} readOnly></input>
                         </div>
 
                         <div>
