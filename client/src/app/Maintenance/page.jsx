@@ -5,8 +5,8 @@ import axios from "axios";
 const Maintenance = () => {
 
   const Options = {
-    device: ["Device", "Computer", "Projector", "Fan"],
-    status: ["Status", "Pending", "Ongoing", "Completed"],
+    device: ["--None--","Computer", "Projector", "Fan","PC","Monitor"],
+    status: ["--None--","Pending", "Ongoing", "Completed"],
     //faculty: ["Faculty", "Faculty 1", "Faculty 2", "Faculty 3"],
   };
 
@@ -46,24 +46,24 @@ const Maintenance = () => {
   const [selectedDate, setSelectedDate] = useState("");
   //const [selectedFaculty, setSelectedFaculty] = useState("");
 
-
+  const reset=()=>{
+    setIssue(OrIssues);
+  }
+  let filteredIssues=OrIssues;
   const handleFilter = () => {
-    let filteredIssues = Issues;
-
-
-    if (selectedDevice && selectedDevice !== "Device") {
+    filteredIssues=OrIssues;
+    if (selectedDevice && selectedDevice!=="--None--") {
       filteredIssues = filteredIssues.filter(
         (issue) => issue.deviceType === selectedDevice
-      );
-      
+      ); 
     }
 
-    if (selectedStatus && selectedStatus !== "Status") {
+    if (selectedStatus && selectedStatus!=="--None--") {
       filteredIssues = filteredIssues.filter(
         (issue) => issue.status === selectedStatus
       );
+      
     }
-
     if (selectedDate) {
       filteredIssues = filteredIssues.filter(
         (issue) => issue.date === selectedDate
@@ -75,24 +75,11 @@ const Maintenance = () => {
     //     (issue) => issue.faculty === selectedFaculty
     //   );
     // }
-
-    return filteredIssues;
+      setIssue(filteredIssues);
   };
 
-  let filteredIssues = handleFilter();
-  const check = () =>{
-    filteredIssues = handleFilter();
-    if(filteredIssues.length===0 || selectedDevice === "Device" ){
-        setIssue(OrIssues);
-    }
-    else{
-    setIssue(filteredIssues);
-    }  
-    console.log("Filtered Issue",filteredIssues);
-    console.log("Issues state",Issues);
-      
-      
-  }
+
+ 
   return (
     <>
       <div className="w-full h-min-screen">
@@ -177,10 +164,17 @@ const Maintenance = () => {
             </div>
             <div>
               <button
-                className="px-8 py-2 mt-3 text-white rounded-md sm:mt-0 bg-emerald-500"
-                onClick={check}
+                className="px-8 py-2 mb-3 text-white rounded-md sm:mt-0 bg-emerald-500"
+                onClick={handleFilter}
               >
                 Filter
+              </button>
+
+              <button
+                className="px-8 py-2 mt-3 text-white rounded-md sm:mt-0 bg-red-500"
+                onClick={reset}
+              >
+                Reset Filter
               </button>
             </div>
           </div>
