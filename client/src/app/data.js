@@ -18,7 +18,7 @@ export const cards = [
       labName: "Lab 3",
       labImage: "https://picsum.photos/200/300",
       labDescription: "This is lab 3",
-      labIncharge: "John Doe",
+      labIncharge: "John wick",
     },
     {
       index: 4,

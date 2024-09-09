@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { cards } from "../../data";
 
@@ -13,6 +13,16 @@ const LabDetails = ({ params }) => {
     labDescription: "",
     labIncharge: "",
   });
+  const router = useRouter();
+  const handleOnClick = () => {
+    // console.log(card);
+    //console.log("Here");
+
+    // const path = `/Form?id=${card.index}`;
+    const path = `/Labs/${id}/Form?id=${id}`;
+
+    router.push(path);
+  };
   useEffect(() => {
     if (id) {
       const card = cards.find((card) => card.index === parseInt(id));
@@ -39,6 +49,12 @@ const LabDetails = ({ params }) => {
           <p className="text-lg mt-4">{lab.labDescription}</p>
           <p className="text-lg mt-4">Incharge: {lab.labIncharge}</p>
         </div>
+        <button
+          onClick={handleOnClick}
+          className="bg-red-500 rounded-md m-2 p-2 shadow-md"
+        >
+          Raise issue
+        </button>
       </div>
     </>
   );

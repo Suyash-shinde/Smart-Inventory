@@ -4,12 +4,12 @@ import {
   getCookie,
   parseCookie,
   getPropertyFromCookie,
-} from "../utils/useCookie";
+} from "../../../utils/useCookie";
 import { useSearchParams } from "next/navigation";
 import "dotenv/config";
-import { cards } from "../data";
+import { cards } from "../../../data";
 import styles from "./form.css";
-import { issuePost } from "../utils/APIpost";
+import { issuePost } from "../../../utils/APIpost";
 const page = () => {
   const searchParams = useSearchParams();
   //const id=searchParams.get('id');
