@@ -1,27 +1,63 @@
 "use client"
 import React,{useState,useEffect} from 'react'
-import Navbar from '../Components/Navbar'
+import { getCookie,parseCookie,getPropertyFromCookie } from '../utils/useCookie'
+import { useSearchParams } from 'next/navigation'
 import 'dotenv/config'
-
+import { cards } from '../data'
 import styles from './form.css'
+import { issuePost } from '../utils/APIpost'
 const page = () => {
-    const getDate = () => {
+  const searchParams = useSearchParams()
+  //const id=searchParams.get('id');
+  
+  const getDate = () => {
         const today=new Date();
-        const month=today.getMonth()+1;
         const year=today.getFullYear();
-        const date=today.getDate();
-        const currentDate = date + "/" +month  + "/" + year;
-        return currentDate;
+        
+    
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Ensure two digits
+        const date = String(today.getDate()).padStart(2, '0'); // Ensure two digits
+        return `${year}-${month}-${date}`;
     }
-    const date=getDate();
+    const formatToUKDate = (isoDate) => {
+      const [year, month, day] = isoDate.split('-');
+      return `${day}/${month}/${year}`;
+    };
+    
+    //const date=getDate();
+
+    useEffect(() => {
+    // Ensure the code runs only on the client side
+    if (typeof window !== 'undefined') {
+        let cookieReq= getCookie("user");  //this gets me the cookie associated with user 
+        let parsed= parseCookie(cookieReq).user;
+        let fetchedName = getPropertyFromCookie(parsed, "name");
+        
+        let id=+searchParams.get('id');
+           
+        //console.log(typeof(id));
+        
+        const selectedCard = cards.find(card => card.index === id);  
+        console.log(selectedCard);
+        //console.log(date);
+        
+        setIssueDetails(prevDetails => ({
+            ...prevDetails,
+            facultyName: fetchedName,
+            facultyLabIncharge:selectedCard ? selectedCard.labIncharge : 'No', 
+            date:getDate() 
+          }));   
+    }
+  }, [searchParams]);
         const [issueDetails,setIssueDetails] = useState({
             deviceId:'',
             deviceType:'',
-            date:date,
+            date:getDate(),
             facultyName:'',
             facultyLabIncharge:'',
             details:''
         });
+ 
         
 
         const handleChange = (e) =>{
@@ -32,7 +68,12 @@ const page = () => {
     
     const sendData = async () => {
         const myData=issueDetails;
-        const result = await fetch('http://localhost:3090/api/issues',{
+<<<<<<< Updated upstream
+        const result = await issuePost(myData);
+        //const resultInJson= await result.json();
+        console.log(result);
+=======
+        const result = await fetch('{$host}/api/issues',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -40,12 +81,16 @@ const page = () => {
             body:JSON.stringify(myData)
         })
         const resultInJson= await result.json();
+>>>>>>> Stashed changes
     }
     
   const handleSubmit = async (e) => {
+    //console.log(id);
+    
     e.preventDefault();
     await sendData()
     console.log(issueDetails);
+    //console.log(id);
     
   }; 
 
@@ -55,32 +100,35 @@ const page = () => {
 
   return (
     <>
-        <Navbar/>
+        {/* <Navbar/> */}
         <div className='min-h-screen bg-green-200 py-2'>
                 <div className='Form'>
                     <form >
                         <div>
                         <label className='' > Faculty Name: </label>
                         {/* We need to get this automatically from login details */}
-                        <input   id='facultyName' name='facultyName' placeholder='Faculty Name' type='text' value={issueDetails.facultyName} onChange={handleChange} />
+                        <input className=' h-10 border mt-1 rounded px-4 w-full bg-gray-50  cursor-not-allowed'  id='facultyName' name='facultyName' placeholder='Not logged in'  type='text' value={issueDetails.facultyName} readOnly />
                         </div>
                         
                         <div>
                         <label > Faculty Lab Incharge: </label>
                         {/* We need to get this automatically from either lab ka details or something like that , maybe a hardcoded json of each lab to faculty,login details */}
-                        <input type='text' name='facultyLabIncharge'id='FacultyLab' placeholder='Faculty Lab' value={issueDetails.facultyLabIncharge} onChange={handleChange}/>
+                        <input className='h-10 border mt-1 rounded px-4 w-full bg-gray-50 cursor-not-allowed' type='text' name='facultyLabIncharge' id='FacultyLab' placeholder='Faculty LabInCharge' value={issueDetails.facultyLabIncharge} readOnly/>
                         </div>
                         
                         <div>
                         <label  >Date:</label>
                         {/* Automatically from OS or something */}
-                        <input type='date' placeholder="dd-mm-yyyy" name='date'  id='Date'  value={issueDetails.date} onChange={handleChange}></input>
+                        <input  className='h-11 border mt-1 rounded px-4 w-full bg-gray-50 cursor-not-allowed' type='date'  name='date'  id='Date'  value={issueDetails.date} readOnly></input>
                         </div>
 
                         <div>
                         <label  > Equipment : </label>
-                            <select name='deviceType' value={issueDetails.deviceType} onChange={handleChange}>
-                                <option value=''>Choose an Equipment</option>
+                            <select name='deviceType' 
+                            className='appearance-none row-start-1 col-start-1 bg-slate-50 dark:bg-slate-400' 
+                            value={issueDetails.deviceType} 
+                            onChange={handleChange}>
+                                <option value='' disabled >Choose an Equipment</option>
                                 <option value="Monitor">Monitor</option>
                                 <option value="PC">PC</option>
                                 <option value="Projector">Projector</option>
@@ -92,13 +140,13 @@ const page = () => {
                         <div>
                         <label  >Device Id:</label>
                         {/* try to make a drop down select later */}
-                        <input type='text' name='deviceId' value={issueDetails.deviceId} onChange={handleChange}></input>
+                        <input className='h-10 border mt-1 rounded px-4 w-full bg-gray-50' type='text' name='deviceId'  value={issueDetails.deviceId} onChange={handleChange}></input>
                         
                         </div>
                         
                         <div>
                         <label >Issue</label>
-                        <textarea  name='details' value={issueDetails.details} onChange={handleChange}></textarea>
+                        <textarea  className=' rounded-md'name='details' value={issueDetails.details} onChange={handleChange}></textarea>
                         </div>
                         
                         <div className='bottomButtons'>
