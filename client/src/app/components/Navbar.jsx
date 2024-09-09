@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-
+import { ToggleLightMode } from "./ToggleLightMode";
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { IoCloseOutline } from "react-icons/io5";
@@ -75,6 +75,7 @@ export default function Navbar() {
             ))}
           </section>
         </div>
+        <ToggleLightMode/>
       </nav>
       <hr className=" " />
     </main>
