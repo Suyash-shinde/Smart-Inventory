@@ -5,20 +5,17 @@ import { useRouter } from "next/router";
 import { useParams } from "next/navigation";
 import { cards } from "../../data";
 
-const LabDetails = () => {
-  const { deatils_id: id } = useParams();
-
-  // const [selectedLab, setSelectedLab] = useState({
-  //   labName: "",
-  //   labImage: "",
-  //   labDescription: "",
-  //   labIncharge: "",
-  // });
+const LabDetails = ({ params }) => {
+  const id = params.details_id;
+  console.log(id);
   useEffect(() => {
     if (id) {
-      const card = cards.find((card) => card.index === details_id);
-
-      console.log(card);
+      const card = cards.find((card) => card.index === parseInt(id));
+      if (card) {
+        console.log(card);
+      } else {
+        console.error("Card not found");
+      }
     }
   }, [id]);
 
@@ -35,7 +32,7 @@ const LabDetails = () => {
           <p className="text-lg mt-4">Incharge: {selectedLab.labIncharge}</p>
         </div>
       </div> */}
-      <div>{id}</div>
+      <div>hi</div>
     </>
   );
 };
