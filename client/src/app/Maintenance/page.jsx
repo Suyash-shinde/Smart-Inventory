@@ -95,7 +95,7 @@ const Maintenance = () => {
   }
   return (
     <>
-      <div className="w-full h-screen">
+      <div className="w-full h-min-screen">
         <header className="flex items-center justify-center w-full h-12 bg-emerald-500">
           <h1 className="text-2xl font-bold text-white">Maintenance</h1>
         </header>
@@ -228,7 +228,6 @@ const Maintenance = () => {
           </ul>
         </main>
       </div>
-      <div className="w-full bg-teal-300 h-96"></div>
     </>
   );
 };
