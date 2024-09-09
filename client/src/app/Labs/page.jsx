@@ -10,9 +10,11 @@ const Labs = () => {
     console.log(card);
     //console.log("Here");
     
-    const path = `/Form?id=${card.index}`;
+    //const path = `/Form?id=${card.index}`;
+    const path = `/Labs/${card.index}`;
 
     router.push(path);
+    
 
   } 
   return (
