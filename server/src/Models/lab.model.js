@@ -6,21 +6,10 @@ const labSchema=new Schema({
         required:true,
         unique:true,
     },
-    devices:{
-        type:[
-            {
-                deviceId:{
-                    type:String,
-                },
-                deviceType:{
-                    type:String,
-                },
-                status:{
-                    type:Boolean,
-                }
-            }
-        ]
+    incharge:{
+        type:String,
     }
+    
 })
 
 export const Lab = mongoose.model("Lab", labSchema);
