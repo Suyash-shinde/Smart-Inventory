@@ -2,9 +2,13 @@ import React from 'react'
 import Layout from '../components/Layout'
 
 const page = () => {
+  const grid={
+    gridr:10,
+    gridc:10
+  }
   return (
     <>
-    <Layout></Layout>
+    <Layout grid={grid}></Layout>
     </>
   )
 }
