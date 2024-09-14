@@ -9,7 +9,7 @@ const Card = ({id,isVisible,selected}) => {
     }
   return (
     <>
-    <div key={id} onClick={setSeat}>
+    <div className="m-3"key={id} onClick={setSeat}>
       
     {isVisible? select? 
     <div key={id} className=" group absolute h-10 w-10 flex items-center justify-center font-extrabold rounded border-green-500 bg-green-500 text-white font-mono hover:cursor-pointer">

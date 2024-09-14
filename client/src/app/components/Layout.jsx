@@ -97,6 +97,81 @@ const json=[
     { "key": 90, "name": "item 90", "isVisible": true, "selected":false },
     { "key": 91, "name": "item 91", "isVisible": true, "selected":false },
     { "key": 92, "name": "item 92", "isVisible": true, "selected":false },
+    { "key": 93, "name": "item 93", "isVisible": true, "selected": false },
+  { "key": 94, "name": "item 94", "isVisible": true, "selected": false },
+  { "key": 95, "name": "item 95", "isVisible": true, "selected": false },
+  { "key": 96, "name": "item 96", "isVisible": true, "selected": false },
+  { "key": 97, "name": "item 97", "isVisible": true, "selected": false },
+  { "key": 98, "name": "item 98", "isVisible": true, "selected": false },
+  { "key": 99, "name": "item 99", "isVisible": true, "selected": false },
+  { "key": 100, "name": "item 100", "isVisible": true, "selected": false },
+  { "key": 101, "name": "item 101", "isVisible": true, "selected": false },
+  { "key": 102, "name": "item 102", "isVisible": true, "selected": false },
+  { "key": 103, "name": "item 103", "isVisible": true, "selected": false },
+  { "key": 104, "name": "item 104", "isVisible": true, "selected": false },
+  { "key": 105, "name": "item 105", "isVisible": true, "selected": false },
+  { "key": 106, "name": "item 106", "isVisible": true, "selected": false },
+  { "key": 107, "name": "item 107", "isVisible": true, "selected": false },
+  { "key": 108, "name": "item 108", "isVisible": true, "selected": false },
+  { "key": 109, "name": "item 109", "isVisible": true, "selected": false },
+  { "key": 110, "name": "item 110", "isVisible": true, "selected": false },
+  { "key": 111, "name": "item 111", "isVisible": true, "selected": false },
+  { "key": 112, "name": "item 112", "isVisible": true, "selected": false },
+  { "key": 113, "name": "item 113", "isVisible": true, "selected": false },
+  { "key": 114, "name": "item 114", "isVisible": true, "selected": false },
+  { "key": 115, "name": "item 115", "isVisible": true, "selected": false },
+  { "key": 116, "name": "item 116", "isVisible": true, "selected": false },
+  { "key": 117, "name": "item 117", "isVisible": true, "selected": false },
+  { "key": 118, "name": "item 118", "isVisible": true, "selected": false },
+  { "key": 119, "name": "item 119", "isVisible": true, "selected": false },
+  { "key": 120, "name": "item 120", "isVisible": true, "selected": false },
+  { "key": 121, "name": "item 121", "isVisible": true, "selected": false },
+  { "key": 122, "name": "item 122", "isVisible": true, "selected": false },
+  { "key": 123, "name": "item 123", "isVisible": true, "selected": false },
+  { "key": 124, "name": "item 124", "isVisible": true, "selected": false },
+  { "key": 125, "name": "item 125", "isVisible": true, "selected": false },
+  { "key": 126, "name": "item 126", "isVisible": true, "selected": false },
+  { "key": 127, "name": "item 127", "isVisible": true, "selected": false },
+  { "key": 128, "name": "item 128", "isVisible": true, "selected": false },
+  { "key": 129, "name": "item 129", "isVisible": true, "selected": false },
+  { "key": 130, "name": "item 130", "isVisible": true, "selected": false },
+  { "key": 131, "name": "item 131", "isVisible": true, "selected": false },
+  { "key": 132, "name": "item 132", "isVisible": true, "selected": false },
+  { "key": 133, "name": "item 133", "isVisible": true, "selected": false },
+  { "key": 134, "name": "item 134", "isVisible": true, "selected": false },
+  { "key": 135, "name": "item 135", "isVisible": true, "selected": false },
+  { "key": 136, "name": "item 136", "isVisible": true, "selected": false },
+  { "key": 137, "name": "item 137", "isVisible": true, "selected": false },
+  { "key": 138, "name": "item 138", "isVisible": true, "selected": false },
+  { "key": 139, "name": "item 139", "isVisible": true, "selected": false },
+  { "key": 140, "name": "item 140", "isVisible": true, "selected": false },
+  { "key": 141, "name": "item 141", "isVisible": true, "selected": false },
+  { "key": 142, "name": "item 142", "isVisible": true, "selected": false },
+  { "key": 143, "name": "item 143", "isVisible": true, "selected": false },
+  { "key": 144, "name": "item 144", "isVisible": true, "selected": false },
+  { "key": 145, "name": "item 145", "isVisible": true, "selected": false },
+  { "key": 146, "name": "item 146", "isVisible": true, "selected": false },
+  { "key": 147, "name": "item 147", "isVisible": true, "selected": false },
+  { "key": 148, "name": "item 148", "isVisible": true, "selected": false },
+  { "key": 149, "name": "item 149", "isVisible": true, "selected": false },
+  { "key": 150, "name": "item 150", "isVisible": true, "selected": false },
+  { "key": 151, "name": "item 151", "isVisible": true, "selected": false },
+  { "key": 152, "name": "item 152", "isVisible": true, "selected": false },
+  { "key": 153, "name": "item 153", "isVisible": true, "selected": false },
+  { "key": 154, "name": "item 154", "isVisible": true, "selected": false },
+  { "key": 155, "name": "item 155", "isVisible": true, "selected": false },
+  { "key": 156, "name": "item 156", "isVisible": true, "selected": false },
+  { "key": 157, "name": "item 157", "isVisible": true, "selected": false },
+  { "key": 158, "name": "item 158", "isVisible": true, "selected": false },
+  { "key": 159, "name": "item 159", "isVisible": true, "selected": false },
+  { "key": 160, "name": "item 160", "isVisible": true, "selected": false },
+  { "key": 161, "name": "item 161", "isVisible": true, "selected": false },
+  { "key": 162, "name": "item 162", "isVisible": true, "selected": false },
+  { "key": 163, "name": "item 163", "isVisible": true, "selected": false },
+  { "key": 164, "name": "item 164", "isVisible": true, "selected": false },
+  { "key": 165, "name": "item 165", "isVisible": true, "selected": false },
+  { "key": 166, "name": "item 166", "isVisible": true, "selected": false },
+  { "key": 167, "name": "item 167", "isVisible": true, "selected": false },
     ];
 
 
@@ -109,9 +184,14 @@ const Layout = ({grid}) => {
     }
   return (
     <>
-    <div className={`h-screen-full mt-5 ml-10 grid gap-y-10 grid-cols-${grid.gridc} grid-rows-${grid.gridr}`}>
+    <div className={`h-screen-full mt-5 ml-10 grid gap-y-10 `}
+        style={{
+          display:grid,
+          gridTemplateColumns: `repeat(${grid.gridc}, 1fr)`,
+            
+        }}>
         {seats.map((device)=>(
-            <div key={device.key} onClick={(e)=>setSelect(e)}>
+            <div key={device.key} onClick={(e)=>setSelect(e)} >
                 <Card key={device.key} id={device.key} selected={device.selected} isVisible={device.isVisible}></Card>
             </div>
         ))}
