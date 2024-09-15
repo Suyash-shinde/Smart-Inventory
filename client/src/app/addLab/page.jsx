@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-router-dom'
-import Layout from '../components/Layout';
+import Layout from '../components/AddLayout';
 
 const page = () => {
   const [lab,setLab]=useState({});
@@ -17,12 +17,7 @@ const page = () => {
     const {gridc,gridr}=lab;
     setGrid({gridr:gridr, gridc:gridc});
   }
-  useEffect(()=>{
-    const console12=()=>{
-      console.log("hello",grid.gridr);
-    }
-    console12();
-  },[grid])
+  
   return (
     <>
     <div className="h-screen w-full">

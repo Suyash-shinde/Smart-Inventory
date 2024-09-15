@@ -176,11 +176,15 @@ const json=[
 
 
 const Layout = ({grid}) => {
+    const [deviceId,setDeviceId] = useState({});
     const [seats,setSeats] = useState(json);
     const setSelect =(e)=>{
         setSeats(seats.map(seat=>
             seat.key===e.key ? {...seat,selected:!selected} : seat
         ));
+    }
+    const setId=(e)=>{
+      setId({...deviceId,[e.target.name]:e.target.value});
     }
   return (
     <>
@@ -190,11 +194,15 @@ const Layout = ({grid}) => {
           gridTemplateColumns: `repeat(${grid.gridc}, 1fr)`,
             
         }}>
-        {seats.map((device)=>(
-            <div key={device.key} onClick={(e)=>setSelect(e)} >
-                <Card key={device.key} id={device.key} selected={device.selected} isVisible={device.isVisible}></Card>
-            </div>
-        ))}
+        {seats.map((device)=>{
+            if(device.key<=(grid.gridr)*(grid.gridc)){
+             return(
+              <div key={device.key} onClick={(e)=>setSelect(e)} >
+              <Card key={device.key} id={device.key} selected={device.selected} isVisible={device.isVisible}></Card>
+              </div>
+             )
+            }
+          })}
     </div>
     </>
   )
