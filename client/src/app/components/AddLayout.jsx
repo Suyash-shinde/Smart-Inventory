@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Card from './Card';
 import { useState } from 'react';
 
@@ -178,7 +178,11 @@ const json=[
 const Layout = ({grid}) => {
     const [deviceId,setDeviceId] = useState({});
     const [seats,setSeats] = useState(json);
-    const setSelect =(e)=>{
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [data,setData] = useState([]);
+    var x=null;
+    var selectedId=null;
+    const setSelect =(e)=>{ 
         setSeats(seats.map(seat=>
             seat.key===e.key ? {...seat,selected:!selected} : seat
         ));
@@ -186,8 +190,39 @@ const Layout = ({grid}) => {
     const setId=(e)=>{
       setId({...deviceId,[e.target.name]:e.target.value});
     }
+  const handleOpenModal = (e) => {
+      setIsModalOpen(true);
+      selectedId=e; 
+      console.log(x);
+  };
+  
+  const handleChange=(e)=>{
+    x=e.target.value;
+    console.log(x);
+  }
+  const handleCloseModal = (e) => {
+      if(x===null){
+        setIsModalOpen(false);
+        //set a minimun limit 
+      }
+      else{
+        setData([...data,{id:x, pos:selectedId}]);
+        selectedId=null;
+        x=null;
+        setIsModalOpen(false);
+        console.log(data);
+      }
+     
+  };
+  useEffect(()=>{
+    const log=()=>{
+      console.log(data);
+    }
+    log()
+  },[data]);
   return (
     <>
+    
     <div className={`h-screen-full mt-5 ml-10 grid gap-y-10 `}
         style={{
           display:grid,
@@ -197,15 +232,25 @@ const Layout = ({grid}) => {
         {seats.map((device)=>{
             if(device.key<=(grid.gridr)*(grid.gridc)){
              return(
-              <div key={device.key} onClick={(e)=>setSelect(e)} >
-              <Card key={device.key} id={device.key} selected={device.selected} isVisible={device.isVisible}></Card>
+              <div key={device.key} onClick={(e)=>{setSelect(e);handleOpenModal(device.key);}} >
+              <Card type="button"  aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-basic-modal" key={device.key} id={device.key} selected={device.selected} isVisible={device.isVisible}></Card>
               </div>
              )
             }
           })}
     </div>
+    {isModalOpen && (
+                <div id="hs-basic-modal" className="hs-overlay is-visible z-10  w-full flex justify-center ">
+                    <div className="modal-content bg-gray-500 rounded h-80 w-80 z-10">
+                        <input placeholder='DeviceId' name='id' onChange={(e)=>handleChange(e)}></input>
+                        <button onClick={(e)=>handleCloseModal(e)}>Submit</button>
+                        <p>Modal Content Here</p>
+                    </div>
+                </div>
+            )}
     </>
   )
 }
 
 export default Layout
+

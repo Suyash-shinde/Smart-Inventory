@@ -1,4 +1,5 @@
 import mongoose, {Schema} from 'mongoose';
+import { Device } from './device.model';
 
 const labSchema=new Schema({
     labNo:{
@@ -8,6 +9,20 @@ const labSchema=new Schema({
     },
     incharge:{
         type:String,
+    },
+    column:{    
+        type:Number
+    },
+    row:{
+        type:Number
+    },
+    devices:{
+        type:[
+            {
+                type:Schema.Types.ObjectId,
+                ref:Device,
+            }
+        ]
     }
     
 })
