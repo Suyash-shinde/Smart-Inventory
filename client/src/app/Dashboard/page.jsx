@@ -1,6 +1,5 @@
-
 import React from "react";
-import Piechart from "../components/Piechart";
+import Piechart from "../_components/Pie/Piechart";
 
 const page = () => {
   return (
@@ -12,7 +11,7 @@ const page = () => {
           card1
         </div>
       </div> */}
-
+      <div className="bg-red-400 h-14 w-full">nav</div>
       <div className="text-4xl py-5 bg-gray-500 ">Dashboard</div>
       <div className="max-w-[1200px] mx-auto py-[50px] grid lg:grid-cols-4 sm:grid-cols-2 gap-6 ">
         <div className=" text-white w-60 mx-auto bg-black sm:w-64 p-4">
@@ -49,4 +48,3 @@ const page = () => {
 };
 
 export default page;
-
