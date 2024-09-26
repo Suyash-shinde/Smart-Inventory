@@ -240,7 +240,7 @@ const Layout = ({grid}) => {
           })}
     </div>
     {isModalOpen && (
-                <div id="hs-basic-modal" className="hs-overlay is-visible z-10  w-full flex justify-center ">
+                <div id="hs-basic-modal" className="hs-overlay is-visible absolute z-10  w-full flex justify-center ">
                     <div className="modal-content bg-gray-500 rounded h-80 w-80 z-10">
                         <input placeholder='DeviceId' name='id' onChange={(e)=>handleChange(e)}></input>
                         <button onClick={(e)=>handleCloseModal(e)}>Submit</button>
