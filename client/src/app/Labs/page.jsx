@@ -1,22 +1,21 @@
-"use client"
+"use client";
 
-import { classrooms,cards,staffrooms } from '../data';
+import { classrooms, cards, staffrooms } from "../data";
 
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from "next/navigation";
 const Labs = () => {
-  const router=useRouter()
-  const handleOnClick = (card) =>
-  {
-    console.log(card);
+  const router = useRouter();
+  const handleOnClick = (card) => {
+    // console.log(card);
     //console.log("Here");
-    
-    //const path = `/Form?id=${card.index}`;
+
+
+    // const path = `/Form?id=${card.index}`;
     const path = `/Labs/${card.index}`;
 
-    router.push(path);
-    
 
-  } 
+    router.push(path);
+  };
   return (
     <div className="min-h-screen p-6 bg-slate-100">
       <div className="flex flex-wrap justify-center p-10 bg-white border-2 shadow-lg rounded-xl">
@@ -28,7 +27,7 @@ const Labs = () => {
             <div
               key={card.index}
               className="group relative w-64 h-80 [perspective:1000px]"
-              onClick={()=>handleOnClick(card)}
+              onClick={() => handleOnClick(card)}
             >
               <div className="relative h-full w-full rounded-xl shadow-lg transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 <div className="absolute inset-0">
