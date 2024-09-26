@@ -1,9 +1,14 @@
-"use client"
+  "use client"
 import React, { useState } from 'react'
 import styles from './page.module.css';
 import { loginRoute } from '../utils/APIroutes';
 import axios from 'axios';    
+import { useRouter } from 'next/navigation'; 
+
+
 const page = () => {
+  const router=useRouter();
+  
   const [user,setUser] = useState({});
   const handleChange=(e)=>{
     setUser({...user,[e.target.name]:e.target.value});
@@ -28,6 +33,7 @@ const page = () => {
         }
         else{
           console.log(data.msg);
+          router.push("/Dashboard");
         }
       }
   }

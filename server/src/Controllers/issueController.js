@@ -19,7 +19,7 @@ export const createIssue =  async (req,res,next) => {
             deviceType,
             date,
             //facultyName,
-            status:false,
+            status:"pending",
             facultyLabIncharge,
             details
         })
