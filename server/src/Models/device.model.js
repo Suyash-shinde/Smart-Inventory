@@ -8,7 +8,7 @@ const deviceSchema=new Schema({
     },
     labNo:{
         type:Schema.Types.ObjectId,
-        ref:Lab,
+        // ref:Lab,
     },
     type:{
         type:String,
@@ -20,7 +20,7 @@ const deviceSchema=new Schema({
         type:[
             {
                 type: Schema.Types.ObjectId,
-                ref:Issue
+                // ref:Issue
             }
         ]
     }

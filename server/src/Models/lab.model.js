@@ -1,5 +1,5 @@
 import mongoose, {Schema} from 'mongoose';
-import { Device } from './device.model';
+import { Device } from './device.model.js';
 
 const labSchema=new Schema({
     labNo:{
