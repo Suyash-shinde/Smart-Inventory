@@ -11,7 +11,7 @@ const issueSchema = new Schema({
         required:true,
     },
     status:{
-        type:String,//true is the issue is resolved else false
+        type:String,
     },
     date:{
         type:Date,
@@ -28,7 +28,6 @@ const issueSchema = new Schema({
     details:{
         type:String,
     }
-    
 });
 
 export const Issue = mongoose.model("Issue", issueSchema);

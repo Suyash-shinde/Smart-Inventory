@@ -1,4 +1,5 @@
 import mongoose, {Schema} from 'mongoose';
+import { Device } from './device.model';
 
 const labSchema=new Schema({
     labNo:{
@@ -6,21 +7,24 @@ const labSchema=new Schema({
         required:true,
         unique:true,
     },
+    incharge:{
+        type:String,
+    },
+    column:{    
+        type:Number
+    },
+    row:{
+        type:Number
+    },
     devices:{
         type:[
             {
-                deviceId:{
-                    type:String,
-                },
-                deviceType:{
-                    type:String,
-                },
-                status:{
-                    type:Boolean,
-                }
+                type:Schema.Types.ObjectId,
+                ref:Device,
             }
         ]
     }
+    
 })
 
 export const Lab = mongoose.model("Lab", labSchema);

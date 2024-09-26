@@ -9,8 +9,10 @@ const Labs = () => {
     // console.log(card);
     //console.log("Here");
 
+
     // const path = `/Form?id=${card.index}`;
     const path = `/Labs/${card.index}`;
+
 
     router.push(path);
   };
@@ -34,7 +36,7 @@ const Labs = () => {
                     alt={card.labName}
                     className="object-cover w-full h-full rounded-xl"
                   />
-                  <div className="absolute inset-0 flex flex-col justify-end text-white bg-black/20 rounded-xl">
+                  <div className="absolute inset-0 flex flex-col justify-end text-white rounded-xl">
                     {/* bg-black/40 */}
                     <div className="content-end w-full p-4 bg-gradient-to-t rounded-xl from-black/80 to-transparent h-1/2">
                       <h2 className="w-full text-2xl font-semibold">
@@ -44,7 +46,7 @@ const Labs = () => {
                     </div>
                   </div>
                 </div>
-                <div className="absolute inset-0 h-full w-full rounded-xl backdrop-blur-sm p-6 text-center bg-black/20 text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                <div className="absolute inset-0 h-full w-full rounded-xl backdrop-blur-3xl p-6 text-center bg-black/70 text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
                   <div className="flex flex-col items-center justify-center min-h-full">
                     <h2 className="text-3xl font-bold">{card.labName}</h2>
                     <p className="mt-2 text-lg">Incharge: {card.labIncharge}</p>
@@ -87,7 +89,7 @@ const Labs = () => {
                     </div>
                   </div>
                 </div>
-                <div className="absolute inset-0 h-full w-full rounded-xl backdrop-blur-sm p-6 text-center text-slate-200 bg-black/20 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                <div className="absolute inset-0 h-full w-full rounded-xl p-6 text-center text-slate-200 bg-black/50 backdrop-blur-sm [transform:rotateY(180deg)] [backface-visibility:hidden]">
                   <div className="flex flex-col items-center justify-center min-h-full">
                     <h2 className="text-3xl font-bold">
                       {classroom.classroomName}
