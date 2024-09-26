@@ -175,55 +175,47 @@ const json=[
     ];
 
 
-const Layout = ({grid}) => {
+const Layout = ({grid, handleAddPC}) => {
     const [deviceId,setDeviceId] = useState({});
     const [seats,setSeats] = useState(json);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [data,setData] = useState([]);
-    var x=null;
-    var selectedId=null;
+    const [deviceString, setDeviceString]=useState("");
+    const [position,setPosition]=useState(null);
     const setSelect =(e)=>{ 
         setSeats(seats.map(seat=>
             seat.key===e.key ? {...seat,selected:!selected} : seat
         ));
     }
     const setId=(e)=>{
-      setId({...deviceId,[e.target.name]:e.target.value});
+      setDeviceId({...deviceId,[e.target.name]:e.target.value});
     }
   const handleOpenModal = (e) => {
       setIsModalOpen(true);
-      selectedId=e; 
-      console.log(x);
+      setPosition(e);
+
   };
   
   const handleChange=(e)=>{
-    x=e.target.value;
-    console.log(x);
+    setDeviceString(e.target.value);
+
   }
   const handleCloseModal = (e) => {
-      if(x===null){
+      if(deviceString===""){
         setIsModalOpen(false);
         //set a minimun limit 
       }
       else{
-        setData([...data,{id:x, pos:selectedId}]);
-        selectedId=null;
-        x=null;
+        handleAddPC({
+          uniqueID:deviceString,
+          pos:position})
         setIsModalOpen(false);
-        console.log(data);
       }
-     
   };
-  useEffect(()=>{
-    const log=()=>{
-      console.log(data);
-    }
-    log()
-  },[data]);
+
   return (
     <>
     
-    <div className={`h-screen-full mt-5 ml-10 grid gap-y-10 `}
+    <div className={`h-screen-full mt-5 mb-10 ml-10 grid gap-y-10 `}
         style={{
           display:grid,
           gridTemplateColumns: `repeat(${grid.gridc}, 1fr)`,

@@ -1,51 +1,137 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import { Form } from 'react-router-dom'
-import Layout from '../components/AddLayout';
+import { useEffect, useState } from "react";
+import AddLabs_DeviceForm from "../components/AddLabDeviceForm.jsx";
+import AddLabs_DeviceList from "../components/AddLabDeviceList.jsx";
 
-const page = () => {
-  const [lab,setLab]=useState({});
-  const [grid,setGrid]=useState({});
-  const handleSubmit=()=>{
-    console.log("helllo")
+const AddLabs = () => {
+  // State to manage lab number, device type, count, unique ID, and lab in charge
+  const [labNo, setLabNo] = useState("");
+  const [deviceType, setDeviceType] = useState("");
+  const [deviceCount, setDeviceCount] = useState("");
+  const [currentDeviceIndex, setCurrentDeviceIndex] = useState(1);
+  const [uniqueID, setUniqueID] = useState("");
+  const [labInCharge, setLabInCharge] = useState("");
+
+  // State to store the list of devices categorized by type
+  const [deviceList, setDeviceList] = useState({
+    Fan: [],
+    Light: [],
+    Projector: [],
+    Computer: [],
+  });
+
+  const [devices, setDevices] = useState([]);
+  // Function to reset the form fields and device list
+  const resetForm = () => {
+    setLabNo("");
+    setDeviceType("");
+    setDeviceCount("");
+    setCurrentDeviceIndex(1);
+    setUniqueID("");
+    setDeviceList({
+      Fan: [],
+      Light: [],
+      Projector: [],
+      Computer:[],
+    });
+  };
+
+  const handleAddPC=(e)=>{
+    console.log(e);
+    const newDevice = {
+      id: e.uniqueID,
+      labNo,
+      deviceType:"Computer",
+      position:e.pos,
+    };
+
+    console.log(newDevice);
+    setDeviceList((prevList) => ({
+      ...prevList,
+      ["Computer"]: [...prevList["Computer"], newDevice],
+    }));
+    console.log(deviceList);
   }
-  const handleChange=(e)=>{
-    setLab({...lab,[e.target.name]:e.target.value});
-    console.log(lab);
+  // Function to add a new device to the device list
+  const handleAddDevice = () => {
+    // Ensure all necessary fields are filled before adding
+    if (!labNo || !deviceType || !uniqueID ) return;
+
+    // Create a new device object
+    const newDevice = {
+      id: uniqueID,
+      labNo,
+      deviceType,
+      pos:null,
+       // Include the lab in charge information
+    };
+    console.log(deviceList)
+    // Update the device list with the new device
+    setDeviceList((prevList) => ({
+      ...prevList,
+      [deviceType]: [...prevList[deviceType], newDevice],
+    }));
+
+    // Clear the unique ID input and increment the current device index
+    setUniqueID("");
+    setCurrentDeviceIndex((prev) => prev + 1);
+  };
+  const createLab=()=>{
+    //fix this
+    deviceList.Fan.forEach(device => {
+      setDevices([...devices,device])
+    });
+    deviceList.Light.forEach(device => {
+      setDevices([...devices,device])
+    });
+    deviceList.Projector.forEach(device => {
+      setDevices([...devices,device])
+    });
+    deviceList.Computer.forEach(device => {
+      setDevices([...devices,device])
+    });
   }
-  const setGridSize=()=>{
-    const {gridc,gridr}=lab;
-    setGrid({gridr:gridr, gridc:gridc});
-  }
-  
+  useEffect(()=>{
+    console.log(devices);
+  },[devices])
   return (
-    <>
-    <div className="h-screen w-full">
-
-      <div className="w-full flex-col">
-        <label >
-          Lab No.
-        </label>
-        <input className="rounded text-gray-500" placeholder="Enter Lab Number">
-        </input>
-      </div>
-      <div className=" w-full flex-col p-3">
-        <label >
-          Grid Columns 
-        </label>
-        <input className="rounded text-gray-500" placeholder="0" name="gridc" onChange={handleChange}>
-        </input>
-        <label >
-          Grid Rows
-        </label>
-        <input className="rounded text-gray-500" placeholder="0" name="gridr" onChange={handleChange}>
-        </input>
-        <button className="outline" onClick={setGridSize}>Load Layout</button>
-      </div>
-      <Layout grid={grid}></Layout>
+    <div className="min-h-screen p-8 bg-gray-100">
+      <h1 className="p-3 mb-6 text-2xl font-bold text-center text-white bg-blue-800">
+        Add Devices to Lab
+      </h1>
+      {/* Render the device form and pass relevant state and handlers */}
+      <AddLabs_DeviceForm
+        labNo={labNo}
+        setLabNo={setLabNo}
+        deviceType={deviceType}
+        setDeviceType={setDeviceType}
+        deviceCount={deviceCount}
+        setDeviceCount={setDeviceCount}
+        currentDeviceIndex={currentDeviceIndex}
+        setCurrentDeviceIndex={setCurrentDeviceIndex} // Pass the setter for current device index
+        uniqueID={uniqueID}
+        setUniqueID={setUniqueID}
+        handleAddDevice={handleAddDevice}
+        labInCharge={labInCharge}
+        setLabInCharge={setLabInCharge}
+      />
+      {/* Render the list of added devices */}
+      <AddLabs_DeviceList deviceList={deviceList} handleAddPC={handleAddPC} />
+      {/* Button to reset the form fields */}
+      <button
+        onClick={resetForm}
+        className="px-4 py-2 mt-4 text-white bg-red-500 rounded"
+      >
+        Reset Form
+      </button>
+      <button
+        onClick={createLab}
+        className="px-4 py-2 mt-4 ml-10 text-white bg-green-500 rounded"
+      >
+        Create Lab
+      </button>
     </div>
-    </>
-  )
-}
+  );
+};
 
-export default page
+export default AddLabs;
