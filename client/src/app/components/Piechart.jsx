@@ -1,7 +1,13 @@
 "use client";
 
-import react from "react";
-import { ResponsiveContainer, PieChart, Pie } from "recharts";
+import React from "react";
+import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+
+// Define a function to dynamically assign color based on the device name
+const getColor = (name) => {
+  if (name === "PC") return '#d4d884';
+  return '#8884d8'; // Default color for other devices
+};
 
 const Piechart = ({ data }) => {
   return (
@@ -9,12 +15,15 @@ const Piechart = ({ data }) => {
       <ResponsiveContainer width={"100%"} minHeight={300}>
         <PieChart>
           <Pie
-            nameKey="name"
-            dataKey="value"
+            nameKey="name"  // Assuming pie data has "device" key for name
+            dataKey="value"    // Assuming pie data has "count" key for values
             data={data}
-            fill="#8884d8"
-            label={(item) => item.name}
-          />
+            label={(item) => item.name}  // Display device type as label
+          >
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={getColor(entry.name)} /> // Dynamically assign colors
+            ))}
+          </Pie>
         </PieChart>
       </ResponsiveContainer>
     </>
