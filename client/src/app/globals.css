@@ -83,3 +83,24 @@
     @apply bg-background text-foreground;
   }
 }
+/* Custom toast styles for React Hot Toast */
+.react-hot-toast {
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.react-hot-toast--success {
+  background-color: #28a745 !important;
+}
+
+.react-hot-toast--error {
+  background-color: #dc3545 !important;
+}
+
+.react-hot-toast--loading {
+  background-color: #007bff !important;
+}
+
+.react-hot-toast .toast-icon {
+  color: white !important;
+}

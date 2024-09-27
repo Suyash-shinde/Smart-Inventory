@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import toast, {Toaster} from 'react-hot-toast'
 import {
   getCookie,
   parseCookie,
@@ -82,14 +83,27 @@ const page = () => {
   };
 
   const handleSubmit = async (e) => {
-    //console.log(id);
-
     e.preventDefault();
-    await sendData();
-    console.log(issueDetails);
-    //console.log(id);
+  
+    const sendPromise = sendData(); // Create the promise
+  
+    toast.promise(
+      sendPromise,
+      {
+        loading: 'Sending...',
+        success: 'Sent successfully!',
+        error: 'Failed to send.',
+      }
+    );
+  
+    try {
+      await sendPromise;
+      console.log(issueDetails); // Execute when the promise resolves
+    } catch (error) {
+      console.error('Error sending data:', error);
+    }
   };
-
+  
   const handleReset = (e) => {
     window.alert("You are about to reset");
   };
@@ -97,6 +111,7 @@ const page = () => {
   return (
     <>
       {/* <Navbar/> */}
+     
       <div className="min-h-screen bg-green-200 py-2">
         <div className="Form">
           <form>
