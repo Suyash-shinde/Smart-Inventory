@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import AddLabs_DeviceForm from "../components/AddLabDeviceForm.jsx";
 import AddLabs_DeviceList from "../components/AddLabDeviceList.jsx";
+import { addLabPost } from "../utils/APIpost.js";
 
 const AddLabs = () => {
   // State to manage lab number, device type, count, unique ID, and lab in charge
@@ -11,7 +12,7 @@ const AddLabs = () => {
   const [currentDeviceIndex, setCurrentDeviceIndex] = useState(1);
   const [uniqueID, setUniqueID] = useState("");
   const [labInCharge, setLabInCharge] = useState("");
-
+  const [grid, setGrid] = useState({});
   // State to store the list of devices categorized by type
   const [deviceList, setDeviceList] = useState({
     Fan: [],
@@ -51,8 +52,7 @@ const AddLabs = () => {
       deviceType:"Computer",
       position:e.pos,
     };
-
-    console.log(newDevice);
+    setGrid(e.grid);
     setDeviceList((prevList) => ({
       ...prevList,
       ["Computer"]: [...prevList["Computer"], newDevice],
@@ -83,8 +83,8 @@ const AddLabs = () => {
     setUniqueID("");
     setCurrentDeviceIndex((prev) => prev + 1);
   };
-  const createLab=()=>{
-    //fix this
+  const createLab=async()=>{
+
     setDevices(allDevices);
     // deviceList.Fan.forEach(device => {
     //   setDevices([...devices,device])
@@ -98,6 +98,8 @@ const AddLabs = () => {
     // deviceList.Computer.forEach(device => {
     //   setDevices([...devices,device])
     // });
+     const {data} = await addLabPost({labNo,devices, inCharge:labInCharge,column:grid.gridc, row:grid.gridr});
+     console.log(data);
   }
   useEffect(()=>{
     console.log(devices);
