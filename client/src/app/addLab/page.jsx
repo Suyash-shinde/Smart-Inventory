@@ -34,7 +34,14 @@ const AddLabs = () => {
       Projector: [],
       Computer:[],
     });
-  };
+  };const allDevices = [
+    ...deviceList.Fan,
+    ...deviceList.Light,
+    ...deviceList.Projector,
+    ...deviceList.Computer,
+  ];
+
+
 
   const handleAddPC=(e)=>{
     console.log(e);
@@ -78,18 +85,19 @@ const AddLabs = () => {
   };
   const createLab=()=>{
     //fix this
-    deviceList.Fan.forEach(device => {
-      setDevices([...devices,device])
-    });
-    deviceList.Light.forEach(device => {
-      setDevices([...devices,device])
-    });
-    deviceList.Projector.forEach(device => {
-      setDevices([...devices,device])
-    });
-    deviceList.Computer.forEach(device => {
-      setDevices([...devices,device])
-    });
+    setDevices(allDevices);
+    // deviceList.Fan.forEach(device => {
+    //   setDevices([...devices,device])
+    // });
+    // deviceList.Light.forEach(device => {
+    //   setDevices([...devices,device])
+    // });
+    // deviceList.Projector.forEach(device => {
+    //   setDevices([...devices,device])
+    // });
+    // deviceList.Computer.forEach(device => {
+    //   setDevices([...devices,device])
+    // });
   }
   useEffect(()=>{
     console.log(devices);
