@@ -8,7 +8,10 @@ const getColor = (name) => {
   if (name === "PC") return '#d4d884';
   return '#8884d8'; // Default color for other devices
 };
-
+// data is coming like {
+//  name : "PC",
+// value:1
+// }
 const Piechart = ({ data }) => {
   return (
     <>
