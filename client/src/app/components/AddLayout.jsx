@@ -207,7 +207,8 @@ const Layout = ({grid, handleAddPC}) => {
       else{
         handleAddPC({
           uniqueID:deviceString,
-          pos:position})
+          pos:position,
+          grid})
         setIsModalOpen(false);
       }
 
