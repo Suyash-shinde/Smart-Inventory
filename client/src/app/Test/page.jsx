@@ -1,113 +1,40 @@
 'use client'
-import { useState } from "react";
-import AddLabs_DeviceForm from "../components/AddLabDeviceForm.jsx";
-import AddLabs_DeviceList from "../components/AddLabDeviceList.jsx";
+import React, { useEffect, useState } from 'react'
+import ViewLayout from '../components/ViewLayout'
+import { getLabPost } from '../utils/APIpost';
+const page = () => {
+  const [lab,setLab] = useState({});
+  const [loading, setLoading] = useState(true);
+  const getData = async()=>{
 
-const AddLabs = () => {
-  // State to manage lab number, device type, count, unique ID, and lab in charge
-  const [labNo, setLabNo] = useState("");
-  const [deviceType, setDeviceType] = useState("");
-  const [deviceCount, setDeviceCount] = useState("");
-  const [currentDeviceIndex, setCurrentDeviceIndex] = useState(1);
-  const [uniqueID, setUniqueID] = useState("");
-  const [labInCharge, setLabInCharge] = useState("");
+    try {
+      const {data}= await getLabPost({labNo:510});
+      console.log(data.data);
+      setLab(data.data);  // Update the state with fetched data
+    } catch (error) {
+      console.error("Error fetching lab data:", error);
+    } finally {
+      setLoading(false);  // Stop loading once data is fetched (or failed)
+    }
 
-  // State to store the list of devices categorized by type
-  const [deviceList, setDeviceList] = useState({
-    Fan: [],
-    Light: [],
-    Projector: [],
-    Computer: [],
-  });
-
-  // Function to reset the form fields and device list
-  const resetForm = () => {
-    setLabNo("");
-    setDeviceType("");
-    setDeviceCount("");
-    setCurrentDeviceIndex(1);
-    setUniqueID("");
-    setDeviceList({
-      Fan: [],
-      Light: [],
-      Projector: [],
-      Computer:[],
-    });
-  };
-
-  const handleAddPC=(e)=>{
-    console.log(e);
-    const newDevice = {
-      id: e.uniqueID,
-      labNo,
-      deviceType:"Computer",
-      position:e.pos,
-    };
-
-    console.log(newDevice);
-    setDeviceList((prevList) => ({
-      ...prevList,
-      ["Computer"]: [...prevList["Computer"], newDevice],
-    }));
-    console.log(deviceList);
   }
-  // Function to add a new device to the device list
-  const handleAddDevice = () => {
-    // Ensure all necessary fields are filled before adding
-    if (!labNo || !deviceType || !uniqueID ) return;
+  useEffect(()=>{
 
-    // Create a new device object
-    const newDevice = {
-      id: uniqueID,
-      labNo,
-      deviceType,
-      pos:null,
-       // Include the lab in charge information
-    };
-    console.log(deviceList)
-    // Update the device list with the new device
-    setDeviceList((prevList) => ({
-      ...prevList,
-      [deviceType]: [...prevList[deviceType], newDevice],
-    }));
+    getData();
+  },[])
 
-    // Clear the unique ID input and increment the current device index
-    setUniqueID("");
-    setCurrentDeviceIndex((prev) => prev + 1);
-  };
+  if (loading) {
+    return <div className='font-extrabold'>Loading...</div>;  // Display loading message or spinner
+  }
 
+  if (!lab) {
+    return <div>No data available</div>;  // If no lab data is fetched or null
+  }
+
+ 
   return (
-    <div className="min-h-screen p-8 bg-gray-100">
-      <h1 className="p-3 mb-6 text-2xl font-bold text-center text-white bg-blue-800">
-        Add Devices to Lab
-      </h1>
-      {/* Render the device form and pass relevant state and handlers */}
-      <AddLabs_DeviceForm
-        labNo={labNo}
-        setLabNo={setLabNo}
-        deviceType={deviceType}
-        setDeviceType={setDeviceType}
-        deviceCount={deviceCount}
-        setDeviceCount={setDeviceCount}
-        currentDeviceIndex={currentDeviceIndex}
-        setCurrentDeviceIndex={setCurrentDeviceIndex} // Pass the setter for current device index
-        uniqueID={uniqueID}
-        setUniqueID={setUniqueID}
-        handleAddDevice={handleAddDevice}
-        labInCharge={labInCharge}
-        setLabInCharge={setLabInCharge}
-      />
-      {/* Render the list of added devices */}
-      <AddLabs_DeviceList deviceList={deviceList} handleAddPC={handleAddPC} />
-      {/* Button to reset the form fields */}
-      <button
-        onClick={resetForm}
-        className="px-4 py-2 mt-4 text-white bg-red-500 rounded"
-      >
-        Reset Form
-      </button>
-    </div>
-  );
-};
+    <ViewLayout data={lab}></ViewLayout>
+  )
+}
 
-export default AddLabs;
+export default page

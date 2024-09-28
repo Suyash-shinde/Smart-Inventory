@@ -4,6 +4,7 @@ import AddLabs_DeviceForm from "../components/AddLabDeviceForm.jsx";
 import AddLabs_DeviceList from "../components/AddLabDeviceList.jsx";
 import { addLabPost } from "../utils/APIpost.js";
 
+
 const AddLabs = () => {
   // State to manage lab number, device type, count, unique ID, and lab in charge
   const [labNo, setLabNo] = useState("");
@@ -35,17 +36,13 @@ const AddLabs = () => {
       Projector: [],
       Computer:[],
     });
-  };const allDevices = [
-    ...deviceList.Fan,
-    ...deviceList.Light,
-    ...deviceList.Projector,
-    ...deviceList.Computer,
-  ];
+    window.location.reload();
+  };
+  
 
 
 
   const handleAddPC=(e)=>{
-    console.log(e);
     const newDevice = {
       id: e.uniqueID,
       labNo,
@@ -57,7 +54,6 @@ const AddLabs = () => {
       ...prevList,
       ["Computer"]: [...prevList["Computer"], newDevice],
     }));
-    console.log(deviceList);
   }
   // Function to add a new device to the device list
   const handleAddDevice = () => {
@@ -69,10 +65,9 @@ const AddLabs = () => {
       id: uniqueID,
       labNo,
       deviceType,
-      pos:null,
+      position:-1,
        // Include the lab in charge information
     };
-    console.log(deviceList)
     // Update the device list with the new device
     setDeviceList((prevList) => ({
       ...prevList,
@@ -84,25 +79,18 @@ const AddLabs = () => {
     setCurrentDeviceIndex((prev) => prev + 1);
   };
   const createLab=async()=>{
-
-    setDevices(allDevices);
-    // deviceList.Fan.forEach(device => {
-    //   setDevices([...devices,device])
-    // });
-    // deviceList.Light.forEach(device => {
-    //   setDevices([...devices,device])
-    // });
-    // deviceList.Projector.forEach(device => {
-    //   setDevices([...devices,device])
-    // });
-    // deviceList.Computer.forEach(device => {
-    //   setDevices([...devices,device])
-    // });
-     const {data} = await addLabPost({labNo,devices, inCharge:labInCharge,column:grid.gridc, row:grid.gridr});
+    const allDevices = [
+      ...deviceList.Fan,
+      ...deviceList.Light,
+      ...deviceList.Projector,
+      ...deviceList.Computer,
+    ];
+    console.log(allDevices)
+     const {data} = await addLabPost({labNo,devices:allDevices, inCharge:labInCharge,column:grid.gridc, row:grid.gridr});
      console.log(data);
   }
   useEffect(()=>{
-    console.log(devices);
+    console.log("abcd",devices);
   },[devices])
   return (
     <div className="min-h-screen p-8 bg-gray-100">
