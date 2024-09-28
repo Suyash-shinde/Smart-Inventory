@@ -10,6 +10,7 @@ const deviceSchema=new Schema({
     },
     labNo:{
         type:Number,
+
     },
     deviceType:{
         type:String,

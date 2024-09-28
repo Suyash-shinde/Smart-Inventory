@@ -1,5 +1,7 @@
 import { Device } from "../Models/device.model.js";
+
 import { Lab } from "../Models/lab.model.js";
+
 export const addlab=async(req,res,next)=>{
     try{
         const {devices,labNo,row,column,incharge}=req.body;
