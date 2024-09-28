@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect } from 'react'
-import Card from './Card';
+import Card2 from './Card2';
 import { useState } from 'react';
 
 
@@ -175,84 +175,75 @@ const json=[
     ];
 
 
-const Layout = ({grid, handleAddPC}) => {
-    const [deviceId,setDeviceId] = useState({});
+const ViewLayout = ({data}) => {
+    const [computers,setComputers] = useState([]);
     const [seats,setSeats] = useState(json);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [deviceString, setDeviceString]=useState("");
     const [position,setPosition]=useState(null);
     const setSelect =(e)=>{ 
         setSeats(seats.map(seat=>
-            seat.key===e.key ? {...seat,selected:!selected} : seat
+            seat.key === device.position ? { ...seat, selected: !seat.selected } : seat
         ));
     }
-    const setId=(e)=>{
-      setDeviceId({...deviceId,[e.target.name]:e.target.value});
+    const handleSetComputers=()=>{
+        const updatedComputers = seats.map((seat) => {
+            // Find the corresponding device from the backend data
+            console.log("a");
+                const device = data.devices?.find(device => device.position === seat.key);
+                if (device && device.deviceType === "Computer") {
+                    // If there's a matching device and it's a computer, return the combined object
+                    console.log("match", device.id)
+                    return {
+                      ...device,
+                      selected: false,  // Add default values you need
+                      isVisible: true
+                    };
+                  } else {
+                    // If no match, return the seat as a computer placeholder
+                    return {
+                      id: seat.key,
+                      position: seat.key,
+                      isVisible: false,
+                      selected: false
+                    };
+                  }
+            
+          });
+        
+        console.log(updatedComputers);
+        setComputers(updatedComputers);
     }
-  const handleOpenModal = (e) => {
-      setIsModalOpen(true);
-      setPosition(e);
 
-  };
+    useEffect(()=>{
+        console.log("seats",seats);
+        handleSetComputers();
+    },[data,seats])
+    useEffect(()=>{
+        console.log("as",computers);
+    },[computers])
   
-  const handleChange=(e)=>{
-    setDeviceString(e.target.value);
-
-  }
-  const handleCloseModal = (e) => {
-      if(deviceString===""){
-        setIsModalOpen(false);
-        //set a minimun limit 
-      }
-      else{
-        handleAddPC({
-          uniqueID:deviceString,
-          pos:position,
-          grid})
-        setIsModalOpen(false);
-      }
-
-  };
-
-  const handleOverlayClick = (e) => {
-    // closes modal whenever user clicks outside of it 
-    if (e.target.id === "hs-basic-modal") {
-        setIsModalOpen(false);
-    }
-};
   return (
     <>
         <div className=''>
             <div className={`z-10 h-screen-full mt-5 mb-10 ml-10 grid gap-y-10 `}
                 style={{
-                    display: grid,
-                    gridTemplateColumns: `repeat(${grid.gridc}, 1fr)`,
+                    display: 'grid',
+                    gridTemplateColumns: `repeat(${data.column}, 1fr)`,
                 }}>
-                {seats.map((device) => {
-                    if (device.key <= (grid.gridr) * (grid.gridc)) {
-                        return (
-                            <div key={device.key} onClick={(e) => { setSelect(e); handleOpenModal(device.key); }} >
-                                <Card type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-basic-modal" key={device.key} id={device.key} selected={device.selected} isVisible={device.isVisible}></Card>
-                            </div>
-                        )
-                    }
+                    
+                {computers.map((device) => {
+                        if(device.position <= (data.row) * (data.column) ){
+                            return (
+                                <div key={device.id} onClick={() => { setSelect(device) }} >
+                                    <Card2  deviceId={device.id} key={device.id} position={device.position} selected={device.selected} isVisible={device.isVisible}></Card2>
+                                </div>
+                            )
+                        }
                 })}
-            </div>
-
-            {isModalOpen && (
-                <div id="hs-basic-modal" className="hs-overlay is-visible z-50 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50" onClick={handleOverlayClick}>
-                  {/*   onClick={(e) => e.stopPropagation()} */}
-                    <div className="modal-content bg-gray-500 rounded h-80 w-80 p-4 relative">
-                        <input placeholder='DeviceId' name='id' onChange={(e) => handleChange(e)} className="mb-4 p-2 w-full"></input>
-                        <button onClick={(e) => handleCloseModal(e)} className="px-4 py-2 bg-blue-500 text-white rounded">Submit</button>
-                        <p className="mt-4 text-white">Modal Content Here</p>
-                    </div>
-                </div>
-            )}
+            </div>{/*device.key <= (grid.gridr) * (grid.gridc) */}
         </div>
     </>
 )
 }
 
-export default Layout
+export default ViewLayout
 
