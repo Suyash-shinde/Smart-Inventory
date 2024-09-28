@@ -4,7 +4,7 @@ import styles from './page.module.css';
 import { loginRoute } from '../utils/APIroutes';
 import axios from 'axios';    
 import { useRouter } from 'next/navigation'; 
-
+import toast,{ Toaster } from 'react-hot-toast';
 
 const page = () => {
   const router=useRouter();
@@ -20,23 +20,53 @@ const page = () => {
     }
     return true;
   }; 
-
-  const handleSubmit = async()=>{
-      if(handleValidation){
-        const {prn,password} = user;
-        const {data}= await axios.post(loginRoute,{
-          prn,
-          password,
-        },{withCredentials:true});
-        if(data.status===false){
-          console.log(data.msg);
-        }
-        else{
-          console.log(data.msg);
-          router.push("/Dashboard");
-        }
+  
+  const sendData = async () => {
+    const { prn, password } = user;
+    return axios.post(loginRoute, {
+      prn,
+      password,
+    }, { withCredentials: true });
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    // Validate before sending the request
+    if (!handleValidation()) {
+      toast.error("PRN and password are required!");
+      return;
+    }
+  
+    // Create the promise for sending data
+    const sendPromise = sendData();
+  
+    toast.promise(
+      sendPromise,
+      {
+        loading: 'Logging in...',
+        success: (data) => {
+          if (data.data.status === false) {
+            throw new Error(data.data.msg);  // Reject the promise if login fails
+          }
+          return 'Login successful! Redirecting...';
+        },
+        error: (err) => `Login failed: ${err.message}`,
       }
-  }
+    );
+  
+    try {
+      const { data } = await sendPromise; // Wait for the data to be sent
+      if (data.status === true) {
+        // Redirect to dashboard if login is successful
+        router.push("/Dashboard");
+      }
+    } catch (error) {
+      // Handle error state here (optional, as toast.promise will show an error message)
+      console.error('Error during login:', error);
+    }
+  };
+  
   return (
     <>
         <div className={styles.container}>

@@ -43,3 +43,8 @@ input[type=submit]{
 .bottomButtons{
     margin-top: 10%;
 }
+
+  .dark input, .dark select {
+    background-color: #333;
+    color: #fff;
+  }

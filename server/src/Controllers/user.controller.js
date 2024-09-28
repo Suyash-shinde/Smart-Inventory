@@ -83,6 +83,12 @@ export const login=async(req,res,next)=>{
                 msg:"Invalid  prn",
             });
         }
+        if(password != findUser.password){
+            return res.json({
+                status:false,
+                msg:"Incorrect password",
+            });
+        }
         const sendUser = { 
             name:findUser.name,
             prn:findUser.prn,

@@ -70,23 +70,11 @@ const page = () => {
   const sendData = async () => {
     const myData = issueDetails;
     const result = await issuePost(myData);
-    //const resultInJson= await result.json();
-    console.log(result);
-    //   const result = await fetch('{$host}/api/issues',{
-    //     method:'POST',
-    //     headers:{
-    //         'Content-Type':'application/json'
-    //     },
-    //     body:JSON.stringify(myData)
-    // })
-    // const resultInJson= await result.json();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
     const sendPromise = sendData(); // Create the promise
-  
     toast.promise(
       sendPromise,
       {
