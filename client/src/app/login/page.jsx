@@ -28,7 +28,10 @@ const page = () => {
       password,
     }, { withCredentials: true });
   };
-  
+  const handleSignUp = () =>{
+    router.push("/signup");
+
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -90,7 +93,7 @@ const page = () => {
                 <button className={styles.submit} onClick={(e)=>handleSubmit(e)}>Login</button>
                 <div className={styles.buttons}>
                   Do not have an account?   
-                  <button className={styles.register}>Sign Up</button>
+                  <button className={styles.register} onClick={() => handleSignUp()}>Sign Up</button>
                 </div>
             </div>
         </div>

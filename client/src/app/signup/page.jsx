@@ -46,7 +46,7 @@ const page = () => {
       } else {
         alert(data.msg);
         console.log(data);
-        router.push("/Form");
+        router.push("/login");
       }
     }
   };

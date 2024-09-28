@@ -1,5 +1,6 @@
 import { User } from "../Models/user.model.js";
 import jwt from "jsonwebtoken"
+import bcrypt from 'bcrypt'
 const generateAccessAndRefreshTokens = async(userId)=>{
     try {
         const user = await User.findById(userId)
@@ -35,11 +36,12 @@ export const register=async(req,res,next)=>{
                 msg:"User with this prn already exists",
             });
         }
+        const hashPassword=await bcrypt.hash(password,10);
         const createUser= await User.create({
             name,
             prn,
             email,
-            password,
+            password : hashPassword,
         });
         if(!createUser){
             return res.json({
@@ -77,13 +79,14 @@ export const login=async(req,res,next)=>{
             })
         } 
         const findUser = await User.findOne({prn});
+        const isPasswordValid = await bcrypt.compare(password, findUser.password);
         if(!findUser){
             return res.json({
                 status:false,
                 msg:"Invalid  prn",
             });
         }
-        if(password != findUser.password){
+        if(!isPasswordValid){
             return res.json({
                 status:false,
                 msg:"Incorrect password",
