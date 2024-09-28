@@ -1,4 +1,4 @@
-import { Device } from "../Models/device.model";
+import { Device } from "../Models/device.model.js";
 
 export const addlab=async(req,res,next)=>{
     try{
