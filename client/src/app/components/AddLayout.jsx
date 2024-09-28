@@ -210,38 +210,47 @@ const Layout = ({grid, handleAddPC}) => {
           pos:position})
         setIsModalOpen(false);
       }
+
   };
 
+  const handleOverlayClick = (e) => {
+    // closes modal whenever user clicks outside of it 
+    if (e.target.id === "hs-basic-modal") {
+        setIsModalOpen(false);
+    }
+};
   return (
     <>
-    
-    <div className={`h-screen-full mt-5 mb-10 ml-10 grid gap-y-10 `}
-        style={{
-          display:grid,
-          gridTemplateColumns: `repeat(${grid.gridc}, 1fr)`,
-            
-        }}>
-        {seats.map((device)=>{
-            if(device.key<=(grid.gridr)*(grid.gridc)){
-             return(
-              <div key={device.key} onClick={(e)=>{setSelect(e);handleOpenModal(device.key);}} >
-              <Card type="button"  aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-basic-modal" key={device.key} id={device.key} selected={device.selected} isVisible={device.isVisible}></Card>
-              </div>
-             )
-            }
-          })}
-    </div>
-    {isModalOpen && (
-                <div id="hs-basic-modal" className="hs-overlay is-visible absolute z-10  w-full flex justify-center ">
-                    <div className="modal-content bg-gray-500 rounded h-80 w-80 z-10">
-                        <input placeholder='DeviceId' name='id' onChange={(e)=>handleChange(e)}></input>
-                        <button onClick={(e)=>handleCloseModal(e)}>Submit</button>
-                        <p>Modal Content Here</p>
+        <div className=''>
+            <div className={`z-10 h-screen-full mt-5 mb-10 ml-10 grid gap-y-10 `}
+                style={{
+                    display: grid,
+                    gridTemplateColumns: `repeat(${grid.gridc}, 1fr)`,
+                }}>
+                {seats.map((device) => {
+                    if (device.key <= (grid.gridr) * (grid.gridc)) {
+                        return (
+                            <div key={device.key} onClick={(e) => { setSelect(e); handleOpenModal(device.key); }} >
+                                <Card type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-basic-modal" data-hs-overlay="#hs-basic-modal" key={device.key} id={device.key} selected={device.selected} isVisible={device.isVisible}></Card>
+                            </div>
+                        )
+                    }
+                })}
+            </div>
+
+            {isModalOpen && (
+                <div id="hs-basic-modal" className="hs-overlay is-visible z-50 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50" onClick={handleOverlayClick}>
+                  {/*   onClick={(e) => e.stopPropagation()} */}
+                    <div className="modal-content bg-gray-500 rounded h-80 w-80 p-4 relative">
+                        <input placeholder='DeviceId' name='id' onChange={(e) => handleChange(e)} className="mb-4 p-2 w-full"></input>
+                        <button onClick={(e) => handleCloseModal(e)} className="px-4 py-2 bg-blue-500 text-white rounded">Submit</button>
+                        <p className="mt-4 text-white">Modal Content Here</p>
                     </div>
                 </div>
             )}
+        </div>
     </>
-  )
+)
 }
 
 export default Layout
