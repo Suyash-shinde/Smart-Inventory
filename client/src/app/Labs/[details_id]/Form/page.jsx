@@ -75,7 +75,7 @@ const page = () => {
 
       // const selectedCard = cards.find((card) => card.index === id);
       // console.log(selectedCard);
-      let incharge;
+      let incharge='';
       //console.log(date);
       axios.post('http://localhost:3090/getLab',
         {
