@@ -19,7 +19,7 @@ const issueSchema = new Schema({
     },
     facultyName:{
         type: Schema.Types.ObjectId,
-        ref:User,   
+        ref:'User',   
     },
     facultyLabIncharge:{
         type:String,

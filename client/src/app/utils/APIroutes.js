@@ -3,3 +3,5 @@ export const RegisterRoute=`${host}/register`;
 export const issueRoute=`${host}/api/issues`;
 export const refreshTokenRoute=`${host}/refresh`;   
 export const loginRoute=`${host}/login`;
+export const addLabRoute=`${host}/addLab`;
+export const getDataRoute=`${host}/getLab`;

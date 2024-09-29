@@ -20,7 +20,7 @@ const labSchema=new Schema({
         type:[
             {
                 type:Schema.Types.ObjectId,
-                ref:Device,
+                ref:'Device',
             }
         ]
     }
