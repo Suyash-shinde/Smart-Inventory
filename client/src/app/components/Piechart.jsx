@@ -5,7 +5,8 @@ import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
 // Define a function to dynamically assign color based on the device name
 const getColor = (name) => {
-  if (name === "PC") return '#d4d884';
+  if (name === "Computer") return '#d4d884';
+  if (name === "Fan") return '#d88884';
   return '#8884d8'; // Default color for other devices
 };
 // data is coming like {
