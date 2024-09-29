@@ -11,6 +11,8 @@ import "dotenv/config";
 import { cards } from "../../../data";
 import styles from "./form.css";
 import { issuePost } from "../../../utils/APIpost";
+import { getLabPost } from "../../../utils/APIpost";
+import ViewLayout from "@/app/components/ViewLayout";
 const page = () => {
   const searchParams = useSearchParams();
   //const id=searchParams.get('id');
@@ -28,9 +30,38 @@ const page = () => {
     return `${day}/${month}/${year}`;
   };
 
-  //const date=getDate();
+  //code for lab layout
 
+  const [lab,setLab] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [devicevalue,setDeviceValue] = useState(null);
+  const getData = async()=>{
+
+    try {
+      const {data}= await getLabPost({labNo:510});
+      console.log(data.data);
+      setLab(data.data);  // Update the state with fetched data
+    } catch (error) {
+      console.error("Error fetching lab data:", error);
+    } finally {
+      setLoading(false);  // Stop loading once data is fetched (or failed)
+    }
+
+  }
+  
+
+  // if (loading) {
+  //   return <div className='font-extrabold'>Loading...</div>;  // Display loading message or spinner
+  // }
+
+  if (!lab) {
+    return <div>No data available</div>;  // If no lab data is fetched or null
+  }
+
+  //const date=getDate();
+  
   useEffect(() => {
+    
     // Ensure the code runs only on the client side
     if (typeof window !== "undefined") {
       let cookieReq = getCookie("user"); //this gets me the cookie associated with user
@@ -53,6 +84,10 @@ const page = () => {
       }));
     }
   }, [searchParams]);
+  useEffect(()=>{
+
+    getData();
+  },[])
   const [issueDetails, setIssueDetails] = useState({
     deviceId: "",
     deviceType: "",
@@ -64,9 +99,13 @@ const page = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setDeviceValue(e.target.value);
     setIssueDetails((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
-
+  const handleDeviceId = (e)=>{
+    setIssueDetails((prev)=>({...prev,["deviceId"]:e}))
+    console.log(issueDetails);
+  }
   const sendData = async () => {
     const myData = issueDetails;
     const result = await issuePost(myData);
@@ -162,7 +201,8 @@ const page = () => {
               </select>
             </div>
 
-            <div>
+            {(devicevalue!=="PC")? 
+              <div>
               <label>Device Id:</label>
               {/* try to make a drop down select later */}
               <input
@@ -172,7 +212,10 @@ const page = () => {
                 value={issueDetails.deviceId}
                 onChange={handleChange}
               ></input>
-            </div>
+            </div>:
+            <div className="w-auto flex justify-center items-center"><ViewLayout handleDeviceId={handleDeviceId} data={lab}></ViewLayout></div>
+            }
+            
 
             <div>
               <label>Issue</label>
