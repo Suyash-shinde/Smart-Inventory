@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-
+import { ThemeSwitcher } from "./ThemeSwitcher";
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { IoCloseOutline } from "react-icons/io5";
 import clsx from "clsx";
+import Toggle from "./Toggle";
 
 export default function Navbar() {
   const [isSideMenuOpen, setMenu] = useState(false);
@@ -53,6 +54,8 @@ export default function Navbar() {
               {d.labe}
             </Link>
           ))}
+          
+        
         </div>
 
         {/* sidebar mobile menu */}
@@ -75,6 +78,7 @@ export default function Navbar() {
             ))}
           </section>
         </div>
+        <Toggle/>
       </nav>
       <hr className=" " />
     </main>
