@@ -44,7 +44,7 @@ const page = () => {
 
       // const selectedCard = cards.find((card) => card.index === id);
       // console.log(selectedCard);
-      let incharge='';
+      let incharge;
       //console.log(date);
       axios.post('http://localhost:3090/getLab',
         {
@@ -61,7 +61,7 @@ const page = () => {
         setIssueDetails((prevDetails) => ({
           ...prevDetails,
           facultyName: fetchedName,
-          facultyLabIncharge: incharge ? incharge : "No",
+          facultyLabIncharge: incharge ? incharge : "None assigned",
           date: getDate(),
         }));
       }).catch((error)=>{
