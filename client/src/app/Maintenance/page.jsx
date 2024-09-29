@@ -1,68 +1,74 @@
 "use client";
 
-import { useEffect, useState , useRef} from "react";
+import { useEffect, useState, useRef } from "react";
+import MaintenanceModal from "@/app/components/MaintenanceModal";
 import axios from "axios";
 const Maintenance = () => {
-
   const Options = {
-    device: ["--None--","Computer", "Projector", "Fan","PC","Monitor"],
-    status: ["--None--","Pending", "Ongoing", "Completed"],
+    device: ["--None--", "Computer", "Projector", "Fan", "PC", "Monitor"],
+    status: ["--None--", "Pending", "Ongoing", "Completed"],
     //faculty: ["Faculty", "Faculty 1", "Faculty 2", "Faculty 3"],
   };
 
-  const [Issues,setIssue] = useState([]);
-  const [OrIssues,setOrIssue]=useState([]);
-  const runOnce = useRef(false)
+  const [Issues, setIssue] = useState([]);
+  const [OrIssues, setOrIssue] = useState([]);
+  const runOnce = useRef(false);
+  const [selectedIssue, setSelectedIssue] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  
-  const fetchData = async () =>{
+  const handleOpenModal = (issue) => {
+    setSelectedIssue(issue);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedIssue(null);
+    setIsModalOpen(false);
+  };
+
+  const fetchData = async () => {
     try {
-     
-      const response = (await axios.get("http://localhost:3090/api/issues")).data;
-    console.log("Response: " , response);
-    // response.forEach((_id)=>{
-    //     Issues.push(_id);
-    // })
-    setIssue(response);
-    setOrIssue(response);
-    //Issues.push(response.data)
-    console.log(Issues);
-
+      const response = (await axios.get("http://localhost:3090/api/issues"))
+        .data;
+      console.log("Response: ", response);
+      // response.forEach((_id)=>{
+      //     Issues.push(_id);
+      // })
+      setIssue(response);
+      setOrIssue(response);
+      //Issues.push(response.data)
+      console.log(Issues);
     } catch (error) {
       console.log(error);
-      
     }
-    
-    
-  }
-  useEffect(()=>{
-    if(runOnce.current===false){
+  };
+  useEffect(() => {
+    if (runOnce.current === false) {
       fetchData();
     }
-    return () => runOnce.current=true
-  },[])
+    return () => (runOnce.current = true);
+  }, []);
   const [selectedDevice, setSelectedDevice] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   //const [selectedFaculty, setSelectedFaculty] = useState("");
 
-  const reset=()=>{
+  const reset = () => {
     setIssue(OrIssues);
-  }
-  let filteredIssues=OrIssues;
+  };
+  let filteredIssues = OrIssues;
   const handleFilter = () => {
-    filteredIssues=OrIssues;
-    if (selectedDevice && selectedDevice!=="--None--") {
+    filteredIssues = OrIssues;
+    if (selectedDevice && selectedDevice !== "--None--") {
       filteredIssues = filteredIssues.filter(
         (issue) => issue.deviceType === selectedDevice
-      ); 
+      );
     }
 
-    if (selectedStatus && selectedStatus!=="--None--") {
+    if (selectedStatus && selectedStatus !== "--None--") {
       filteredIssues = filteredIssues.filter(
         (issue) => issue.status === selectedStatus
       );
-      
     }
     if (selectedDate) {
       filteredIssues = filteredIssues.filter(
@@ -75,11 +81,9 @@ const Maintenance = () => {
     //     (issue) => issue.faculty === selectedFaculty
     //   );
     // }
-      setIssue(filteredIssues);
+    setIssue(filteredIssues);
   };
 
-
- 
   return (
     <>
       <div className="w-full h-min-screen">
@@ -171,7 +175,7 @@ const Maintenance = () => {
               </button>
 
               <button
-                className="px-8 py-2 mt-3 text-white rounded-md sm:mt-0 bg-red-500"
+                className="px-8 py-2 mt-3 text-white bg-red-500 rounded-md sm:mt-0"
                 onClick={reset}
               >
                 Reset Filter
@@ -184,7 +188,8 @@ const Maintenance = () => {
               Issues.map((issue) => (
                 <li
                   key={issue._id}
-                  className="flex justify-between border rounded-md bg-slate-50"
+                  className="flex justify-between border rounded-md cursor-pointer bg-slate-50"
+                  onClick={() => handleOpenModal(issue)}
                 >
                   <div className="flex flex-col self-center w-11/12 p-4 space-y-2 rounded-l-md text-slate-500">
                     <div>
@@ -192,7 +197,9 @@ const Maintenance = () => {
                       <h6>Date: {issue.date}</h6>
                     </div>
                     <div className="flex flex-wrap">
-                      <h6 className="w-1/2">Faculty: {issue.facultyLabIncharge}</h6>
+                      <h6 className="w-1/2">
+                        Faculty: {issue.facultyLabIncharge}
+                      </h6>
                       <h6 className="w-1/2">Lab: 1</h6>
                       <h6 className="w-1/2">Device: {issue.deviceType}</h6>
                     </div>
@@ -220,6 +227,22 @@ const Maintenance = () => {
               <p className="text-center text-gray-500">No issues found.</p>
             )}
           </ul>
+          <MaintenanceModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            title="Issue Details"
+          >
+            {selectedIssue && (
+              <>
+                <h6>Issue Id: {selectedIssue._id}</h6>
+                <h6>Date: {selectedIssue.date}</h6>
+                <h6>Faculty: {selectedIssue.facultyLabIncharge}</h6>
+                <h6>Lab: 1</h6>
+                <h6>Device: {selectedIssue.deviceType}</h6>
+                <h6>Status: {selectedIssue.status}</h6>
+              </>
+            )}
+          </MaintenanceModal>
         </main>
       </div>
     </>
