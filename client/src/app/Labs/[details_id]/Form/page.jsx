@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import toast, {Toaster} from 'react-hot-toast'
+import axios from "axios";
 import {
   getCookie,
   parseCookie,
@@ -41,16 +42,31 @@ const page = () => {
 
       //console.log(typeof(id));
 
-      const selectedCard = cards.find((card) => card.index === id);
-      console.log(selectedCard);
+      // const selectedCard = cards.find((card) => card.index === id);
+      // console.log(selectedCard);
+      let incharge='';
       //console.log(date);
-
-      setIssueDetails((prevDetails) => ({
-        ...prevDetails,
-        facultyName: fetchedName,
-        facultyLabIncharge: selectedCard ? selectedCard.labIncharge : "No",
-        date: getDate(),
-      }));
+      axios.post('http://localhost:3090/getLab',
+        {
+        labNo:id
+      },
+      {withCredentials:true}
+    )
+      .then((response)=>{
+        console.log(response.data.data);
+        // setLab(response.data.data);
+        incharge+=response.data.data.incharge;
+        console.log("HereF",incharge);
+        console.log("HereD",response.data.data.incharge);
+        setIssueDetails((prevDetails) => ({
+          ...prevDetails,
+          facultyName: fetchedName,
+          facultyLabIncharge: incharge ? incharge : "No",
+          date: getDate(),
+        }));
+      }).catch((error)=>{
+        console.log("Error found ",error);
+      }) 
     }
   }, [searchParams]);
   const [issueDetails, setIssueDetails] = useState({

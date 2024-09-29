@@ -44,17 +44,37 @@ export const getLabData =async(req,res,next)=>{
     try{
         const {labNo} = req.body;
         const getLab = await Lab.findOne({labNo}).populate('devices').exec();
+        console.log(labNo)
         if(!getLab){    
             return res.json({
                 msg:"Error fetching lab data",
                 status:false,
             })
         }
-        console.log("rewq")
+         
         return res.json({
             msg:"Lab data fetched successfully",
             status:true,
             data:getLab
+        })
+    }catch(error){
+        next(error);
+    }
+}
+export const getAllLabs =async(req,res,next)=>{
+    try{
+        
+        const getLabs = await Lab.find({});
+        if(!getLabs){    
+            return res.json({
+                msg:"Error fetching lab data",
+                status:false,
+            })
+        }
+        return res.json({
+            msg:"Lab data fetched successfully",
+            status:true,
+            data:getLabs
         })
     }catch(error){
         next(error);
