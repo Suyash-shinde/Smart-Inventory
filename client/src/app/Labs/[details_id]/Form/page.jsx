@@ -8,9 +8,9 @@ import {
   getPropertyFromCookie,
 } from "../../../utils/useCookie";
 import { useSearchParams } from "next/navigation";
-import "dotenv/config";
+// import "dotenv/config";
 import { cards } from "../../../data";
-import styles from "./form.css";
+// import styles from "./form.css";
 import { issuePost } from "../../../utils/APIpost";
 import { getLabPost } from "../../../utils/APIpost";
 import ViewLayout from "@/app/components/ViewLayout";
@@ -151,73 +151,67 @@ const page = () => {
     window.alert("You are about to reset");
   };
 
+ 
   return (
-    <>
-      {/* <Navbar/> */}
-     
-      <div className="min-h-screen bg-green-200 py-2">
-        <div className="Form">
-          <form>
-            <div>
-              <label className=""> Faculty Name: </label>
-              {/* We need to get this automatically from login details */}
-              <input
-                className=" h-10 border mt-1 rounded px-4 w-full bg-gray-50  cursor-not-allowed"
-                id="facultyName"
-                name="facultyName"
-                placeholder="Not logged in"
-                type="text"
-                value={issueDetails.facultyName}
-                readOnly
-              />
-            </div>
 
-            <div>
-              <label> Faculty Lab Incharge: </label>
-              {/* We need to get this automatically from either lab ka details or something like that , maybe a hardcoded json of each lab to faculty,login details */}
-              <input
-                className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 cursor-not-allowed"
-                type="text"
-                name="facultyLabIncharge"
-                id="FacultyLab"
-                placeholder="Faculty LabInCharge"
-                value={issueDetails.facultyLabIncharge}
-                readOnly
-              />
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-green-200 to-blue-200 py-10 flex items-center justify-center">
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+        <h1 className="text-2xl font-semibold text-center mb-6">Report an Issue</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-gray-700 font-medium">Faculty Name:</label>
+            <input
+              className="h-10 border border-gray-300 mt-1 rounded-md px-4 w-full bg-gray-100 cursor-not-allowed"
+              id="facultyName"
+              name="facultyName"
+              placeholder="Not logged in"
+              type="text"
+              value={issueDetails.facultyName}
+              readOnly
+            />
+          </div>
 
-            <div>
-              <label>Date:</label>
-              {/* Automatically from OS or something */}
-              <input
-                className="h-11 border mt-1 rounded px-4 w-full bg-gray-50 cursor-not-allowed"
-                type="date"
-                name="date"
-                id="Date"
-                value={issueDetails.date}
-                readOnly
-              ></input>
-            </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Faculty Lab Incharge:</label>
+            <input
+              className="h-10 border border-gray-300 mt-1 rounded-md px-4 w-full bg-gray-100 cursor-not-allowed"
+              type="text"
+              name="facultyLabIncharge"
+              value={issueDetails.facultyLabIncharge}
+              readOnly
+            />
+          </div>
 
-            <div>
-              <label> Equipment : </label>
-              <select
-                name="deviceType"
-                className="appearance-none row-start-1 col-start-1 bg-slate-50 dark:bg-slate-400"
-                value={issueDetails.deviceType}
-                onChange={handleChange}
-              >
-                <option value="" disabled>
-                  Choose an Equipment
-                </option>
-                <option value="Monitor">Monitor</option>
-                <option value="PC">PC</option>
-                <option value="Projector">Projector</option>
-                <option value="Fan">Fan</option>
-              </select>
-            </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Date:</label>
+            <input
+              className="h-10 border border-gray-300 mt-1 rounded-md px-4 w-full bg-gray-100 cursor-not-allowed"
+              type="date"
+              name="date"
+              value={issueDetails.date}
+              readOnly
+            />
+          </div>
 
-            {(devicevalue!=="PC")? 
+          <div>
+            <label className="block text-gray-700 font-medium">Equipment:</label>
+            <select
+              name="deviceType"
+              className="h-10 border border-gray-300 mt-1 rounded-md px-4 w-full bg-white"
+              value={issueDetails.deviceType}
+              onChange={handleChange}
+            >
+              <option value="" disabled>
+                Choose an Equipment
+              </option>
+              <option value="Monitor">Monitor</option>
+              <option value="PC">PC</option>
+              <option value="Projector">Projector</option>
+              <option value="Fan">Fan</option>
+            </select>
+          </div>
+          
+        {(devicevalue!=="PC")? 
               <div>
               <label>Device Id:</label>
               {/* try to make a drop down select later */}
@@ -233,38 +227,38 @@ const page = () => {
             }
             
 
-            <div>
-              <label>Issue</label>
-              <textarea
-                className=" rounded-md"
-                name="details"
-                value={issueDetails.details}
-                onChange={handleChange}
-              ></textarea>
-            </div>
+          <div>
+            <label className="block text-gray-700 font-medium">Issue:</label>
+            <textarea
+              className="h-24 border border-gray-300 mt-1 rounded-md px-4 w-full"
+              name="details"
+              value={issueDetails.details}
+              onChange={handleChange}
+            />
+          </div>
 
-            <div className="bottomButtons">
-              <button
-                className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded mr-[58%] "
-                type="reset"
-                onClick={handleReset}
-              >
-                Delete{" "}
-              </button>
-              <button
-                className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-                type="submit"
-                onClick={handleSubmit}
-              >
-                {" "}
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
+          <div className="flex justify-between items-center">
+            <button
+              type="reset"
+              onClick={handleReset}
+              className="bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 transition-all"
+            >
+              Reset
+            </button>
+            <button
+              type="submit"
+              className="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition-all"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+
       </div>
-    </>
+    </div>
   );
 };
+
+
 
 export default page;
