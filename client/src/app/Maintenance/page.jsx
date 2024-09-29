@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import MaintenanceModal from "@/app/components/MaintenanceModal";
 import axios from "axios";
+import { getLabPost } from "../utils/APIpost";
 const Maintenance = () => {
   const Options = {
     device: ["--None--", "Computer", "Projector", "Fan", "PC", "Monitor"],
@@ -15,7 +16,6 @@ const Maintenance = () => {
   const runOnce = useRef(false);
   const [selectedIssue, setSelectedIssue] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const handleOpenModal = (issue) => {
     setSelectedIssue(issue);
     setIsModalOpen(true);
@@ -42,6 +42,7 @@ const Maintenance = () => {
       console.log(error);
     }
   };
+  
   useEffect(() => {
     if (runOnce.current === false) {
       fetchData();
@@ -231,6 +232,7 @@ const Maintenance = () => {
             isOpen={isModalOpen}
             onClose={handleCloseModal}
             title="Issue Details"
+            issueData={selectedIssue}
           >
             {selectedIssue && (
               <>
@@ -240,6 +242,7 @@ const Maintenance = () => {
                 <h6>Lab: 1</h6>
                 <h6>Device: {selectedIssue.deviceType}</h6>
                 <h6>Status: {selectedIssue.status}</h6>
+                
               </>
             )}
           </MaintenanceModal>

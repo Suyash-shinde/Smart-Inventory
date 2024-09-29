@@ -1,8 +1,26 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getLabPost } from "../utils/APIpost";
+import MaintainanceLayout from "./MaintainanceLayout";
+const MaintenanceModal = ({ isOpen, onClose, title, children, issueData }) => {
+  const [lab,setLab] = useState({});
+  const [loading, setLoading] = useState(true); 
+  const getData = async()=>{
 
-const MaintenanceModal = ({ isOpen, onClose, title, children }) => {
+    try {
+      const {data}= await getLabPost({labNo:510});
+      console.log(data.data);
+      setLab(data.data);  // Update the state with fetched data
+    } catch (error) {
+      console.error("Error fetching lab data:", error);
+    } finally {
+      setLoading(false);  // Stop loading once data is fetched (or failed)
+    }
+
+  }
   useEffect(() => {
+    getData();
+    console.log(lab);
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -21,6 +39,14 @@ const MaintenanceModal = ({ isOpen, onClose, title, children }) => {
       onClose();
     }
   };
+
+  if (loading) {
+    return <div className='font-extrabold'>Loading...</div>;  // Display loading message or spinner
+  }
+
+  if (!lab) {
+    return <div>No data available</div>;  // If no lab data is fetched or null
+  }
 
   return (
     <div
@@ -49,6 +75,9 @@ const MaintenanceModal = ({ isOpen, onClose, title, children }) => {
         </button>
         <h2 className="mb-4 text-2xl font-bold">{title}</h2>
         <div className="text-gray-700">{children}</div>
+        <div >
+          <MaintainanceLayout issueDevice={issueData.deviceId} data={lab}></MaintainanceLayout>
+        </div>
       </div>
     </div>
   );
