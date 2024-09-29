@@ -1,14 +1,21 @@
 "use client";
 import Link from "next/link";
+
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from "react";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 // import { CgProfile } from "react-icons/cg";
 import { IoCloseOutline } from "react-icons/io5";
 import clsx from "clsx";
+
 import {getCookie, parseCookie, getPropertyFromCookie} from "../utils/useCookie"
+
+import Toggle from "./Toggle";
+
+
 export default function Navbar() {
   const router = useRouter();
   const [isSideMenuOpen, setMenu] = useState(false);
@@ -66,7 +73,7 @@ export default function Navbar() {
 };
   return (
     <main>
-      <nav className="flex justify-between px-8 items-center py-6   ">
+      <nav className="flex justify-between px-8 items-center py-8 h-20   ">
         <div className="flex items-center gap-8">
           <section className="flex items-center gap-4">
             {/* menu */}
@@ -75,9 +82,10 @@ export default function Navbar() {
               className="text-3xl cursor-pointer lg:hidden"
             />
             {/* logo */}
-            <Link href={"/"} className="text-4xl font-mono">
-              logo
+            <Link href="/" className="text-4xl font-mono">
+              <img src="/image.png" alt="logo" className="h-12 w-auto" />
             </Link>
+
           </section>
           {navlinks.map((d, i) => (
             <Link
@@ -88,6 +96,8 @@ export default function Navbar() {
               {d.labe}
             </Link>
           ))}
+          
+        
         </div>
       <div className="flex items-center gap-2 cursor-pointer">
       { name &&  ( <div className="relative">
@@ -143,6 +153,7 @@ export default function Navbar() {
             ))}
           </section>
         </div>
+        <Toggle/>
       </nav>
       <hr className=" " />
     </main>

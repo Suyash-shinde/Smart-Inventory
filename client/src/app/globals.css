@@ -19,7 +19,7 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-@layer base {
+/* @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
@@ -73,13 +73,46 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-}
+} */
 
-@layer base {
+/* @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
   }
+}
+/* Custom toast styles for React Hot Toast */
+.react-hot-toast {
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.react-hot-toast--success {
+  background-color: #28a745 !important;
+}
+
+.react-hot-toast--error {
+  background-color: #dc3545 !important;
+}
+
+.react-hot-toast--loading {
+  background-color: #007bff !important;
+}
+
+.react-hot-toast .toast-icon {
+  color: white !important;
+}
+.dark textarea {
+  background-color: #ffffff; /* Dark background */
+  color: #fff; /* Light text color */
+  border: 1px solid #555; /* Optional border color */
+}
+.dark ::placeholder{
+  background-color: #fff; /* Dark background */
+  color: #fff;
+}
+.dark text label{
+  color: #000000;
 }

@@ -39,7 +39,7 @@ export const cards = [
       labName: "Lab 6",
       labImage: "https://picsum.photos/200/300",
       labDescription: "This is lab 6",
-      labIncharge: "Jane Doe",
+      labIncharge: "Jane bs",
     },
   ];
   

@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import toast, {Toaster} from 'react-hot-toast'
+import axios from "axios";
 import {
   getCookie,
   parseCookie,
@@ -10,6 +12,8 @@ import { useSearchParams } from "next/navigation";
 import { cards } from "../../../data";
 // import styles from "./form.css";
 import { issuePost } from "../../../utils/APIpost";
+import { getLabPost } from "../../../utils/APIpost";
+import ViewLayout from "@/app/components/ViewLayout";
 const page = () => {
   const searchParams = useSearchParams();
   //const id=searchParams.get('id');
@@ -27,9 +31,38 @@ const page = () => {
     return `${day}/${month}/${year}`;
   };
 
-  //const date=getDate();
+  //code for lab layout
 
+  const [lab,setLab] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [devicevalue,setDeviceValue] = useState(null);
+  const getData = async()=>{
+
+    try {
+      const {data}= await getLabPost({labNo:510});
+      console.log(data.data);
+      setLab(data.data);  // Update the state with fetched data
+    } catch (error) {
+      console.error("Error fetching lab data:", error);
+    } finally {
+      setLoading(false);  // Stop loading once data is fetched (or failed)
+    }
+
+  }
+  
+
+  // if (loading) {
+  //   return <div className='font-extrabold'>Loading...</div>;  // Display loading message or spinner
+  // }
+
+  if (!lab) {
+    return <div>No data available</div>;  // If no lab data is fetched or null
+  }
+
+  //const date=getDate();
+  
   useEffect(() => {
+    
     // Ensure the code runs only on the client side
     if (typeof window !== "undefined") {
       let cookieReq = getCookie("user"); //this gets me the cookie associated with user
@@ -40,18 +73,37 @@ const page = () => {
 
       //console.log(typeof(id));
 
-      const selectedCard = cards.find((card) => card.index === id);
-      console.log(selectedCard);
+      // const selectedCard = cards.find((card) => card.index === id);
+      // console.log(selectedCard);
+      let incharge;
       //console.log(date);
-
-      setIssueDetails((prevDetails) => ({
-        ...prevDetails,
-        facultyName: fetchedName,
-        facultyLabIncharge: selectedCard ? selectedCard.labIncharge : "No",
-        date: getDate(),
-      }));
+      axios.post('http://localhost:3090/getLab',
+        {
+        labNo:id
+      },
+      {withCredentials:true}
+    )
+      .then((response)=>{
+        console.log(response.data.data);
+        // setLab(response.data.data);
+        incharge+=response.data.data.incharge;
+        console.log("HereF",incharge);
+        console.log("HereD",response.data.data.incharge);
+        setIssueDetails((prevDetails) => ({
+          ...prevDetails,
+          facultyName: fetchedName,
+          facultyLabIncharge: incharge ? incharge : "None assigned",
+          date: getDate(),
+        }));
+      }).catch((error)=>{
+        console.log("Error found ",error);
+      }) 
     }
   }, [searchParams]);
+  useEffect(()=>{
+
+    getData();
+  },[])
   const [issueDetails, setIssueDetails] = useState({
     deviceId: "",
     deviceType: "",
@@ -63,39 +115,45 @@ const page = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setDeviceValue(e.target.value);
     setIssueDetails((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
-
+  const handleDeviceId = (e)=>{
+    setIssueDetails((prev)=>({...prev,["deviceId"]:e}))
+    console.log(issueDetails);
+  }
   const sendData = async () => {
     const myData = issueDetails;
     const result = await issuePost(myData);
-    //const resultInJson= await result.json();
-    console.log(result);
-    //   const result = await fetch('{$host}/api/issues',{
-    //     method:'POST',
-    //     headers:{
-    //         'Content-Type':'application/json'
-    //     },
-    //     body:JSON.stringify(myData)
-    // })
-    // const resultInJson= await result.json();
   };
 
   const handleSubmit = async (e) => {
-    //console.log(id);
-
     e.preventDefault();
-    await sendData();
-    console.log(issueDetails);
-    //console.log(id);
+    const sendPromise = sendData(); // Create the promise
+    toast.promise(
+      sendPromise,
+      {
+        loading: 'Sending...',
+        success: 'Sent successfully!',
+        error: 'Failed to send.',
+      }
+    );
+  
+    try {
+      await sendPromise;
+      console.log(issueDetails); // Execute when the promise resolves
+    } catch (error) {
+      console.error('Error sending data:', error);
+    }
   };
-
+  
   const handleReset = (e) => {
     window.alert("You are about to reset");
   };
 
  
   return (
+
     <div className="min-h-screen bg-gradient-to-br from-green-200 to-blue-200 py-10 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
         <h1 className="text-2xl font-semibold text-center mb-6">Report an Issue</h1>
@@ -152,17 +210,22 @@ const page = () => {
               <option value="Fan">Fan</option>
             </select>
           </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium">Device ID:</label>
-            <input
-              className="h-10 border border-gray-300 mt-1 rounded-md px-4 w-full"
-              type="text"
-              name="deviceId"
-              value={issueDetails.deviceId}
-              onChange={handleChange}
-            />
-          </div>
+          
+        {(devicevalue!=="PC")? 
+              <div>
+              <label>Device Id:</label>
+              {/* try to make a drop down select later */}
+              <input
+                className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                type="text"
+                name="deviceId"
+                value={issueDetails.deviceId}
+                onChange={handleChange}
+              ></input>
+            </div>:
+            <div className="w-auto flex justify-center items-center"><ViewLayout handleDeviceId={handleDeviceId} data={lab}></ViewLayout></div>
+            }
+            
 
           <div>
             <label className="block text-gray-700 font-medium">Issue:</label>
@@ -190,6 +253,7 @@ const page = () => {
             </button>
           </div>
         </form>
+
       </div>
     </div>
   );

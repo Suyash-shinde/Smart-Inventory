@@ -26,6 +26,7 @@ connectDb();
 app.use("/", router);    
 app.use("/api/issues",issueRoutes);
 
+
 app.listen(port, ()=>{
     console.log(`Server is listening on port http://localhost:${port}`);
 })
