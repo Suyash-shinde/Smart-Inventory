@@ -6,7 +6,7 @@ import {
   getPropertyFromCookie,
 } from "../../../utils/useCookie";
 import { useSearchParams } from "next/navigation";
-import "dotenv/config";
+// import "dotenv/config";
 import { cards } from "../../../data";
 import styles from "./form.css";
 import { issuePost } from "../../../utils/APIpost";
