@@ -127,6 +127,7 @@ export default function Navbar() {
                
                 <div onClick={handleLogout}>Logout</div>
             </button>
+            <Toggle/>
         </div>
                        )}
                         
@@ -153,7 +154,7 @@ export default function Navbar() {
             ))}
           </section>
         </div>
-        <Toggle/>
+        
       </nav>
       <hr className=" " />
     </main>
