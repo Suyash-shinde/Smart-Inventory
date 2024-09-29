@@ -1,4 +1,4 @@
-.Form{
+/* /* .Form{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,7 +22,7 @@ input, select, textarea{
     padding: 12px;
     /* border: 1px solid #ccc; */
     /* border-radius: 5%; */
-    box-sizing: border-box;
+   /* box-sizing: border-box;
     resize: vertical; 
   }
   input[type=reset]{
@@ -33,13 +33,13 @@ input, select, textarea{
     order: 2;
     background: rgb(175, 20, 20); 
     /* top: 68%; */
-}
+/* }
 input[type=submit]{
     /* padding: 15px; */
-    max-width: fit-content;
+   /* max-width: fit-content;
     background: rgb(18, 185, 129); 
     /* top: 68%; */
-}
+/* }
 .bottomButtons{
     margin-top: 10%;
-}
+}  
