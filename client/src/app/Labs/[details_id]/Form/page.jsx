@@ -36,28 +36,12 @@ const page = () => {
   const [lab,setLab] = useState({});
   const [loading, setLoading] = useState(true);
   const [devicevalue,setDeviceValue] = useState(null);
-  const getData = async()=>{
-
-    try {
-      const {data}= await getLabPost({labNo:510});
-      console.log(data.data);
-      setLab(data.data);  // Update the state with fetched data
-    } catch (error) {
-      console.error("Error fetching lab data:", error);
-    } finally {
-      setLoading(false);  // Stop loading once data is fetched (or failed)
-    }
-
-  }
+  
   
 
-  // if (loading) {
-  //   return <div className='font-extrabold'>Loading...</div>;  // Display loading message or spinner
-  // }
+ 
 
-  if (!lab) {
-    return <div>No data available</div>;  // If no lab data is fetched or null
-  }
+ 
 
   //const date=getDate();
   
@@ -75,7 +59,7 @@ const page = () => {
 
       // const selectedCard = cards.find((card) => card.index === id);
       // console.log(selectedCard);
-      let incharge='';
+      let incharge="";
       //console.log(date);
       axios.post('http://localhost:3090/getLab',
         {
@@ -84,8 +68,8 @@ const page = () => {
       {withCredentials:true}
     )
       .then((response)=>{
-        console.log(response.data.data);
-        // setLab(response.data.data);
+        console.log("res",response);
+        setLab(response.data.data);
         incharge+=response.data.data.incharge;
         console.log("HereF",incharge);
         console.log("HereD",response.data.data.incharge);
@@ -94,16 +78,13 @@ const page = () => {
           facultyName: fetchedName,
           facultyLabIncharge: incharge ? incharge : "None assigned",
           date: getDate(),
+          labNo:id
         }));
       }).catch((error)=>{
         console.log("Error found ",error);
-      }) 
+      }) .finally(setLoading(false))
     }
   }, [searchParams]);
-  useEffect(()=>{
-
-    getData();
-  },[])
   const [issueDetails, setIssueDetails] = useState({
     deviceId: "",
     deviceType: "",
@@ -111,6 +92,7 @@ const page = () => {
     facultyName: "",
     facultyLabIncharge: "",
     details: "",
+    labNo:lab.labNo,
   });
 
   const handleChange = (e) => {
@@ -149,9 +131,15 @@ const page = () => {
   
   const handleReset = (e) => {
     window.alert("You are about to reset");
+    window.location.reload();
   };
-
  
+  if (loading) {
+    return <div className='font-extrabold'>Loading...</div>;  // Display loading message or spinner
+  }
+  if (!lab) {
+    return <div>No data available</div>;  // If no lab data is fetched or null
+  }
   return (
 
     <div className="min-h-screen bg-gradient-to-br from-green-200 to-blue-200 py-10 flex items-center justify-center">

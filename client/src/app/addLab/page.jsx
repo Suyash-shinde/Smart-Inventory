@@ -48,6 +48,7 @@ const AddLabs = () => {
       labNo,
       deviceType:"Computer",
       position:e.pos,
+      status:true,
     };
     setGrid(e.grid);
     setDeviceList((prevList) => ({
@@ -66,6 +67,7 @@ const AddLabs = () => {
       labNo,
       deviceType,
       position:-1,
+      status:true,
        // Include the lab in charge information
     };
     // Update the device list with the new device
@@ -86,7 +88,7 @@ const AddLabs = () => {
       ...deviceList.Computer,
     ];
     console.log(allDevices)
-     const {data} = await addLabPost({labNo,devices:allDevices, inCharge:labInCharge,column:grid.gridc, row:grid.gridr});
+     const {data} = await addLabPost({labNo,devices:allDevices, incharge:labInCharge,column:grid.gridc, row:grid.gridr});
      console.log(data);
   }
   useEffect(()=>{

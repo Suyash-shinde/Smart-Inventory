@@ -201,7 +201,7 @@ const Maintenance = () => {
                       <h6 className="w-1/2">
                         Faculty: {issue.facultyLabIncharge}
                       </h6>
-                      <h6 className="w-1/2">Lab: 1</h6>
+                      <h6 className="w-1/2">Lab: {issue.labNo}</h6>
                       <h6 className="w-1/2">Device: {issue.deviceType}</h6>
                     </div>
                   </div>
@@ -228,7 +228,7 @@ const Maintenance = () => {
               <p className="text-center text-gray-500">No issues found.</p>
             )}
           </ul>
-          <MaintenanceModal
+          {selectedIssue? <MaintenanceModal
             isOpen={isModalOpen}
             onClose={handleCloseModal}
             title="Issue Details"
@@ -239,13 +239,13 @@ const Maintenance = () => {
                 <h6>Issue Id: {selectedIssue._id}</h6>
                 <h6>Date: {selectedIssue.date}</h6>
                 <h6>Faculty: {selectedIssue.facultyLabIncharge}</h6>
-                <h6>Lab: 1</h6>
+                <h6>Lab: {selectedIssue.labNo}</h6>
                 <h6>Device: {selectedIssue.deviceType}</h6>
                 <h6>Status: {selectedIssue.status}</h6>
                 
               </>
             )}
-          </MaintenanceModal>
+          </MaintenanceModal>:<div></div>}
         </main>
       </div>
     </>

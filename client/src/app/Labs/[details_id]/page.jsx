@@ -6,14 +6,12 @@ import Piechart from "../../components/Piechart";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import { cards } from "../../data";
+import LabLayout from "@/app/components/LabLayout";
 
 const LabDetails = ({ params }) => {
   const id = params.details_id;
-  const [lab, setLab] = useState({
-    labNo: "",
-    labDescription: "This lab takes care of ",
-    incharge: "",
-  });
+  const [lab, setLab] = useState(null);
+  const [loading, setLoading]= useState(true);
   const [pie,setPie] = useState([])
   const popPie = (input) => {
     const updatedPie = [...pie]; // Create a copy of the current pie state
@@ -77,10 +75,14 @@ const LabDetails = ({ params }) => {
       popPie(response.data.data.devices)
     }).catch((error)=>{
       console.log("Error found ",error);
-      
-    })
+    }).finally(setLoading(false));
   }, [id]);
-
+  if (loading) {
+    return <div className='font-extrabold'>Loading...</div>;  // Display loading message or spinner
+  }
+  if (!lab) {
+    return <div>No data available</div>;  // If no lab data is fetched or null
+  }
   return (
     <>
     
@@ -89,7 +91,7 @@ const LabDetails = ({ params }) => {
       <div className="min-h-screen p-6 bg-slate-100">
         <div className="flex flex-col items-center p-10 bg-white border-2 shadow-lg rounded-xl">
           <h1 className="text-4xl font-bold text-gray-800">{lab.labNo}</h1>
-          <p className="text-lg mt-4">{lab.labDescription}</p>
+          <p className="text-lg mt-4">This lab takes care of </p>
           <p className="text-lg mt-4">Incharge: {lab.incharge}</p>
           <div className="max-w-[1200px] mx-auto py-[50px] grid lg:grid-cols-4 sm:grid-cols-2 gap-6 ">
         <div className=" text-white w-60 mx-auto bg-black sm:w-64 p-4">
@@ -119,7 +121,9 @@ const LabDetails = ({ params }) => {
         
       
         </div>
-
+      <div>
+        <LabLayout data={lab}></LabLayout>
+      </div>
         <button
           onClick={handleOnClick}
           className="bg-red-500 rounded-md m-2 p-2 shadow-md"

@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect } from 'react'
-import Card2 from './Card2';
+import Card4 from './Card4';
 import { useState } from 'react';
 
 
@@ -175,33 +175,13 @@ const json=[
     ];
 
 
-const ViewLayout = ({data, handleDeviceId}) => {
+const LabLayout = ({data}) => {
     const [computers,setComputers] = useState([]);
     const [seats,setSeats] = useState(json);
-    const [position,setPosition]=useState(null);
-    const [counter,setCounter] = useState(1);
-    
-    const handleClick=(e)=>{
-        if(e.selected){
-            e.selected=false;
-            setCounter(1);
-            handleDeviceId("");
-        }
-        else{
-            if(counter===0){
-                console.warn("Select only one device at a time");
-            }
-            else{
-                console.log(e)
-                handleDeviceId(e.id);
-                setCounter(0);
-            }
-        }
-    }
+
     const handleSetComputers=()=>{
         const updatedComputers = seats.map((seat) => {
             // Find the corresponding device from the backend data
-            console.log("a");
                 const device = data.devices?.find(device => device.position === seat.key);
                 if (device && device.deviceType === "Computer") {
                     // If there's a matching device and it's a computer, return the combined object
@@ -237,9 +217,9 @@ const ViewLayout = ({data, handleDeviceId}) => {
   
   return (
     <>
-        <div className='w-96 bg-gray-100 m-2 rounded'>
+        <div className='w-auto max-h-full m-2 rounded'>
             <div className='bg-gray-600 h-20 flex justify-center items-center text-large font-bold'>BlackBoard</div>
-            <div className={`z-10 h-auto mt-5 mb-10  grid gap-y-2 `}
+            <div className={`z-10 min-h-fit mt-5 mr-2 mb-10 grid gap-y-1 `}
                 style={{
                     display: 'grid',
                     gridTemplateColumns: `repeat(${data.column}, 1fr)`,
@@ -248,8 +228,8 @@ const ViewLayout = ({data, handleDeviceId}) => {
                 {computers.map((device) => {
                         if(device.position <= (data.row) * (data.column) ){
                             return (
-                                <div key={device.id} className='h-7 w-7'>
-                                    <Card2  deviceId={device.id} setCounter = {setCounter} handleDeviceId = {handleDeviceId} counter={counter} key={device.id} position={device.position} selected={device.selected} isVisible={device.isVisible}></Card2>
+                                <div key={device.id} className='w-6 h-6'>
+                                    <Card4  status={device.status} deviceId={device.id} key={device.id} position={device.position} selected={device.selected} isVisible={device.isVisible}></Card4>
                                 </div>
                             )
                         }
@@ -260,5 +240,5 @@ const ViewLayout = ({data, handleDeviceId}) => {
 )
 }
 
-export default ViewLayout
+export default LabLayout
 

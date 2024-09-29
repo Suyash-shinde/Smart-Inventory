@@ -1,4 +1,5 @@
 import asyncHandler from '../Middlewares/asyncHandler.js';
+import { Device } from '../Models/device.model.js';
 import { Issue } from '../Models/issue.model.js';
 
  //@desc Adding issue to db
@@ -7,7 +8,7 @@ import { Issue } from '../Models/issue.model.js';
 export const createIssue =  async (req,res,next) => {
     try {
         //const {deviceId,deviceType,date,facultyName,facultyLabIncharge,details} =req.body;
-        const {deviceId,deviceType,date,facultyLabIncharge,details} =req.body;
+        const {deviceId,deviceType,date,facultyLabIncharge,details,labNo} =req.body;
         if(!deviceId|| !deviceType|| !date||!facultyLabIncharge||!details){
             return res.json({
                 status:false,
@@ -21,7 +22,8 @@ export const createIssue =  async (req,res,next) => {
             //facultyName,
             status:"pending",
             facultyLabIncharge,
-            details
+            details,
+            labNo
         })
         if(!addIssue){
             return res.json({
@@ -29,6 +31,15 @@ export const createIssue =  async (req,res,next) => {
                 msg:"Error in creating a new Issue"
             })
         }
+        const findDevice = await Device.findOne({id:deviceId});
+        if(!findDevice){
+            return res.json({
+                status:false,
+                msg:"error updating the data"
+            })
+        }
+        findDevice.status=false;
+        await findDevice.save({validateBeforeSave:false});
         return res.json({
             status:true,
             msg:"Added issue to db"
