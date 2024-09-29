@@ -105,7 +105,7 @@
   color: white !important;
 }
 .dark textarea {
-  background-color: #121212; /* Dark background */
+  background-color: #ffffff; /* Dark background */
   color: #fff; /* Light text color */
   border: 1px solid #555; /* Optional border color */
 }
@@ -113,6 +113,6 @@
   background-color: #fff; /* Dark background */
   color: #fff;
 }
-.dark text{
-  color: #121212;
+.dark text label{
+  color: #000000;
 }
