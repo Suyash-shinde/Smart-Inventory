@@ -8,8 +8,8 @@ const MaintenanceModal = ({ isOpen, onClose, title, children, issueData }) => {
   const getData = async()=>{
 
     try {
-      const {data}= await getLabPost({labNo:510});
-      console.log(data.data);
+      const {data}= await getLabPost({labNo:issueData.labNo});
+      console.log("number", issueData);
       setLab(data.data);  // Update the state with fetched data
     } catch (error) {
       console.error("Error fetching lab data:", error);
@@ -19,6 +19,7 @@ const MaintenanceModal = ({ isOpen, onClose, title, children, issueData }) => {
 
   }
   useEffect(() => {
+    console.log("lab", issueData)
     getData();
     console.log(lab);
     if (isOpen) {

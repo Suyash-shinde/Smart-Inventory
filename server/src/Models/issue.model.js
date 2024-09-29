@@ -6,6 +6,9 @@ const issueSchema = new Schema({
     deviceId:{
         type:String,
     },
+    labNo:{
+        type:Number,
+    },
     deviceType:{
         type:String,
         required:true,
