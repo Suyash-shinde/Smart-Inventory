@@ -175,14 +175,28 @@ const json=[
     ];
 
 
-const ViewLayout = ({data}) => {
+const ViewLayout = ({data, handleDeviceId}) => {
     const [computers,setComputers] = useState([]);
     const [seats,setSeats] = useState(json);
     const [position,setPosition]=useState(null);
-    const setSelect =(e)=>{ 
-        setSeats(seats.map(seat=>
-            seat.key === device.position ? { ...seat, selected: !seat.selected } : seat
-        ));
+    const [counter,setCounter] = useState(1);
+    
+    const handleClick=(e)=>{
+        if(e.selected){
+            e.selected=false;
+            setCounter(1);
+            handleDeviceId("");
+        }
+        else{
+            if(counter===0){
+                console.warn("Select only one device at a time");
+            }
+            else{
+                console.log(e)
+                handleDeviceId(e.id);
+                setCounter(0);
+            }
+        }
     }
     const handleSetComputers=()=>{
         const updatedComputers = seats.map((seat) => {
@@ -223,8 +237,9 @@ const ViewLayout = ({data}) => {
   
   return (
     <>
-        <div className=''>
-            <div className={`z-10 h-screen-full mt-5 mb-10 ml-10 grid gap-y-10 `}
+        <div className='w-auto bg-gray-100 m-2 rounded'>
+            <div className='bg-gray-600 h-20 flex justify-center items-center text-large font-bold'>BlackBoard</div>
+            <div className={`z-10 h-auto mt-5 mb-10  grid gap-y-10 `}
                 style={{
                     display: 'grid',
                     gridTemplateColumns: `repeat(${data.column}, 1fr)`,
@@ -233,13 +248,13 @@ const ViewLayout = ({data}) => {
                 {computers.map((device) => {
                         if(device.position <= (data.row) * (data.column) ){
                             return (
-                                <div key={device.id} onClick={() => { setSelect(device) }} >
-                                    <Card2  deviceId={device.id} key={device.id} position={device.position} selected={device.selected} isVisible={device.isVisible}></Card2>
+                                <div key={device.id}>
+                                    <Card2  deviceId={device.id} setCounter = {setCounter} handleDeviceId = {handleDeviceId} counter={counter} key={device.id} position={device.position} selected={device.selected} isVisible={device.isVisible}></Card2>
                                 </div>
                             )
                         }
                 })}
-            </div>{/*device.key <= (grid.gridr) * (grid.gridc) */}
+            </div>
         </div>
     </>
 )
