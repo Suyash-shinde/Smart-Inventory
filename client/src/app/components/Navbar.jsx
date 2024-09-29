@@ -32,7 +32,7 @@ export default function Navbar() {
 
   return (
     <main>
-      <nav className="flex justify-between px-8 items-center py-6   ">
+      <nav className="flex justify-between px-8 items-center py-8 h-20   ">
         <div className="flex items-center gap-8">
           <section className="flex items-center gap-4">
             {/* menu */}
@@ -41,9 +41,10 @@ export default function Navbar() {
               className="text-3xl cursor-pointer lg:hidden"
             />
             {/* logo */}
-            <Link href={"/"} className="text-4xl font-mono">
-              logo
+            <Link href="/" className="text-4xl font-mono">
+              <img src="/image.png" alt="logo" className="h-12 w-auto" />
             </Link>
+
           </section>
           {navlinks.map((d, i) => (
             <Link
