@@ -7,6 +7,8 @@ import {
   parseCookie,
   getPropertyFromCookie,
 } from "../../../utils/useCookie";
+import { useRouter } from 'next/navigation'; 
+
 import { useSearchParams } from "next/navigation";
 // import "dotenv/config";
 import { cards } from "../../../data";
@@ -15,6 +17,8 @@ import { issuePost } from "../../../utils/APIpost";
 import { getLabPost } from "../../../utils/APIpost";
 import ViewLayout from "@/app/components/ViewLayout";
 const page = () => {
+  const router=useRouter();
+
   const searchParams = useSearchParams();
   //const id=searchParams.get('id');
 
@@ -107,6 +111,7 @@ const page = () => {
   const sendData = async () => {
     const myData = issueDetails;
     const result = await issuePost(myData);
+    router.push("/Labs")
   };
 
   const handleSubmit = async (e) => {

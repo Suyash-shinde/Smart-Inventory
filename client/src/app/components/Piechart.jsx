@@ -7,6 +7,7 @@ import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 const getColor = (name) => {
   if (name === "Computer") return '#d4d884';
   if (name === "Fan") return '#d88884';
+  if (name === "Projector") return '#84d8b2';
   return '#8884d8'; // Default color for other devices
 };
 // data is coming like {
