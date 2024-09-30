@@ -42,7 +42,7 @@ const Maintenance = () => {
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     if (runOnce.current === false) {
       fetchData();
@@ -228,24 +228,27 @@ const Maintenance = () => {
               <p className="text-center text-gray-500">No issues found.</p>
             )}
           </ul>
-          {selectedIssue? <MaintenanceModal
-            isOpen={isModalOpen}
-            onClose={handleCloseModal}
-            title="Issue Details"
-            issueData={selectedIssue}
-          >
-            {selectedIssue && (
-              <>
-                <h6>Issue Id: {selectedIssue._id}</h6>
-                <h6>Date: {selectedIssue.date}</h6>
-                <h6>Faculty: {selectedIssue.facultyLabIncharge}</h6>
-                <h6>Lab: {selectedIssue.labNo}</h6>
-                <h6>Device: {selectedIssue.deviceType}</h6>
-                <h6>Status: {selectedIssue.status}</h6>
-                
-              </>
-            )}
-          </MaintenanceModal>:<div></div>}
+          {selectedIssue ? (
+            <MaintenanceModal
+              isOpen={isModalOpen}
+              onClose={handleCloseModal}
+              title="Issue Details"
+              issueData={selectedIssue}
+            >
+              {selectedIssue && (
+                <>
+                  <h6>Issue Id: {selectedIssue._id}</h6>
+                  <h6>Date: {selectedIssue.date}</h6>
+                  <h6>Faculty: {selectedIssue.facultyLabIncharge}</h6>
+                  <h6>Lab: {selectedIssue.labNo}</h6>
+                  <h6>Device: {selectedIssue.deviceType}</h6>
+                  <h6>Status: {selectedIssue.status}</h6>
+                </>
+              )}
+            </MaintenanceModal>
+          ) : (
+            <div></div>
+          )}
         </main>
       </div>
     </>
