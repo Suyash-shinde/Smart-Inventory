@@ -96,7 +96,7 @@ const page = () => {
     facultyName: "",
     facultyLabIncharge: "",
     details: "",
-    labNo:lab.labNo,
+    labNo:"",
   });
 
   const handleChange = (e) => {
@@ -109,10 +109,11 @@ const page = () => {
     console.log(issueDetails);
   }
   const sendData = async () => {
-    const myData = issueDetails;
-    const result = await issuePost(myData);
-    router.push("/Labs")
-  };
+  const myData = issueDetails;
+  const result = await issuePost(myData);
+  const path = `/Labs/Form?id=1/Pdf`;
+  router.push(path);
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
