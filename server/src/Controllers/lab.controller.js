@@ -13,7 +13,6 @@ export const addlab=async(req,res,next)=>{
                 status:false,
             })
         }
-        console.log(devices);
         const devicePromises = devices.map(async (device) => {
             const findDevice = await Device.findOne({ id: device.id });
             return findDevice ? findDevice._id : null;
@@ -44,7 +43,6 @@ export const getLabData =async(req,res,next)=>{
     try{
         const {labNo} = req.body;
         const getLab = await Lab.findOne({labNo}).populate('devices').exec();
-        console.log(labNo)
         if(!getLab){    
             return res.json({
                 msg:"Error fetching lab data",
