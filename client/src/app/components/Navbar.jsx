@@ -39,6 +39,14 @@ export default function Navbar() {
       labe: "Dashboard",
       link: "/Dashboard",
     },
+    {
+      labe: "AddLab",
+      link: "/addLab",
+    },
+    {
+      labe: "My Issues",
+      link: "/userIssues",
+    },
   ];
  
   useEffect(() => {

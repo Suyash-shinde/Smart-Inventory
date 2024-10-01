@@ -40,7 +40,7 @@ const page = () => {
   const [lab,setLab] = useState({});
   const [loading, setLoading] = useState(true);
   const [devicevalue,setDeviceValue] = useState(null);
-  
+  const [faculty,setFaculty]=useState("");
   
 
  
@@ -56,7 +56,10 @@ const page = () => {
       let cookieReq = getCookie("user"); //this gets me the cookie associated with user
       let parsed = parseCookie(cookieReq).user;
       let fetchedName = getPropertyFromCookie(parsed, "name");
-
+      if(fetchedName){
+        setFaculty(fetchedName);
+      }
+      console.log("name",fetchedName)
       let id = +searchParams.get("id");
 
       //console.log(typeof(id));
@@ -89,11 +92,12 @@ const page = () => {
       }) .finally(setLoading(false))
     }
   }, [searchParams]);
+
   const [issueDetails, setIssueDetails] = useState({
     deviceId: "",
     deviceType: "",
     date: getDate(),
-    facultyName: "",
+    facultyName: faculty,
     facultyLabIncharge: "",
     details: "",
     labNo:"",
@@ -109,11 +113,18 @@ const page = () => {
     console.log(issueDetails);
   }
   const sendData = async () => {
-  const myData = issueDetails;
-  const result = await issuePost(myData);
-  const path = `/Labs/Form?id=1/Pdf`;
-  router.push(path);
-};
+
+    const myData = issueDetails;
+    const {data} = await issuePost(myData);
+    if(data.status===false){
+      console.log(data.msg);
+    }
+    else{
+      router.push("/Labs")
+    }
+    
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
