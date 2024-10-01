@@ -3,12 +3,13 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-import { NextUIProvider } from '@nextui-org/react';
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+// import { NextUIProvider } from "@nextui-org/react"; // Commented out
+// import { ThemeProvider as NextThemesProvider } from "next-themes"; // Commented out
 import { Providers } from "./providers";
 import { Toaster } from "react-hot-toast";
-import { useEffect } from 'react';
-import { useTheme } from 'next-themes';
+import { useEffect } from "react";
+import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
 
 // export const metadata = {
 //   title: "Smart Inventory",
@@ -17,44 +18,47 @@ import { useTheme } from 'next-themes';
 
 export default function RootLayout({ children }) {
   const { theme } = useTheme();
+  const pathname = usePathname();
 
   useEffect(() => {
     document.body.className = theme; // Add a class to the body
   }, [theme]);
+
+  const showNavbar =
+    pathname !== "/login" && pathname !== "/login/admin" && pathname !== "/";
+
   return (
     <html lang="en">
-      
-        <body>
-          <Providers>
-          <Navbar />
-          {children}
-          <Toaster
-        position="bottom-right"
-        reverseOrder={false}
-        toastOptions={{
-          // Customize default options
-          style: {
-            borderRadius: '10px',
-            background: '#333',
-            color: '#fff',
-          },
-          success: {
-            duration: 4000,
+      <body>
+        {/* <Providers> */}
+        {showNavbar && <Navbar />}
+        {children}
+        <Toaster
+          position="bottom-right"
+          reverseOrder={false}
+          toastOptions={{
+            // Customize default options
             style: {
-              background: '#28a745',
+              borderRadius: "10px",
+              background: "#333",
+              color: "#fff",
             },
-          },
-          error: {
-            duration: 4000,
-            style: {
-              background: '#dc3545',
+            success: {
+              duration: 4000,
+              style: {
+                background: "#28a745",
+              },
             },
-          },
-        }}
-      />
-          </Providers>
-        </body>
-        
+            error: {
+              duration: 4000,
+              style: {
+                background: "#dc3545",
+              },
+            },
+          }}
+        />
+        {/* </Providers> */}
+      </body>
     </html>
   );
 }

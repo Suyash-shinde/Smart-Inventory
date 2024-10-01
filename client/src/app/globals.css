@@ -104,15 +104,15 @@
 .react-hot-toast .toast-icon {
   color: white !important;
 }
-.dark textarea {
-  background-color: #ffffff; /* Dark background */
-  color: #fff; /* Light text color */
-  border: 1px solid #555; /* Optional border color */
+/* .dark textarea {
+  background-color: #ffffff;
+  color: #fff;
+  border: 1px solid #555; 
 }
 .dark ::placeholder{
-  background-color: #fff; /* Dark background */
+  background-color: #fff;
   color: #fff;
 }
 .dark text label{
   color: #000000;
-}
+} */
