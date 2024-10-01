@@ -100,7 +100,7 @@ const page = () => {
     facultyName: faculty,
     facultyLabIncharge: "",
     details: "",
-    labNo:lab.labNo,
+    labNo:"",
   });
 
   const handleChange = (e) => {
@@ -113,6 +113,7 @@ const page = () => {
     console.log(issueDetails);
   }
   const sendData = async () => {
+
     const myData = issueDetails;
     const {data} = await issuePost(myData);
     if(data.status===false){
@@ -123,6 +124,7 @@ const page = () => {
     }
     
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
