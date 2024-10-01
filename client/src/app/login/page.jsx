@@ -4,7 +4,7 @@ import { loginRoute } from "../utils/APIroutes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
-import { FaUserCircle } from "react-icons/fa";
+import { MdAdminPanelSettings } from "react-icons/md";
 
 const Page = () => {
   const router = useRouter();
@@ -74,7 +74,7 @@ const Page = () => {
     <div className="flex flex-col h-screen overflow-hidden md:flex-row">
       <div className="flex items-center justify-center h-full bg-emerald-800 md:w-1/2">
         <div className="p-10">
-          <FaUserCircle className="w-48 h-48 text-white" />
+          <MdAdminPanelSettings className="w-48 h-48 text-white" />
         </div>
       </div>
       <div className="flex items-center justify-center h-full bg-white md:w-1/2">
