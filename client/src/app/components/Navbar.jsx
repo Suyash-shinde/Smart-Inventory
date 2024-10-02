@@ -139,7 +139,7 @@ function deleteAllCookies() {
                
                 <div onClick={handleLogout}>Logout</div>
             </button>
-            {/* <Toggle/> */}
+            <Toggle/>
         </div>
                        )}
                         

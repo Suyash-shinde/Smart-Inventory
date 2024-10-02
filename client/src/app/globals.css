@@ -112,9 +112,13 @@
 .dark ::placeholder{
   background-color: #fff; /* Dark background */
   color: #fff;
+  
 }
 .dark text label{
   color: #000000;
+}
+.dark {
+  background-color: #001e2b;
 }
 
 

@@ -18,10 +18,12 @@ const page = ({params}) => {
     // onBeforePrint: handleBeforePrint,
   });
   return (
-    <>
+    
+    <div className='flex items-center flex-col'>
   <FormIssue ref={componentRef} location ={id} deviceId={deviceId}/>
-  <button onClick={toPrint}>Print</button>
-  </>
+  <button className="bg-blue-500 py-3 px-8 my-4 rounded-md text-white font-bold " onClick={toPrint}>Print</button>
+  </div>
+  
   )
 }
 
