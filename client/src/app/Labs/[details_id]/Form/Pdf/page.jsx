@@ -3,7 +3,12 @@ import React, {useRef} from 'react'
 import { useReactToPrint } from 'react-to-print';
 import { usePDF } from 'react-to-pdf';
 import FormIssue from './formIssue';
-const page = () => {
+import { useSearchParams } from "next/navigation";
+
+const page = ({params}) => {
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  const deviceId=searchParams.get('deviceId')
   const componentRef = useRef(null);
   const toPrint = useReactToPrint({
     contentRef: componentRef,
@@ -14,7 +19,7 @@ const page = () => {
   });
   return (
     <>
-  <FormIssue ref={componentRef}/>
+  <FormIssue ref={componentRef} location ={id} deviceId={deviceId}/>
   <button onClick={toPrint}>Print</button>
   </>
   )
