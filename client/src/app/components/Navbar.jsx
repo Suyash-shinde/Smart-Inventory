@@ -1,20 +1,23 @@
 "use client";
 import Link from "next/link";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { ThemeSwitcher } from "./ThemeSwitcher";
-
+import { ModeToggle } from "./ModeToggle";
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 // import { CgProfile } from "react-icons/cg";
 import { IoCloseOutline } from "react-icons/io5";
 import clsx from "clsx";
 
-import {getCookie, parseCookie, getPropertyFromCookie} from "../utils/useCookie"
+import {
+  getCookie,
+  parseCookie,
+  getPropertyFromCookie,
+} from "../utils/useCookie";
 
-import Toggle from "./Toggle";
-
+// import Toggle from "./Toggle";
 
 export default function Navbar() {
   const router = useRouter();
@@ -40,26 +43,24 @@ export default function Navbar() {
       link: "/Dashboard",
     },
   ];
- 
+
   useEffect(() => {
-    
-    let userCookie = getCookie("user"); 
-    if(userCookie){
+    let userCookie = getCookie("user");
+    if (userCookie) {
       let parsed = parseCookie(userCookie).user;
-      if(parsed){
-      let parsedName = getPropertyFromCookie(parsed, "name");
-      if(parsedName){
-      console.log(parsedName)
-      // setName(parsedName.charAt(0).toUpperCase());
-      setName(parsedName)
+      if (parsed) {
+        let parsedName = getPropertyFromCookie(parsed, "name");
+        if (parsedName) {
+          console.log(parsedName);
+          // setName(parsedName.charAt(0).toUpperCase());
+          setName(parsedName);
+        }
       }
-   
-       }
-      }
-  }, [])
+    }
+  }, []);
   const handleDropdownToggle = () => {
     setDropdownOpen((prev) => !prev);
-};
+  };
 
   const handleLogout = () => {
     // PURE CHATGPTEEEEEEEED
@@ -68,9 +69,8 @@ export default function Navbar() {
     setName("");
     // Optionally, redirect the user or update state
     // window.location.reload();
-    router.push('/login');
-     
-};
+    router.push("/login");
+  };
   return (
     <main>
       <nav className="flex justify-between px-8 items-center py-8 h-20   ">
@@ -85,7 +85,6 @@ export default function Navbar() {
             <Link href="/" className="text-4xl font-mono">
               <img src="/image.png" alt="logo" className="h-12 w-auto" />
             </Link>
-
           </section>
           {navlinks.map((d, i) => (
             <Link
@@ -96,44 +95,42 @@ export default function Navbar() {
               {d.labe}
             </Link>
           ))}
-          
-        
         </div>
-      <div className="flex items-center gap-2 cursor-pointer">
-      { name &&  ( <div className="relative">
-            <span className="w-14 h-14 flex items-center justify-center bg-gray-300 rounded-full text-xl"  onClick={handleDropdownToggle}>
-             <div className=" text-4xl font-semibold" > {name.charAt(0).toUpperCase()}</div>
-            </span>
-            {dropdownOpen && (
-                          
-                            <div  className="absolute right-0 mt-3 flex w-60 flex-col gap-3 rounded-xl bg-slate-900 p-4 text-slate-100 shadow-lg">
-            <div className="flex gap-3 items-center">
-                <div className="flex items-center justify-center rounded-lg h-12 w-12 overflow-hidden border-2 border-slate-600">
+        <div className="flex items-center gap-2 cursor-pointer">
+          {name && (
+            <div className="relative">
+              <span
+                className="w-14 h-14 flex items-center justify-center bg-gray-300 rounded-full text-xl"
+                onClick={handleDropdownToggle}
+              >
+                <div className=" text-4xl font-semibold">
+                  {" "}
                   {name.charAt(0).toUpperCase()}
                 </div>
-                <div>
-                    <div className="flex gap-1 text-sm font-semibold">
-                        <span>{name}</span>
-                       
+              </span>
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-3 flex w-60 flex-col gap-3 rounded-xl bg-slate-900 p-4 text-slate-100 shadow-lg">
+                  <div className="flex gap-3 items-center">
+                    <div className="flex items-center justify-center rounded-lg h-12 w-12 overflow-hidden border-2 border-slate-600">
+                      {name.charAt(0).toUpperCase()}
                     </div>
-                   
+                    <div>
+                      <div className="flex gap-1 text-sm font-semibold">
+                        <span>{name}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="border-t border-slate-500/30"></div>
+
+                  <button className="flex justify-center gap-3 rounded-md bg-red-600 py-2 px-3 font-semibold hover:bg-red-500 focus:ring-2 focus:ring-red-400">
+                    <div onClick={handleLogout}>Logout</div>
+                  </button>
+                  <ModeToggle />
                 </div>
+              )}
             </div>
-            <div className="border-t border-slate-500/30"></div>
-           
-            
-       
-            <button className="flex justify-center gap-3 rounded-md bg-red-600 py-2 px-3 font-semibold hover:bg-red-500 focus:ring-2 focus:ring-red-400">
-               
-                <div onClick={handleLogout}>Logout</div>
-            </button>
-            <Toggle/>
+          )}
         </div>
-                       )}
-                        
-          </div>)}
-          
-         </div>
         {/* sidebar mobile menu */}
         <div
           className={clsx(
@@ -154,7 +151,6 @@ export default function Navbar() {
             ))}
           </section>
         </div>
-        
       </nav>
       <hr className=" " />
     </main>
