@@ -1,5 +1,5 @@
 import axios from "axios";
-import { addLabRoute, getDataRoute, issueRoute,refreshTokenRoute } from "./APIroutes";
+import { addLabRoute, getDataRoute, getUserIssueRoute, handleResolveRoute, issueRoute,refreshTokenRoute } from "./APIroutes";
 const api = axios.create({
     baseURL: "http://localhost:3000 ",
     withCredentials: true,
@@ -12,7 +12,8 @@ const api = axios.create({
 export const issuePost=(data)=>api.post(issueRoute,data);  
 export const addLabPost=(data)=>api.post(addLabRoute,data);
 export const getLabPost=(data)=>api.post(getDataRoute,data);
-
+export const getUserIssue=(data)=>api.post(getUserIssueRoute,data);
+export const handleResolvePost=(data)=>api.post(handleResolveRoute,data);
 api.interceptors.response.use(
     (config)=>{
         return config;

@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import toast,{ Toaster } from 'react-hot-toast';
 
 const page = () => {
-  const router=useRouter();
+    const router=useRouter();
   
   const [user,setUser] = useState({});
   const handleChange=(e)=>{
@@ -62,7 +62,7 @@ const page = () => {
       const { data } = await sendPromise; // Wait for the data to be sent
       if (data.status === true) {
         // Redirect to dashboard if login is successful
-        router.push("/Dashboard");
+        router.push("/Labs");
       }
     } catch (error) {
       // Handle error state here (optional, as toast.promise will show an error message)
@@ -87,7 +87,7 @@ const page = () => {
                 <label className={styles.title}>Password</label>
                 <input className={styles.input}
                 placeholder='Password'
-                type='text' name='password' 
+                type='password' name='password' 
                 onChange={(e)=> handleChange(e)}></input>
                 </div>
                 <button className={styles.submit} onClick={(e)=>handleSubmit(e)}>Login</button>
