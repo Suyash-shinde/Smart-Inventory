@@ -42,7 +42,7 @@ const Maintenance = () => {
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     if (runOnce.current === false) {
       fetchData();
@@ -340,6 +340,7 @@ const Maintenance = () => {
                       : "bg-red-500"
                   }`}
                 >
+
                   <span className="font-semibold text-white" style={{ writingMode: "vertical-lr" }}>
                     {issue.status}
                   </span>
