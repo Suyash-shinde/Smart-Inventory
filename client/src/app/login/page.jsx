@@ -62,7 +62,7 @@ const Page = () => {
       const { data } = await sendPromise; // Wait for the data to be sent
       if (data.status === true) {
         // Redirect to dashboard if login is successful
-        router.push("/Dashboard");
+        router.push("/Labs");
       }
     } catch (error) {
       // Handle error state here (optional, as toast.promise will show an error message)
@@ -79,7 +79,7 @@ const Page = () => {
       </div>
       <div className="flex items-center justify-center h-full bg-white md:w-1/2">
         <div className="w-full max-w-md p-6 space-y-10">
-          <h2 className="text-4xl font-bold text-center">Admin Login</h2>
+          <h2 className="text-4xl font-bold text-center">User Login</h2>
           <div className="space-y-6">
             <div className="space-y-2">
               <label className="block text-gray-700">PRN Number</label>

@@ -1,6 +1,7 @@
 import { FaUserGear } from "react-icons/fa6";
 
 const TechnicianLogin = () => {
+  
   return (
     <div className="flex flex-col h-screen overflow-hidden md:flex-row">
       <div className="flex items-center justify-center h-full bg-sky-800 md:w-1/2">

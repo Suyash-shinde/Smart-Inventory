@@ -28,7 +28,7 @@ export default function Home() {
             size={100}
             className="text-black transition-colors duration-500 group-hover:text-white"
           />
-          <div className="text-xl font-bold">Admin</div>
+          <div className="text-xl font-bold">User</div>
         </div>
 
         <div
