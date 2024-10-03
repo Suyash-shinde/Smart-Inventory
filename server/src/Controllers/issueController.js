@@ -116,6 +116,7 @@ export const createIssue =  async (req,res,next) => {
     });
 
     }
+}
 
  export const getUserIssue=async(req,res,next)=>{
     try{
