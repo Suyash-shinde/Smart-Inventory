@@ -6,13 +6,15 @@ import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import { MdAdminPanelSettings } from "react-icons/md";
 
-const Page = () => {
-  const router = useRouter();
 
-  const [user, setUser] = useState({});
-  const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-  };
+const page = () => {
+    const router=useRouter();
+  
+  const [user,setUser] = useState({});
+  const handleChange=(e)=>{
+    setUser({...user,[e.target.name]:e.target.value});
+  }
+
   const handleValidation = () => {
     const { prn, password } = user;
     if (prn === "" || password === "") {
@@ -71,6 +73,7 @@ const Page = () => {
   };
 
   return (
+
     <div className="flex flex-col h-screen overflow-hidden md:flex-row">
       <div className="flex items-center justify-center h-full bg-emerald-800 md:w-1/2">
         <div className="p-10">
@@ -109,6 +112,7 @@ const Page = () => {
               >
                 Login
               </button>
+
             </div>
           </div>
           <div className="text-center">
@@ -128,4 +132,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default page;
