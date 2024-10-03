@@ -10,4 +10,5 @@ router.route("/refresh").post(refreshAccessToken);
 router.route("/addLab").post(verifyJwt, addlab);
 router.route("/getLab").post(verifyJwt,getLabData);
 router.route("/getAllLabs").get(getAllLabs)
+
 export default router;  

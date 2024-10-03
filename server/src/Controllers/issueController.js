@@ -78,6 +78,45 @@ export const createIssue =  async (req,res,next) => {
         }
  }
 
+
+
+ //@desc Send a specific issue to frontend form page
+ //@ route /api/issue/id
+ //
+
+ export const getIssueId = async (req,res,next) =>{
+    try {
+        const {id}=req.body;
+        if(!id)
+        {
+            return res.json({
+                status:false,
+                msg:"No id sent"
+            })
+        }
+        const findIssue= await Issue.findOne({deviceId:id});
+        if(!findIssue){
+            return res.json({
+                status:false,
+                msg:"Isue not open"
+            });
+        }
+        else{
+            return res.json({
+                status:true,
+                msg:"Data related to Issue sent",
+                data:findIssue,
+            })
+        }
+    } catch (error) {
+        console.error("Error fetching issue:", error);
+    return res.status(500).json({
+      status: false,
+      msg: "Server error",
+    });
+
+    }
+
  export const getUserIssue=async(req,res,next)=>{
     try{
         const {name} = req.body;
