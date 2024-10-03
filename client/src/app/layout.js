@@ -1,4 +1,4 @@
-// "use client"; // Add this at the top of the file
+"use client"; // Add this at the top of the file
 
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -7,8 +7,7 @@ import Navbar from "./components/Navbar";
 // import { NextUIProvider } from "@nextui-org/react"; // Commented out
 // import { ThemeProvider as NextThemesProvider } from "next-themes"; // Commented out
 import { Providers } from "./providers";
-import { Toaster } from "react-hot-toast";
-import { useEffect } from "react";
+
 import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 
@@ -31,9 +30,7 @@ export default function RootLayout({ children }) {
 
   const pathname = usePathname();
 
-  useEffect(() => {
-    document.body.className = theme; // Add a class to the body
-  }, [theme]);
+ 
 
   const showNavbar =
     pathname !== "/login" && pathname !== "/login/admin" && pathname !== "/";
@@ -81,8 +78,7 @@ export default function RootLayout({ children }) {
               },
             },
 
-          },
-        }}
+          }}
       />
        </ThemeProvider>
 

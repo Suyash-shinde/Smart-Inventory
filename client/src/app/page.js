@@ -16,7 +16,10 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center h-screen bg-gray-100 border-4">
-      <div className="py-20 text-5xl font-bold text-center text-black">
+      <div className="py-10 text-5xl font-bold text-center text-green-700">
+        Smart Inventory
+      </div>
+      <div className="py-20 text-3xl font-bold text-center text-black">
         Identify Your Role
       </div>
       <div className="flex items-center w-full justify-evenly">
