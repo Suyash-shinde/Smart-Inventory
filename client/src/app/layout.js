@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
           >
 
           <Navbar />
-          <Layout>{children}</Layout>
+          {children}
           <Toaster
 
         position="bottom-right"
