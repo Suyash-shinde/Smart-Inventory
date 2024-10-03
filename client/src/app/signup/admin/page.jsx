@@ -6,7 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter } from 'next/navigation'; 
 import toast from "react-hot-toast";
-import { RegisterRoute } from "../utils/APIroutes";
+import { adminRegisterRoute } from "../../utils/APIroutes.js";
 
 const page = () => {
   const router = useRouter();
@@ -31,7 +31,7 @@ const page = () => {
     e.preventDefault();
     const { name, prn, email, password } = user;
     if (handleValidation()) {
-      const { data } = await axios.post(RegisterRoute, {
+      const { data } = await axios.post(adminRegisterRoute, {
         email,
         name,
         prn,
@@ -46,13 +46,13 @@ const page = () => {
       } else {
         alert(data.msg);
         console.log(data);
-        router.push("/Labs");
+        router.push("/Maintenance");
       }
     }
   };
 
   return (
-    <div className="mt-20 flex min-h-screen items-center justify-center w-full">
+    <div className=" bg-sky-800 mt-20 flex min-h-screen items-center justify-center w-full">
       <div className="bg-white shadow-md rounded-3xl px-5 py-6 w-full sm:w-[27rem]">
         <h1 className="text-2xl font-bold text-center mb-4">Let's connect!</h1>
         <form onSubmit={(e) => handleSubmit(e)}>
@@ -124,7 +124,7 @@ const page = () => {
           </div>
           <div className="mb-4"></div>
           <div className="flex items-center justify-end mb-4">
-            <Link href="/login" className="text-xs text-black">
+            <Link href="/login/admin" className="text-xs text-black">
               Login with Account
             </Link>
           </div>

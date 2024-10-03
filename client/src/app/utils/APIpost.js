@@ -14,6 +14,7 @@ export const addLabPost=(data)=>api.post(addLabRoute,data);
 export const getLabPost=(data)=>api.post(getDataRoute,data);
 export const getUserIssue=(data)=>api.post(getUserIssueRoute,data);
 export const handleResolvePost=(data)=>api.post(handleResolveRoute,data);
+
 api.interceptors.response.use(
     (config)=>{
         return config;

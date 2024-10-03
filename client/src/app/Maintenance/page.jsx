@@ -352,22 +352,24 @@ const Maintenance = () => {
           )}
         </ul>
 
-        {selectedIssue && (
-          <MaintenanceModal
+        {selectedIssue? <MaintenanceModal
             isOpen={isModalOpen}
             onClose={handleCloseModal}
             title="Issue Details"
             issueData={selectedIssue}
           >
-            <h6>Issue Id: {selectedIssue._id}</h6>
-            <h6>Date: {selectedIssue.date}</h6>
-            <h6>Faculty: {selectedIssue.facultyLabIncharge}</h6>
-            <h6>Lab: {selectedIssue.labNo}</h6>
-            <h6>Device: {selectedIssue.deviceType}</h6>
-            <h6>Status: {selectedIssue.status}</h6>
-            <h6>Description: {selectedIssue.description}</h6>
-          </MaintenanceModal>
-        )}
+            {selectedIssue && (
+              <>
+                <h6>Issue Id: {selectedIssue._id}</h6>
+                <h6>Date: {selectedIssue.date}</h6>
+                <h6>Faculty: {selectedIssue.facultyLabIncharge}</h6>
+                <h6>Lab: {selectedIssue.labNo}</h6>
+                <h6>Device: {selectedIssue.deviceType}</h6>
+                <h6>Status: {selectedIssue.status}</h6>
+                
+              </>
+            )}
+          </MaintenanceModal>:<div></div>}
       </main>
     </div>
 

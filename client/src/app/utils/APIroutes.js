@@ -7,3 +7,5 @@ export const addLabRoute=`${host}/addLab`;
 export const getDataRoute=`${host}/getLab`;
 export const getUserIssueRoute = `${host}/api/issues/userIssue`;
 export const handleResolveRoute = `${host}/api/issues/resolve`;
+export const adminloginRoute = `${host}/adminlogin`;
+export const adminRegisterRoute = `${host}/adminRegister`

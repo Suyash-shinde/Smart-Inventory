@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken"
 import { User } from "../Models/user.model.js";
+import { Admin } from "../Models/admin.model.js";
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!create admin jwt middleware later!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 export const verifyJwt=async(req, res, next)=>{
     try {
@@ -12,15 +15,22 @@ export const verifyJwt=async(req, res, next)=>{
         }
         const decodedToken= jwt.verify(token,process.env.ACCESS_TOKEN_SECRET);
         const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
-        if(!user){
+        const admin = await Admin.findById(decodedToken?._id).select("-password -refreshToken")
+        if(!user && !admin){
             return res
             .status(401)
             .json({msg:"Invalid Access Token", status:false});
         }
-        req.user=user;
+        if(user){
+            req.user=user;
+        }
+        if(admin){
+            req.user=admin;
+        }
         next();
 
     } catch (error) {
         res.status(405).json({msg:"Invalid Token"});
     }
 }
+

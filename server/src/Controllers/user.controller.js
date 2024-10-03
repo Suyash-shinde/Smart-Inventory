@@ -1,9 +1,25 @@
 import { User } from "../Models/user.model.js";
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt'
+import { Admin } from "../Models/admin.model.js";
 const generateAccessAndRefreshTokens = async(userId)=>{
     try {
         const user = await User.findById(userId)
+        const accessToken = user.genereateAccessTokens()
+        const refreshToken = user.genereateRefreshTokens()
+        user.refreshToken = refreshToken
+        await user.save({ validateBeforeSave: false })
+
+        return {accessToken, refreshToken};
+
+    } catch (error) {
+        console.log(error);     
+        return error;
+    }
+}
+const generateAdminAccessAndRefreshTokens = async(userId)=>{
+    try {
+        const user = await Admin.findById(userId)
         const accessToken = user.genereateAccessTokens()
         const refreshToken = user.genereateRefreshTokens()
         user.refreshToken = refreshToken
@@ -107,6 +123,98 @@ export const login=async(req,res,next)=>{
             msg:"Logged in sucessfully",
             user:sendUser,          
         });
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const adminlogin=async(req,res,next)=>{
+    try {
+        const {prn , password} = req.body;
+        if(!prn || !password){
+            return res.json({
+                status:false,
+                msg:"Fill all fields",
+            })
+        } 
+        const findUser = await Admin.findOne({prn});
+        const isPasswordValid = await bcrypt.compare(password, findUser.password);
+        if(!findUser){
+            return res.json({
+                status:false,
+                msg:"Invalid  prn",
+            });
+        }
+        if(!isPasswordValid){
+            return res.json({
+                status:false,
+                msg:"Incorrect password",
+            });
+        }
+        const sendUser = { 
+            name:findUser.name,
+            prn:findUser.prn,
+            email:findUser.email,
+        };
+        const {accessToken,refreshToken} = await generateAdminAccessAndRefreshTokens(findUser._id);
+        return res
+        .cookie("accessToken",accessToken,options)
+        .cookie("refreshToken", refreshToken, options)
+        .cookie("user",sendUser)
+        .json({
+            status:true,
+            msg:"Logged in sucessfully",
+            user:sendUser,          
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const adminRegister=async(req,res,next)=>{
+    try {
+        const {name,prn,email,password} = req.body;
+        if(!name || !prn || !email || !password){
+            return res.json({
+                status:false,
+                msg:"Fill all the required fields."
+            }); 
+        }
+        const findUser = await Admin.findOne({prn});
+        if(findUser){
+            return res.json({
+                status:false,
+                msg:"User with this prn already exists",
+            });
+        }
+        const hashPassword=await bcrypt.hash(password,10);
+        const createUser= await Admin.create({
+            name,
+            prn,
+            email,
+            password : hashPassword,
+        });
+        if(!createUser){
+            return res.json({
+                status:false,
+                msg:"Error creating new user please try again."
+            })
+        }   
+        const findId= await Admin.findOne({prn});
+        const {accessToken, refreshToken} = await generateAdminAccessAndRefreshTokens(findId._id);
+        const sendUser = { 
+            name,
+            prn,
+            email,
+        };
+        return res
+        .cookie("accessToken",accessToken,options)
+        .cookie("refreshToken", refreshToken, options)
+        .json({
+            status:true,
+            msg:"User registered Sucessfully",
+            user:sendUser,      
+        }); 
     } catch (error) {
         next(error);
     }

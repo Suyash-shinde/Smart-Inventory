@@ -19,7 +19,7 @@ import {
 // import Toggle from "./Toggle";
 
 
-export default function Navbar() {
+export default function AdminNavbar() {
   const router = useRouter();
   const [isSideMenuOpen, setMenu] = useState(false);
   const [name, setName] = useState("");
@@ -27,12 +27,12 @@ export default function Navbar() {
 
   const navlinks = [
     {
-      labe: "Labs",
-      link: "/Labs",
+      labe: "Maintenance",
+      link: "/Maintenance",
     },
     {
-      labe: "My Issues",
-      link: "/userIssues",
+      labe: "AddLab",
+      link: "/addLab",
     },
   ];
 

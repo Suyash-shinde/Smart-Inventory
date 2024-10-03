@@ -3,7 +3,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-
+import AdminNavbar from "./components/AdminNavbar";
 // import { NextUIProvider } from "@nextui-org/react"; // Commented out
 // import { ThemeProvider as NextThemesProvider } from "next-themes"; // Commented out
 import { Providers } from "./providers";
@@ -35,6 +35,7 @@ export default function RootLayout({ children }) {
   const showNavbar =
     pathname !== "/login" && pathname !== "/login/admin" && pathname !== "/";
 
+  const isAdmin = pathname === "/Maintenance" || pathname === "/addLab";
   
   // const { theme } = useTheme();
 
@@ -52,7 +53,8 @@ export default function RootLayout({ children }) {
             disableTransitionOnChange
           >
 
-          {showNavbar && <Navbar />}
+          {showNavbar && !isAdmin && <Navbar />}
+          {showNavbar && isAdmin && <AdminNavbar/>}
           {children}
           <Toaster
 
