@@ -42,6 +42,14 @@ export default function Navbar() {
       labe: "Dashboard",
       link: "/Dashboard",
     },
+    {
+      labe: "AddLab",
+      link: "/addLab",
+    },
+    {
+      labe: "My Issues",
+      link: "/userIssues",
+    },
   ];
 
   useEffect(() => {
@@ -62,11 +70,23 @@ export default function Navbar() {
     setDropdownOpen((prev) => !prev);
   };
 
+
+function deleteAllCookies() {
+  document.cookie.split(';').forEach(cookie => {
+      const eqPos = cookie.indexOf('=');
+      const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  });
+}
+
   const handleLogout = () => {
     // PURE CHATGPTEEEEEEEED
     // idk how dis works
-    document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    setName("");
+    console.log("here");
+    
+    // document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    deleteAllCookies()
+     setName("");
     // Optionally, redirect the user or update state
     // window.location.reload();
     router.push("/login");

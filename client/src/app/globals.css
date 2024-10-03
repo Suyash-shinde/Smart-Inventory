@@ -112,9 +112,11 @@
 .dark ::placeholder{
   background-color: #fff; 
   color: #fff;
+  
 }
 .dark text label{
   color: #000000;
+
 } */
 @layer base {
   :root {
@@ -185,3 +187,4 @@
     @apply bg-background text-foreground;
   }
 }
+

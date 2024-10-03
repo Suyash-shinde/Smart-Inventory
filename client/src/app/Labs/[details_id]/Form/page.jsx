@@ -7,6 +7,8 @@ import {
   parseCookie,
   getPropertyFromCookie,
 } from "../../../utils/useCookie";
+import { useRouter } from 'next/navigation'; 
+
 import { useSearchParams } from "next/navigation";
 // import "dotenv/config";
 import { cards } from "../../../data";
@@ -15,6 +17,8 @@ import { issuePost } from "../../../utils/APIpost";
 import { getLabPost } from "../../../utils/APIpost";
 import ViewLayout from "@/app/components/ViewLayout";
 const page = () => {
+  const router=useRouter();
+
   const searchParams = useSearchParams();
   //const id=searchParams.get('id');
 
@@ -36,7 +40,7 @@ const page = () => {
   const [lab,setLab] = useState({});
   const [loading, setLoading] = useState(true);
   const [devicevalue,setDeviceValue] = useState(null);
-  
+  const [faculty,setFaculty]=useState("");
   
 
  
@@ -52,7 +56,10 @@ const page = () => {
       let cookieReq = getCookie("user"); //this gets me the cookie associated with user
       let parsed = parseCookie(cookieReq).user;
       let fetchedName = getPropertyFromCookie(parsed, "name");
-
+      if(fetchedName){
+        setFaculty(fetchedName);
+      }
+      console.log("name",fetchedName)
       let id = +searchParams.get("id");
 
       //console.log(typeof(id));
@@ -85,14 +92,15 @@ const page = () => {
       }) .finally(setLoading(false))
     }
   }, [searchParams]);
+
   const [issueDetails, setIssueDetails] = useState({
     deviceId: "",
     deviceType: "",
     date: getDate(),
-    facultyName: "",
+    facultyName: faculty,
     facultyLabIncharge: "",
     details: "",
-    labNo:lab.labNo,
+    labNo:"",
   });
 
   const handleChange = (e) => {
@@ -105,29 +113,43 @@ const page = () => {
     console.log(issueDetails);
   }
   const sendData = async () => {
-    const myData = issueDetails;
-    const result = await issuePost(myData);
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const sendPromise = sendData(); // Create the promise
-    toast.promise(
-      sendPromise,
-      {
-        loading: 'Sending...',
-        success: 'Sent successfully!',
-        error: 'Failed to send.',
-      }
-    );
+  const myData = issueDetails;
+  // console.log(id);
   
-    try {
-      await sendPromise;
-      console.log(issueDetails); // Execute when the promise resolves
-    } catch (error) {
-      console.error('Error sending data:', error);
+  // console.log(deviceId);
+  const result = await issuePost(myData);
+  // console.log(result);  
+};
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const sendPromise = sendData(); // Create the promise
+
+  toast.promise(
+    sendPromise,
+    {
+      loading: 'Sending...',
+      success: 'Sent successfully!',
+      error: 'Failed to send.',
     }
-  };
+  );
+
+  try {
+    await sendPromise;
+
+    // Ensure you're using issueDetails for id and deviceId
+    const { labNo, deviceId } = issueDetails; // Extract labNo (which was the id) and deviceId
+    console.log('issueDetails:', issueDetails); // To check if labNo and deviceId are correct
+    
+    const path = `/Labs/${labNo}/Form/Pdf?id=${labNo}&deviceId=${deviceId}`;
+    router.push(path);
+  } catch (error) {
+    console.error('Error sending data:', error);
+  }
+};
   
   const handleReset = (e) => {
     window.alert("You are about to reset");

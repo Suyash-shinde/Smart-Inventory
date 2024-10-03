@@ -30,6 +30,12 @@ const issueSchema = new Schema({
     },
     details:{
         type:String,
+    },
+    recurring:{
+        type:Boolean
+    },
+    count:{
+        type:Number
     }
 });
 

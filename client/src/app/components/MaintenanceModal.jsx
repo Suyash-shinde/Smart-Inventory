@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getLabPost } from "../utils/APIpost";
+import { getLabPost, handleResolvePost } from "../utils/APIpost";
 import MaintainanceLayout from "./MaintainanceLayout";
 const MaintenanceModal = ({ isOpen, onClose, title, children, issueData }) => {
   const [lab,setLab] = useState({});
@@ -34,7 +34,10 @@ const MaintenanceModal = ({ isOpen, onClose, title, children, issueData }) => {
   }, [isOpen]);
 
   if (!isOpen) return null;
-
+  const handleResolve=async()=>{
+    const {data} = await handleResolvePost({issueID:issueData._id, deviceId:issueData.deviceId});
+    console.log(data.msg);
+  }
   const handleClickOutside = (event) => {
     if (event.target.classList.contains("modal-backdrop")) {
       onClose();
@@ -78,6 +81,9 @@ const MaintenanceModal = ({ isOpen, onClose, title, children, issueData }) => {
         <div className="text-gray-700">{children}</div>
         <div >
           <MaintainanceLayout issueDevice={issueData.deviceId} data={lab}></MaintainanceLayout>
+        </div>
+        <div className="flex justify-center align-center">
+          <button className="border-medium bg-green-500 rounded h-9 hover:bg-green-600" onClick={handleResolve}> Mark as Resolved</button>
         </div>
       </div>
     </div>
