@@ -80,7 +80,7 @@ const TechnicianLogin = () => {
       </div>
       <div className="flex items-center justify-center h-full bg-white md:w-1/2">
         <div className="w-full max-w-md p-6 space-y-10">
-          <h2 className="text-4xl font-bold text-center">Technician Login</h2>
+          <h2 className="text-4xl text-black font-bold text-center">Technician Login</h2>
           <div className="space-y-6">
             <div className="space-y-2">
               <label className="block text-gray-700">PRN Number</label>
