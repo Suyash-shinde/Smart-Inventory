@@ -15,7 +15,7 @@ export default function Home() {
   };
 
   return (
-    <div className=" flex flex-col items-center h-screen bg-black border-4">
+    <div className=" flex flex-col items-center h-screen bg-black ">
       <Hero/>
       <div className="py-20 text-3xl font-bold text-center text-white">
         Identify Your Role
