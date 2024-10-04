@@ -112,22 +112,28 @@ const page = () => {
     setIssueDetails((prev)=>({...prev,["deviceId"]:e}))
     console.log(issueDetails);
   }
+  const handleValidation=()=>{
+    if(issueDetails.deviceType==="" || issueDetails.deviceId==="" || issueDetails.details===""){
+      return false;
+    }
+    return true;
+  }
   const sendData = async () => {
-
+    
   const myData = issueDetails;
   // console.log(id);
   
   // console.log(deviceId);
   const result = await issuePost(myData);
   // console.log(result);  
+  return result;
 };
 
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-
+  if(handleValidation()){
   const sendPromise = sendData(); // Create the promise
-
   toast.promise(
     sendPromise,
     {
@@ -149,6 +155,10 @@ const handleSubmit = async (e) => {
   } catch (error) {
     console.error('Error sending data:', error);
   }
+}
+else{
+  toast.error("All fields are mandatory");
+}
 };
   
   const handleReset = (e) => {
@@ -167,7 +177,7 @@ const handleSubmit = async (e) => {
     <div className="min-h-screen bg-gradient-to-br from-green-200 to-blue-200 py-10 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
         <h1 className="text-2xl font-semibold text-center mb-6">Report an Issue</h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={(e)=>handleSubmit(e)} className="space-y-4">
           <div>
             <label className="block text-gray-700 font-medium">Faculty Name:</label>
             <input

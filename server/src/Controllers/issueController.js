@@ -31,7 +31,7 @@ export const createIssue =  async (req,res,next) => {
             deviceType,
             date,
             facultyName:findUser._id,
-            status:"pending",
+            status:"Pending",
             facultyLabIncharge,
             details,
             labNo
