@@ -107,26 +107,26 @@ const page = () => {
       return (
         <>
           <div className="w-full h-min-screen">
-            <header className="flex items-center justify-center w-full h-12 bg-emerald-500">
-              <h1 className="text-2xl font-bold text-white">Maintenance</h1>
+            <header className="flex items-center justify-center w-full h-12 bg-background">
+              <h1 className="text-2xl font-bold text-foreground">Maintenance</h1>
             </header>
     
-            <main className="w-full h-full p-4 bg-cyan-100">
+            <main className="w-full h-full p-4 bg-background">
               <div className="flex items-center justify-center mb-4">
                 <input
                   type="search"
                   placeholder="Search"
-                  className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-cyan-100"
+                  className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-card "
                 />
               </div>
     
-              <div className="flex flex-col items-center px-4 py-3 space-x-4 bg-white border rounded-md sm:flex-row">
+              <div className="bg-background flex flex-col items-center px-4 py-3 space-x-4  border rounded-md sm:flex-row">
                 <div className="flex flex-col w-full space-y-4 ">
                   <div className="flex space-x-4">
                     <select
                       name="device-type"
                       id="device-type"
-                      className="w-full px-2 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-2 py-2 bg-card border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                       value={selectedDevice}
                       onChange={(e) => setSelectedDevice(e.target.value)}
                     >
@@ -140,7 +140,7 @@ const page = () => {
                     <select
                       name="maintenance-status"
                       id="maintenance-status"
-                      className="w-full px-2 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-2 py-2 bg-card border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                       value={selectedStatus}
                       onChange={(e) => setSelectedStatus(e.target.value)}
                     >
@@ -156,7 +156,7 @@ const page = () => {
                     <select
                       name="faculty"
                       id="faculty"
-                      className="w-full px-2 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-2 py-2 bg-card border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                       // value={selectedFaculty}
                       // onChange={(e) => setSelectedFaculty(e.target.value)}
                     >
@@ -178,7 +178,7 @@ const page = () => {
                         <input
                           type="date"
                           id="date-input"
-                          className="w-full px-2 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                          className="w-full px-2 py-2 bg-card border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                           value={selectedDate}
                           onChange={(e) => setSelectedDate(e.target.value)}
                         />

@@ -87,27 +87,27 @@ const LabDetails = ({ params }) => {
     <>
     
       {" "}
-      <div className="flex flex-row  justify-center items-center">lab details of lab {id}</div>
-      <div className="min-h-screen p-6 bg-slate-100">
-        <div className="flex flex-col items-center p-10 bg-white border-2 shadow-lg rounded-xl">
-          <h1 className="text-4xl font-bold text-gray-800">{lab.labNo}</h1>
+      {/* <div className="flex flex-row  justify-center items-center">lab details of lab {id}</div> */}
+      <div className="min-h-screen p-6 bg-background">
+        <div className="flex flex-col items-center p-10 bg-card border-2 shadow-lg rounded-xl">
+          <h1 className="text-4xl font-bold text-foreground">{lab.labNo}</h1>
           <p className="text-lg mt-4">This lab takes care of </p>
           <p className="text-lg mt-4">Incharge: {lab.incharge}</p>
           <div className="max-w-[1200px] mx-auto py-[50px] grid lg:grid-cols-4 sm:grid-cols-2 gap-6 ">
-        <div className=" text-white w-60 mx-auto bg-black sm:w-64 p-4">
+        <div className=" text-white rounded-lg w-60 mx-auto bg-black sm:w-64 p-4">
           <h3 className="text-xl py-2">Devices</h3>
           <p>akfsmd</p>
         </div>
         
-        <div className="bg-black w-60 mx-auto text-white sm:w-64 p-4">
+        <div className="bg-black w-60 rounded-lg mx-auto text-white sm:w-64 p-4">
           <h3 className="text-xl py-2">Maintenance issues</h3>
           <p>akfsmd</p>
         </div>
-        <div className="bg-black w-60 mx-auto text-white sm:w-64 p-4">
+        <div className="bg-black w-60 rounded-lg mx-auto text-white sm:w-64 p-4">
           <h3 className="text-xl py-2">Replacement issues</h3>
           <p>akfsmd</p>
         </div>
-        <div className="bg-black w-60 mx-auto text-white  sm:w-64 p-4">
+        <div className="bg-black w-60 rounded-lg mx-auto text-white  sm:w-64 p-4">
           <h3 className="text-xl py-2">Inventory</h3>
           <p>akfsmd</p>
         </div>

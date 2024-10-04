@@ -79,7 +79,7 @@ function deleteAllCookies() {
   };
   return (
     <main>
-      <nav className="flex items-center justify-between h-20 px-8 py-8 ">
+      <nav className="flex bg-card items-center justify-between h-20 px-8 py-8 ">
         <div className="flex items-center gap-8">
           <section className="flex items-center gap-4">
             {/* menu */}

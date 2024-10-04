@@ -149,6 +149,9 @@
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
     --pending: 348 100% 61%;
+    
+    
+    
   }
   .dark {
     /* --background: 0 0% 3.9%; */
@@ -180,6 +183,7 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
     --pending: 348 100% 61%;
+    
   }
 }
 @layer base {

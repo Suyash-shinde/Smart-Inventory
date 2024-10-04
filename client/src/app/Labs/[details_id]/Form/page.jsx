@@ -1,13 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import toast, {Toaster} from 'react-hot-toast'
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import {
   getCookie,
   parseCookie,
   getPropertyFromCookie,
 } from "../../../utils/useCookie";
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from "next/navigation";
 
 import { useSearchParams } from "next/navigation";
 // import "dotenv/config";
@@ -17,7 +17,7 @@ import { issuePost } from "../../../utils/APIpost";
 import { getLabPost } from "../../../utils/APIpost";
 import ViewLayout from "@/app/components/ViewLayout";
 const page = () => {
-  const router=useRouter();
+  const router = useRouter();
 
   const searchParams = useSearchParams();
   //const id=searchParams.get('id');
@@ -37,59 +37,57 @@ const page = () => {
 
   //code for lab layout
 
-  const [lab,setLab] = useState({});
+  const [lab, setLab] = useState({});
   const [loading, setLoading] = useState(true);
-  const [devicevalue,setDeviceValue] = useState(null);
-  const [faculty,setFaculty]=useState("");
-  
-
- 
-
- 
+  const [devicevalue, setDeviceValue] = useState(null);
+  const [faculty, setFaculty] = useState("");
 
   //const date=getDate();
-  
+
   useEffect(() => {
-    
     // Ensure the code runs only on the client side
     if (typeof window !== "undefined") {
       let cookieReq = getCookie("user"); //this gets me the cookie associated with user
       let parsed = parseCookie(cookieReq).user;
       let fetchedName = getPropertyFromCookie(parsed, "name");
-      if(fetchedName){
+      if (fetchedName) {
         setFaculty(fetchedName);
       }
-      console.log("name",fetchedName)
+      console.log("name", fetchedName);
       let id = +searchParams.get("id");
 
       //console.log(typeof(id));
 
       // const selectedCard = cards.find((card) => card.index === id);
       // console.log(selectedCard);
-      let incharge="";
+      let incharge = "";
       //console.log(date);
-      axios.post('http://localhost:3090/getLab',
-        {
-        labNo:id
-      },
-      {withCredentials:true}
-    )
-      .then((response)=>{
-        console.log("res",response);
-        setLab(response.data.data);
-        incharge+=response.data.data.incharge;
-        console.log("HereF",incharge);
-        console.log("HereD",response.data.data.incharge);
-        setIssueDetails((prevDetails) => ({
-          ...prevDetails,
-          facultyName: fetchedName,
-          facultyLabIncharge: incharge ? incharge : "None assigned",
-          date: getDate(),
-          labNo:id
-        }));
-      }).catch((error)=>{
-        console.log("Error found ",error);
-      }) .finally(setLoading(false))
+      axios
+        .post(
+          "http://localhost:3090/getLab",
+          {
+            labNo: id,
+          },
+          { withCredentials: true }
+        )
+        .then((response) => {
+          console.log("res", response);
+          setLab(response.data.data);
+          incharge += response.data.data.incharge;
+          console.log("HereF", incharge);
+          console.log("HereD", response.data.data.incharge);
+          setIssueDetails((prevDetails) => ({
+            ...prevDetails,
+            facultyName: fetchedName,
+            facultyLabIncharge: incharge ? incharge : "None assigned",
+            date: getDate(),
+            labNo: id,
+          }));
+        })
+        .catch((error) => {
+          console.log("Error found ", error);
+        })
+        .finally(setLoading(false));
     }
   }, [searchParams]);
 
@@ -100,7 +98,7 @@ const page = () => {
     facultyName: faculty,
     facultyLabIncharge: "",
     details: "",
-    labNo:"",
+    labNo: "",
   });
 
   const handleChange = (e) => {
@@ -108,70 +106,71 @@ const page = () => {
     setDeviceValue(e.target.value);
     setIssueDetails((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
-  const handleDeviceId = (e)=>{
-    setIssueDetails((prev)=>({...prev,["deviceId"]:e}))
+  const handleDeviceId = (e) => {
+    setIssueDetails((prev) => ({ ...prev, ["deviceId"]: e }));
     console.log(issueDetails);
-  }
+  };
   const sendData = async () => {
+    const myData = issueDetails;
+    // console.log(id);
 
-  const myData = issueDetails;
-  // console.log(id);
-  
-  // console.log(deviceId);
-  const result = await issuePost(myData);
-  // console.log(result);  
-};
+    // console.log(deviceId);
+    const result = await issuePost(myData);
+    // console.log(result);
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+    const sendPromise = sendData(); // Create the promise
 
-  const sendPromise = sendData(); // Create the promise
+    toast.promise(sendPromise, {
+      loading: "Sending...",
+      success: "Sent successfully!",
+      error: "Failed to send.",
+    });
 
-  toast.promise(
-    sendPromise,
-    {
-      loading: 'Sending...',
-      success: 'Sent successfully!',
-      error: 'Failed to send.',
+    try {
+      await sendPromise;
+
+      // Ensure you're using issueDetails for id and deviceId
+      const { labNo, deviceId } = issueDetails; // Extract labNo (which was the id) and deviceId
+      console.log("issueDetails:", issueDetails); // To check if labNo and deviceId are correct
+
+      const path = `/Labs/${labNo}/Form/Pdf?id=${labNo}&deviceId=${deviceId}`;
+      router.push(path);
+    } catch (error) {
+      console.error("Error sending data:", error);
     }
-  );
+  };
 
-  try {
-    await sendPromise;
-
-    // Ensure you're using issueDetails for id and deviceId
-    const { labNo, deviceId } = issueDetails; // Extract labNo (which was the id) and deviceId
-    console.log('issueDetails:', issueDetails); // To check if labNo and deviceId are correct
-    
-    const path = `/Labs/${labNo}/Form/Pdf?id=${labNo}&deviceId=${deviceId}`;
-    router.push(path);
-  } catch (error) {
-    console.error('Error sending data:', error);
-  }
-};
-  
   const handleReset = (e) => {
     window.alert("You are about to reset");
     window.location.reload();
   };
- 
+
   if (loading) {
-    return <div className='font-extrabold'>Loading...</div>;  // Display loading message or spinner
+    return <div className="font-extrabold">Loading...</div>; // Display loading message or spinner
   }
   if (!lab) {
-    return <div>No data available</div>;  // If no lab data is fetched or null
+    return <div>No data available</div>; // If no lab data is fetched or null
   }
   return (
-
-    <div className="min-h-screen bg-gradient-to-br from-green-200 to-blue-200 py-10 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
-        <h1 className="text-2xl font-semibold text-center mb-6">Report an Issue</h1>
+    <div
+      className="min-h-screen bg-gradient-to-br  from-green-200  to-blue-200 dark:bg-black
+ py-10 flex items-center justify-center"
+    >
+      <div className="bg-card p-8 rounded-lg shadow-lg max-w-lg w-full">
+        <h1 className="text-2xl  font-semibold text-center mb-6">
+          Report an Issue
+        </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 font-medium">Faculty Name:</label>
+            <label className="block text-foreground font-medium">
+              Faculty Name:
+            </label>
             <input
-              className="h-10 border border-gray-300 mt-1 rounded-md px-4 w-full bg-gray-100 cursor-not-allowed"
+              className="h-10 border border-gray-300 mt-1 rounded-md px-4 w-full dark:bg-gray-700  bg-white  cursor-not-allowed"
               id="facultyName"
               name="facultyName"
               placeholder="Not logged in"
@@ -182,9 +181,11 @@ const handleSubmit = async (e) => {
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium">Faculty Lab Incharge:</label>
+            <label className="block text-foreground font-medium">
+              Faculty Lab Incharge:
+            </label>
             <input
-              className="h-10 border border-gray-300 mt-1 rounded-md px-4 w-full bg-gray-100 cursor-not-allowed"
+              className="h-10 border border-gray-300 mt-1 rounded-md px-4 w-full dark:bg-gray-700  bg-white  cursor-not-allowed"
               type="text"
               name="facultyLabIncharge"
               value={issueDetails.facultyLabIncharge}
@@ -193,9 +194,9 @@ const handleSubmit = async (e) => {
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium">Date:</label>
+            <label className="block text-text-foreground font-medium">Date:</label>
             <input
-              className="h-10 border border-gray-300 mt-1 rounded-md px-4 w-full bg-gray-100 cursor-not-allowed"
+              className="h-10 border border-gray-300 mt-1  rounded-md px-4 w-full dark:bg-gray-700  bg-white  cursor-not-allowed"
               type="date"
               name="date"
               value={issueDetails.date}
@@ -204,10 +205,12 @@ const handleSubmit = async (e) => {
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium">Equipment:</label>
+            <label className="block text-text-foreground font-medium ">
+              Equipment:
+            </label>
             <select
               name="deviceType"
-              className="h-10 border border-gray-300 mt-1 rounded-md px-4 w-full bg-white"
+              className="h-10 border border-gray-300 dark:bg-gray-700  bg-white  mt-1 rounded-md px-4 w-full"
               value={issueDetails.deviceType}
               onChange={handleChange}
             >
@@ -220,27 +223,32 @@ const handleSubmit = async (e) => {
               <option value="Fan">Fan</option>
             </select>
           </div>
-          
-        {(devicevalue!=="PC")? 
-              <div>
+
+          {devicevalue !== "PC" ? (
+            <div>
               <label>Device Id:</label>
               {/* try to make a drop down select later */}
               <input
-                className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                className="h-10 border mt-1 rounded px-4 w-full dark:bg-gray-700  bg-white "
                 type="text"
                 name="deviceId"
                 value={issueDetails.deviceId}
                 onChange={handleChange}
               ></input>
-            </div>:
-            <div className="w-auto flex justify-center items-center"><ViewLayout handleDeviceId={handleDeviceId} data={lab}></ViewLayout></div>
-            }
-            
+            </div>
+          ) : (
+            <div className="w-auto flex justify-center items-center">
+              <ViewLayout
+                handleDeviceId={handleDeviceId}
+                data={lab}
+              ></ViewLayout>
+            </div>
+          )}
 
           <div>
-            <label className="block text-gray-700 font-medium">Issue:</label>
+            <label className="block  font-medium">Issue:</label>
             <textarea
-              className="h-24 border border-gray-300 mt-1 rounded-md px-4 w-full"
+              className="h-24 border dark:bg-gray-700  bg-white  mt-1 rounded-md px-4 w-full"
               name="details"
               value={issueDetails.details}
               onChange={handleChange}
@@ -263,12 +271,9 @@ const handleSubmit = async (e) => {
             </button>
           </div>
         </form>
-
       </div>
     </div>
   );
 };
-
-
 
 export default page;
