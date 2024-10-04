@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import MaintenanceModal from "@/app/components/MaintenanceModal";
+import UserModal from "@/app/components/UserModal";
 import axios from "axios";
 import { getLabPost } from "../utils/APIpost";
 import { getUserIssue } from '../utils/APIpost';
@@ -231,7 +231,7 @@ const page = () => {
   )}
 </ul>
 
-              {selectedIssue? <MaintenanceModal
+              {selectedIssue? <UserModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
                 title="Issue Details"
@@ -248,7 +248,7 @@ const page = () => {
                     
                   </>
                 )}
-              </MaintenanceModal>:<div></div>}
+              </UserModal>:<div></div>}
             </main>
           </div>
         </>
