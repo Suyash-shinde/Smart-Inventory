@@ -19,7 +19,8 @@ const page = () => {
     const runOnce = useRef(false);
     const [selectedIssue, setSelectedIssue] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    
+    const [filteredIssues, setFilteredIssues] = useState([]);
+
     useEffect(() => {
       
     }, [])
@@ -35,30 +36,25 @@ const page = () => {
     const fetchData = async () => {
       let userCookie = getCookie("user");
       let parsedName = ""; 
-        if(userCookie){
+      if (userCookie) {
         let parsed = parseCookie(userCookie).user;
-        if(parsed){
-        parsedName = getPropertyFromCookie(parsed, "name");
-        if(parsedName){
-        console.log(parsedName)
+        if (parsed) {
+          parsedName = getPropertyFromCookie(parsed, "name");
+          if (parsedName) {
+            console.log(parsedName);
+          }
         }
-         }
-        }
+      }
       try {
-        const {data} = await getUserIssue({name:parsedName});
-        console.log("Response: ", data);
-        // response.forEach((_id)=>{
-        //     Issues.push(_id);
-        // })
-
+        const {data} = await getUserIssue({name: parsedName});
         setIssue(data.issues);
         setOrIssue(data.issues);
-        //Issues.push(response.data)
-        console.log(Issues);
+        setFilteredIssues(data.issues); // Also update filteredIssues initially
       } catch (error) {
         console.log(error);
       }
     };
+    
     
     useEffect(() => {
       if (runOnce.current === false) {
@@ -74,39 +70,29 @@ const page = () => {
     const reset = () => {
       setIssue(OrIssues);
     };
-    let filteredIssues = OrIssues;
+    // let filteredIssues = OrIssues;
     const handleFilter = () => {
-      filteredIssues = OrIssues;
+      let issues = OrIssues; // Start with the original issues list
       if (selectedDevice && selectedDevice !== "--None--") {
-        filteredIssues = filteredIssues.filter(
-          (issue) => issue.deviceType === selectedDevice
-        );
+        issues = issues.filter((issue) => issue.deviceType === selectedDevice);
       }
-  
+    
       if (selectedStatus && selectedStatus !== "--None--") {
-        filteredIssues = filteredIssues.filter(
-          (issue) => issue.status === selectedStatus
-        );
+        issues = issues.filter((issue) => issue.status === selectedStatus);
       }
       if (selectedDate) {
-        filteredIssues = filteredIssues.filter(
-          (issue) => issue.date === selectedDate
-        );
+        issues = issues.filter((issue) => issue.date === selectedDate);
       }
-  
-      // if (selectedFaculty && selectedFaculty !== "Faculty") {
-      //   filteredIssues = filteredIssues.filter(
-      //     (issue) => issue.faculty === selectedFaculty
-      //   );
-      // }
-      setIssue(filteredIssues);
+    
+      setFilteredIssues(issues); // Update the filteredIssues state
     };
+    
   
 
     
       return (
         <>
-          <div className="w-full h-min-screen">
+          <div className="w-full h-min-screen ">
             <header className="flex items-center justify-center w-full h-12 bg-emerald-500">
               <h1 className="text-2xl font-bold text-white">Maintenance</h1>
             </header>
@@ -204,49 +190,47 @@ const page = () => {
               </div>
     
               <ul className="mt-5 space-y-4">
-                {filteredIssues.length >= 0 ? (
-                  Issues.map((issue) => (
-                    <li
-                      key={issue._id}
-                      className="flex justify-between border rounded-md cursor-pointer bg-slate-50"
-                      onClick={() => handleOpenModal(issue)}
-                    >
-                      <div className="flex flex-col self-center w-11/12 p-4 space-y-2 rounded-l-md text-slate-500">
-                        <div>
-                          <h6>Issue Id: {issue._id}</h6>
-                          <h6>Date: {issue.date}</h6>
-                        </div>
-                        <div className="flex flex-wrap">
-                          <h6 className="w-1/2">
-                            Faculty: {issue.facultyLabIncharge}
-                          </h6>
-                          <h6 className="w-1/2">Lab: {issue.labNo}</h6>
-                          <h6 className="w-1/2">Device: {issue.deviceType}</h6>
-                        </div>
-                      </div>
-    
-                      <div
-                        className={`flex items-center justify-center w-1/12 rounded-r-md ${
-                          issue.status === "Completed"
-                            ? "bg-green-500"
-                            : issue.status === "Ongoing"
-                            ? "bg-yellow-400"
-                            : "bg-red-500"
-                        }`}
-                      >
-                        <span
-                          className="font-semibold text-white"
-                          style={{ writingMode: "vertical-lr" }}
-                        >
-                          {issue.status}
-                        </span>
-                      </div>
-                    </li>
-                  ))
-                ) : (
-                  <p className="text-center text-gray-500">No issues found.</p>
-                )}
-              </ul>
+  {filteredIssues.length > 0 ? (
+    filteredIssues.map((issue) => (
+      <li
+        key={issue._id}
+        className="flex justify-between border rounded-md cursor-pointer bg-slate-50"
+        onClick={() => handleOpenModal(issue)}
+      >
+        <div className="flex flex-col self-center w-11/12 p-4 space-y-2 rounded-l-md text-slate-500">
+          <div>
+            <h6>Issue Id: {issue._id}</h6>
+            <h6>Date: {issue.date}</h6>
+          </div>
+          <div className="flex flex-wrap">
+            <h6 className="w-1/2">Faculty: {issue.facultyLabIncharge}</h6>
+            <h6 className="w-1/2">Lab: {issue.labNo}</h6>
+            <h6 className="w-1/2">Device: {issue.deviceType}</h6>
+          </div>
+        </div>
+        <div
+          className={`flex items-center justify-center w-1/12 rounded-r-md ${
+            issue.status === "Completed"
+              ? "bg-green-500"
+              : issue.status === "Ongoing"
+              ? "bg-yellow-400"
+              : "bg-red-500"
+          }`}
+        >
+          <span
+            className="font-semibold text-white"
+            style={{ writingMode: "vertical-lr" }}
+          >
+            {issue.status}
+          </span>
+        </div>
+      </li>
+    ))
+  ) : (
+    <p className="text-center text-gray-500">No issues found.</p>
+  )}
+</ul>
+
               {selectedIssue? <MaintenanceModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
