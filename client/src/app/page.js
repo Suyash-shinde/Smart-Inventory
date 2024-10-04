@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FaUserGear } from "react-icons/fa6";
-
+import { Hero } from "./components/Hero";
 export default function Home() {
   const router = useRouter();
 
@@ -15,11 +15,9 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center h-screen bg-gray-100 border-4">
-      <div className="py-10 text-5xl font-bold text-center text-green-700">
-        Smart Inventory
-      </div>
-      <div className="py-20 text-3xl font-bold text-center text-black">
+    <div className=" flex flex-col items-center h-screen bg-black border-4">
+      <Hero/>
+      <div className="py-20 text-3xl font-bold text-center text-white">
         Identify Your Role
       </div>
       <div className="flex items-center w-full justify-evenly">
