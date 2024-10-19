@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { ModeToggle } from "./ModeToggle";
 import { FiMenu } from "react-icons/fi";
@@ -16,7 +16,8 @@ import {
   parseCookie,
   getPropertyFromCookie,
 } from "../utils/useCookie.js"
-// import Toggle from "./Toggle";
+// import Toggle from "./Toggle"; 
+
 
 
 export default function AdminNavbar() {
@@ -24,18 +25,22 @@ export default function AdminNavbar() {
   const [isSideMenuOpen, setMenu] = useState(false);
   const [name, setName] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const sidebarRef = useRef(null); // Sidebar ref initialization
   const navlinks = [
     {
-      labe: "Maintenance",
+      label: "Maintenance",
       link: "/Maintenance",
     },
     {
-      labe: "AddLab",
+      label: "AddLab",
       link: "/addLab",
     },
   ];
-
+  const handleClickOutside = (event) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      setMenu(false); // Close the sidebar if clicked outside
+    }
+  };
   useEffect(() => {
     let userCookie = getCookie("user");
     if (userCookie) {
@@ -43,13 +48,21 @@ export default function AdminNavbar() {
       if (parsed) {
         let parsedName = getPropertyFromCookie(parsed, "name");
         if (parsedName) {
-          console.log(parsedName);
-          // setName(parsedName.charAt(0).toUpperCase());
           setName(parsedName);
         }
       }
     }
-  }, []);
+
+    if (isSideMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside); // Cleanup on unmount
+    };
+  }, [isSideMenuOpen]);
   const handleDropdownToggle = () => {
     setDropdownOpen((prev) => !prev);
   };
@@ -75,7 +88,7 @@ function deleteAllCookies() {
      setName("");
     // Optionally, redirect the user or update state
     // window.location.reload();
-    router.push("/login");
+    router.push("/");
   };
   return (
     <main>
@@ -146,11 +159,14 @@ function deleteAllCookies() {
         {/* sidebar mobile menu */}
         <div
           className={clsx(
-            " fixed h-full w-screen lg:hidden bg-black/50  backdrop-blur-sm top-0 right-0  -translate-x-full  transition-all ",
+            "fixed h-full w-screen lg:hidden bg-black/50 backdrop-blur-sm top-0 right-0 -translate-x-full transition-all",
             isSideMenuOpen && "translate-x-0"
           )}
         >
-          <section className="absolute top-0 left-0 z-50 flex flex-col w-56 h-screen gap-8 p-8 text-black bg-white ">
+          <section
+            ref={sidebarRef} // Sidebar ref assignment
+            className="absolute top-0 left-0 z-50 flex flex-col w-56 h-screen gap-8 p-8 text-black bg-white"
+          >
             <IoCloseOutline
               onClick={() => setMenu(false)}
               className="mt-0 mb-8 text-3xl cursor-pointer"
@@ -158,7 +174,7 @@ function deleteAllCookies() {
 
             {navlinks.map((d, i) => (
               <Link key={i} className="font-bold" href={d.link}>
-                {d.labe}
+                {d.label}
               </Link>
             ))}
           </section>
