@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import AddLabs_DeviceForm from "../components/AddLabDeviceForm.jsx";
 import AddLabs_DeviceList from "../components/AddLabDeviceList.jsx";
 import { addLabPost } from "../utils/APIpost.js";
-
+import toast, {Toaster} from 'react-hot-toast'
 
 const AddLabs = () => {
   // State to manage lab number, device type, count, unique ID, and lab in charge
@@ -89,7 +89,13 @@ const AddLabs = () => {
     ];
     console.log(allDevices)
      const {data} = await addLabPost({labNo,devices:allDevices, incharge:labInCharge,column:grid.gridc, row:grid.gridr});
-     console.log(data);
+     if(data.status===true){
+      toast(data.msg)
+     }
+     else{
+      toast.error(data.msg)
+     }
+     
   }
   useEffect(()=>{
     console.log("abcd",devices);
