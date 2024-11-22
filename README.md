@@ -28,3 +28,8 @@ This project simplifies issue reporting and management, making it quick and hass
         Users can raise an issue and specify the device they want to report.
   ![Screenshot from 2024-11-21 22-25-49](https://github.com/user-attachments/assets/fe205710-35ef-4cab-bacc-5ddb957df6f3)
   
+### Technician Side
+
+    Maintainance Page
+        Technician can see all the issues and mark them as done when completed.
+        
