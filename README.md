@@ -32,4 +32,10 @@ This project simplifies issue reporting and management, making it quick and hass
 
     Maintainance Page
         Technician can see all the issues and mark them as done when completed.
-        
+![Smart inventory demo 1](https://github.com/user-attachments/assets/44408bfb-fb66-4448-a7df-8a600628a5dc)    
+![Smart inventory demo 2](https://github.com/user-attachments/assets/52a9d577-f666-4545-be60-419e7ff0df9e)
+
+    Add Lab Page
+        Technician can add a new lab to the database along with all the equipment in it.
+![Smart invenoty demo 3](https://github.com/user-attachments/assets/01ef17ed-0ac4-4f08-9b37-b70aba51ddeb)
+![smart inventoy demo 4](https://github.com/user-attachments/assets/46d615b9-61e4-41a7-8cb7-1d3ea33f9e80)
