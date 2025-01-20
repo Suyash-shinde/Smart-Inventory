@@ -231,8 +231,10 @@ else{
             </select>
           </div>
           
-        {(devicevalue!=="PC")? 
-              <div>
+        {
+        (devicevalue!=="PC")? 
+            //if not pc
+            <div>
               <label>Device Id:</label>
               {/* try to make a drop down select later */}
               <input
@@ -242,7 +244,8 @@ else{
                 value={issueDetails.deviceId}
                 onChange={handleChange}
               ></input>
-            </div>:
+            </div>
+            :
             <div className="w-auto flex justify-center items-center"><ViewLayout handleDeviceId={handleDeviceId} data={lab}></ViewLayout></div>
             }
             
