@@ -77,11 +77,14 @@ const LabDetails = ({ params }) => {
       console.log("Error found ",error);
     }).finally(setLoading(false));
   }, [id]);
-  if (loading) {
-    return <div className='font-extrabold'>Loading...</div>;  // Display loading message or spinner
-  }
+  // if (loading) {
+  //   return <div className='font-extrabold'>Loading...</div>;  // Display loading message or spinner
+  // }
   if (!lab) {
     return <div>No data available</div>;  // If no lab data is fetched or null
+  }
+  if (loading) {
+    return <div className='font-extrabold'>Loading...</div>;  // Display loading message or spinner
   }
   return (
     <>
@@ -121,12 +124,14 @@ const LabDetails = ({ params }) => {
       <div>
         <LabLayout data={lab}></LabLayout>
       </div>
-        <button
-          onClick={handleOnClick}
-          className="bg-red-500 rounded-md m-2 p-2 shadow-md"
-        >
-          Raise issue
-        </button>
+        <div className="flex justify-center align-middle">
+          <button
+            onClick={handleOnClick}
+            className="bg-red-500 rounded-md m-2 p-2 shadow-md "
+          >
+            Raise issue
+          </button>
+        </div>
 
       </div>
     </>
