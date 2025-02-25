@@ -138,13 +138,14 @@ export const adminlogin=async(req,res,next)=>{
             })
         } 
         const findUser = await Admin.findOne({prn});
-        const isPasswordValid = await bcrypt.compare(password, findUser.password);
+        
         if(!findUser){
             return res.json({
                 status:false,
                 msg:"Invalid  prn",
             });
         }
+        const isPasswordValid = await bcrypt.compare(password, findUser.password);
         if(!isPasswordValid){
             return res.json({
                 status:false,

@@ -194,7 +194,9 @@ const page = () => {
           </div>
 
           <div>
-            <label className="block text-text-foreground font-medium">Date:</label>
+            <label className="block text-text-foreground font-medium">
+              Date:
+            </label>
             <input
               className="h-10 border border-gray-300 mt-1  rounded-md px-4 w-full dark:bg-gray-700  bg-white  cursor-not-allowed"
               type="date"
